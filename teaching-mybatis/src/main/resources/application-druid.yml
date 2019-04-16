@@ -1,0 +1,51 @@
+mysql_db_test:
+  url: jdbc:mysql://127.0.0.1:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  username: teaching
+  password: 123456
+---
+mysql_db:
+  url: jdbc:mysql://127.0.0.2:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  username: teaching
+  password: 123456
+---
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    open-in-view: true
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+  datasource:
+    name: druidDataSource
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      driverClassName: com.mysql.jdbc.Driver
+      url: ${mysql_db_test.url}
+      username: ${mysql_db_test.username}
+      password: ${mysql_db_test.password}
+      # 配置初始化大小、最小、最大
+      initialSize: 20
+      minIdle: 1
+      maxActive: 50
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 300000
+      # 测试连接
+      validationQuery: SELECT 1
+      # 申请连接的时候检测，建议配置为true，不影响性能，并且保证安全性
+      testWhileIdle: true
+      # 获取连接时执行检测，建议关闭，影响性能
+      testOnBorrow: false
+      # 归还连接时执行检测，建议关闭，影响性能
+      testOnReturn: false
+      # 是否开启PSCache，PSCache对支持游标的数据库性能提升巨大，oracle建议开启，mysql下建议关闭
+      poolPreparedStatements: false
+      # 开启poolPreparedStatements后生效
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置扩展插件，常用的插件有=>stat:监控统计  log4j2:日志  wall:防御sql注入
+      filters: stat,wall,log4j2
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000

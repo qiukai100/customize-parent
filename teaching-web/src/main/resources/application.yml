@@ -1,0 +1,17 @@
+spring:
+  profiles:
+    active: dev
+    include:
+      - druid
+      - mybatis
+      - redis
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  messages:
+    basename: i18n/messages
+---
+logging:
+  config: classpath:log4j2.yml
