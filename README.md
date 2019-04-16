@@ -34,6 +34,9 @@
 ####2.6 log4j2
     1、替代spring boot默认的日志框架
     
+####2.7 spring cloud
+    1、注册中心、注册发现
+    
 ##3、待完成事项
     1、hbase单机版集成（文件上传）
     2、spring cloud搭建（部署微服务）
