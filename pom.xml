@@ -11,6 +11,11 @@
         <module>teaching-jpa</module>
         <module>teaching-redis</module>
         <module>teaching-mybatis</module>
+        <module>teaching-hbase</module>
+        <module>teaching-mongodb</module>
+        <module>teaching-shiro</module>
+        <module>teaching-activity</module>
+        <module>teaching-mqtt</module>
     </modules>
 
     <parent>
