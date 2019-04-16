@@ -5,7 +5,9 @@ import com.customize.jpa.core.BaseRepository;
 import com.customize.redis.server.RedisServer;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class BaseServiceImpl<T, ID> extends BaseJpaServiceImpl<T, ID> implements BaseService<T, ID> {
+import java.io.Serializable;
+
+public abstract class BaseServiceImpl<T, ID extends Serializable> extends BaseJpaServiceImpl<T, ID> implements BaseService<T, ID> {
 
     public BaseServiceImpl(BaseRepository<T, ID> repository) {
         super(repository);

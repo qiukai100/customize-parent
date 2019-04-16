@@ -1,5 +1,6 @@
 package com.customize.component.config;
 
+import org.springframework.aop.interceptor.AsyncUncaughtExceptionHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
@@ -32,4 +33,13 @@ public class ExecutorConfig implements AsyncConfigurer {
         return executor;
     }
 
+    @Override
+    public Executor getAsyncExecutor() {
+        return null;
+    }
+
+    @Override
+    public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
+        return null;
+    }
 }

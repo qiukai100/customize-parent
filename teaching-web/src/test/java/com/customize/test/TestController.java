@@ -1,16 +1,15 @@
 package com.customize.test;
 
-import cn.hutool.core.lang.UUID;
 import com.customize.redis.server.RedisServer;
-import com.customize.web.TeachingWebApplication;
+import com.customize.web.WebApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.embedded.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -19,7 +18,7 @@ import java.net.URL;
 
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = TeachingWebApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes = WebApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class TestController {
 
     @LocalServerPort
