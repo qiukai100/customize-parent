@@ -8,3 +8,7 @@ server:
     uri-encoding: utf-8
     max-threads: 1000
 ---
+mysql_db:
+  url: jdbc:mysql://127.0.0.2:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  username: teaching
+  password: 123456

@@ -19,3 +19,7 @@ spring:
     favicon:
       enabled: false
 ---
+mysql_db:
+  url: jdbc:mysql://192.168.1.224:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  username: teaching
+  password: 123456
