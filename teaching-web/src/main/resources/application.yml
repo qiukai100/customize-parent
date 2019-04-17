@@ -2,7 +2,7 @@ spring:
   application:
     name: teaching-web
   profiles:
-    active: dev
+    active: pro
     include:
       - druid
       - mybatis

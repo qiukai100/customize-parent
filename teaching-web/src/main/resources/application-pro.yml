@@ -11,10 +11,20 @@ server:
 eureka:
   client:
     service-url:
-      defaultZone: http://127.0.0.1:8761/eureka/
+#      defaultZone: http://127.0.0.1:8761/eureka/
+      defaultZone: http://eureka.didispace.com/eureka/
 
 ---
+server_url:
+  localhost: 127.0.0.1
+  iphone_wifi: 172.20.10.5
+  ip: ${server_url.iphone_wifi}
+
+
+redis_db:
+  url: ${server_url.ip}
+
 mysql_db:
-  url: jdbc:mysql://127.0.0.2:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  url: jdbc:mysql://${server_url.ip}:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
   username: teaching
   password: 123456

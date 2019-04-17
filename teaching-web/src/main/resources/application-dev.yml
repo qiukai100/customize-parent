@@ -27,7 +27,15 @@ eureka:
       defaultZone: http://eureka.didispace.com/eureka/
 
 ---
+server_url:
+  localhost: 127.0.0.1
+  ip: ${server_url.localhost}
+
+
+redis_db:
+  url: ${server_url.ip}
+
 mysql_db:
-  url: jdbc:mysql://127.0.0.1:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  url: jdbc:mysql://${server_url.ip}:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
   username: teaching
   password: 123456
