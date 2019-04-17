@@ -50,6 +50,8 @@ public class StudentController extends BaseController {
         if (!VerifyUtil.vailIsPass(vailMsg)) {
             return Result.error(vailMsg);
         }
+        // TODO hbase保存图片数据并且提供图片预览路径
+        studentService.save(student);
         return Result.success();
     }
 
