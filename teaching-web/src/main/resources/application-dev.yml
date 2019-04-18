@@ -27,7 +27,19 @@ eureka:
       defaultZone: http://eureka.didispace.com/eureka/
 
 ---
+server_common:
+  centos_ip: 192.168.1.214
+  localhost: 127.0.0.1
+  # 通用IP，其他配置均引入这里
+  ip: ${server_common.centos_ip}
+
+redis_db:
+  ip: ${server_common.ip}
+  port: 6379
+  password: 123456
+
+
 mysql_db:
-  url: jdbc:mysql://127.0.0.1:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  url: jdbc:mysql://${server_common.ip}:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
   username: teaching
   password: 123456
