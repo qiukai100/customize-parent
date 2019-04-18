@@ -1,9 +1,9 @@
 spring:
   redis:
     database: 1
-    host: ${redis_db.url}
-    port: 6379
-    password: 123456
+    host: ${redis_db.ip}
+    port: ${redis_db.port}
+    password: ${redis_db.password}
     pool:
       max-active: 8
       max-idle: 8
