@@ -19,5 +19,5 @@ eureka:
 
 ---
 HBase:
-  nodes: 192.168.1.214
+  nodes: 192.168.0.108
   maxSize: 500000

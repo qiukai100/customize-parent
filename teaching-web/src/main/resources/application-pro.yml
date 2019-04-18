@@ -15,16 +15,20 @@ eureka:
       defaultZone: http://eureka.didispace.com/eureka/
 
 ---
-server_url:
+server_common:
+  centos_ip: 192.168.0.108
+  iphone_ip: 172.20.10.5
   localhost: 127.0.0.1
-  iphone_wifi: 172.20.10.5
-  ip: ${server_url.iphone_wifi}
-
+  # 通用IP，其他配置均引入这里
+  ip: ${server_common.centos_ip}
 
 redis_db:
-  url: ${server_url.ip}
+  ip: ${server_common.ip}
+  port: 6379
+  password: 123456
+
 
 mysql_db:
-  url: jdbc:mysql://${server_url.ip}:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  url: jdbc:mysql://${server_common.ip}:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
   username: teaching
   password: 123456
