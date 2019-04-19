@@ -35,7 +35,6 @@ public class StudentController extends BaseController {
     public Result queryStudentPage(StudentVo student,
                                    @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
         Page<Student> list = studentService.queryStudentPage(student, pageNum, pageSize);
-        log.debug("testFeign is {}", pictureFeignService.testFeign("hello feign"));
         return Result.success(list);
     }
 
@@ -55,8 +54,8 @@ public class StudentController extends BaseController {
         if (!VerifyUtil.vailIsPass(vailMsg)) {
             return Result.error(vailMsg);
         }
-        // TODO hbase保存图片数据并且提供图片预览路径
-        studentService.save(student);
+        pictureFeignService.uploadPicture("tb_student", student.getPkStuId(), "pic", student.getPhotoFile());
+//        studentService.save(student);
         return Result.success();
     }
 

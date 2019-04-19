@@ -1,10 +1,9 @@
 package com.customize.jpa.core;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
-public class BaseJpaServiceImpl<T, ID extends Serializable> implements BaseJpaService<T, ID> {
+public class BaseJpaServiceImpl<T, ID> implements BaseJpaService<T, ID> {
 
     private BaseRepository<T, ID> repository;
 
@@ -14,7 +13,8 @@ public class BaseJpaServiceImpl<T, ID extends Serializable> implements BaseJpaSe
 
     @Override
     public T findById(ID id) {
-        return repository.findOne(id);
+        Optional<T> optional = repository.findById(id);
+        return optional.orElse(null);
     }
 
     @Override
@@ -29,6 +29,6 @@ public class BaseJpaServiceImpl<T, ID extends Serializable> implements BaseJpaSe
 
     @Override
     public void deleteById(ID id) {
-        repository.delete(id);
+        repository.deleteById(id);
     }
 }

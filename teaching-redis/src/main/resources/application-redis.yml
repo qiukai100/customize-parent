@@ -4,8 +4,9 @@ spring:
     host: ${redis_db.ip}
     port: ${redis_db.port}
     password: ${redis_db.password}
-    pool:
-      max-active: 8
-      max-idle: 8
-      max-wait: -1
-      min-idle: 0
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1s
+        min-idle: 0
