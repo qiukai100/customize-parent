@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -15,6 +16,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
  * EntityScan 扫描jpa实体注解
  * MapperScan 扫描mybatis mapper
  * EnableEurekaClient 表明eureka客户端
+ * EnableFeignClients 支持Feign调用
  * EnableJpaRepositories 启动jpa repository 注解
  * ComponentScan 扫描spring mvc基本注解
  */
@@ -23,6 +25,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @SpringBootApplication
 @EntityScan(basePackages = {"com.customize.domain.entity"})
 @MapperScan(basePackages = {"com.customize.mybatis.mapper"})
+@EnableFeignClients(basePackages = {"com.customize.feign.service"})
 @EnableJpaRepositories(basePackages = {"com.customize.jpa.repository"})
 @ComponentScan(basePackages = {
         "com.customize.web",

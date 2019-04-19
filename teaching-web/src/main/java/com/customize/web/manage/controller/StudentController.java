@@ -4,6 +4,7 @@ import com.customize.common.utils.RandomUtil;
 import com.customize.common.utils.UUIDUtil;
 import com.customize.common.utils.VerifyUtil;
 import com.customize.domain.vo.StudentVo;
+import com.customize.feign.service.hbase.PictureFeignService;
 import com.customize.web.core.BaseController;
 import com.customize.component.modules.Result;
 import com.customize.domain.entity.Student;
@@ -21,9 +22,12 @@ import java.util.List;
 public class StudentController extends BaseController {
     private final StudentService studentService;
 
+    private final PictureFeignService pictureFeignService;
+
     @Autowired
-    private StudentController(StudentService studentService) {
+    private StudentController(StudentService studentService, PictureFeignService pictureFeignService) {
         this.studentService = studentService;
+        this.pictureFeignService = pictureFeignService;
     }
 
     @ResponseBody
@@ -31,6 +35,7 @@ public class StudentController extends BaseController {
     public Result queryStudentPage(StudentVo student,
                                    @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
         Page<Student> list = studentService.queryStudentPage(student, pageNum, pageSize);
+        log.debug("testFeign is {}", pictureFeignService.testFeign("hello feign"));
         return Result.success(list);
     }
 

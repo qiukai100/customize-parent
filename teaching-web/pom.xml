@@ -18,6 +18,11 @@
             <artifactId>teaching-service</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.customize</groupId>
+            <artifactId>teaching-feign</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <!--spring boot + mvc-->
         <dependency>

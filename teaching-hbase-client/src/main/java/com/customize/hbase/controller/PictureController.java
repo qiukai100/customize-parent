@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -41,5 +40,11 @@ public class PictureController {
     public String uploadPicture(String tableName, String rowKey, List<String> columnName, List<MultipartFile> pictureFile) {
 
         return null;
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "testFeign", method = RequestMethod.GET)
+    public String testFeign(@RequestParam String msg) {
+        return msg;
     }
 }

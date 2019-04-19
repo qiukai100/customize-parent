@@ -14,10 +14,11 @@ server:
 eureka:
   client:
     service-url:
-#      defaultZone: http://127.0.0.1:8761/eureka/
-      defaultZone: http://eureka.didispace.com/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
+#      defaultZone: http://eureka.didispace.com/eureka/
 
 ---
 HBase:
-  nodes: 192.168.0.108
+#  nodes: 192.168.0.108
+  nodes: 192.168.1.214
   maxSize: 500000

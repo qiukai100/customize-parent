@@ -17,6 +17,7 @@
         <module>teaching-activity</module>
         <module>teaching-mqtt</module>
         <module>teaching-eureka-server</module>
+        <module>teaching-feign</module>
     </modules>
 
     <groupId>com.customize</groupId>
