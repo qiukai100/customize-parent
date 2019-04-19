@@ -27,7 +27,7 @@ public class PictureController {
     @ResponseBody
     @RequestMapping(value = "uploadPicture", method = RequestMethod.POST)
     public String uploadPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey,
-                                @RequestParam("columnName") String columnName, @RequestPart("pictureFile") MultipartFile pictureFile) {
+                                @RequestParam("columnName") String columnName, @RequestParam("pictureFile") MultipartFile pictureFile) {
         List<String> columns = Collections.singletonList(columnName);
         List<String> values = Collections.emptyList();
         /*hBaseService.putData(tableName, rowKey, ColumnFamilyType.IMAGE.name(),
