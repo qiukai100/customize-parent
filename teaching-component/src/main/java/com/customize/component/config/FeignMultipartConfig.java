@@ -19,4 +19,5 @@ public class FeignMultipartConfig {
     public Encoder multipartFormEncoder(ObjectFactory<HttpMessageConverters> messageConverters) {
         return new FeignSpringFormEncoder(new SpringEncoder(messageConverters));
     }
+
 }

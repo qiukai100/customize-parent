@@ -7,6 +7,7 @@ import feign.form.FormEncoder;
 import feign.form.MultipartFormContentProcessor;
 import feign.form.spring.SpringManyMultipartFilesWriter;
 import feign.form.spring.SpringSingleMultipartFileWriter;
+import lombok.extern.slf4j.Slf4j;
 import lombok.val;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,7 @@ import static java.util.Collections.singletonMap;
  * attention:
  * 1、 val 写法是lombok带的，不是java11的
  */
+@Slf4j
 public class FeignSpringFormEncoder extends FormEncoder {
 
     /**
@@ -48,12 +50,14 @@ public class FeignSpringFormEncoder extends FormEncoder {
     public void encode(Object object, Type bodyType, RequestTemplate template) throws EncodeException {
         if (bodyType.equals(MultipartFile.class)) {
             val file = (MultipartFile) object;
+            log.debug("feign upload file. file param is {}", file.getName());
             val data = singletonMap(file.getName(), object);
             super.encode(data, MAP_STRING_WILDCARD, template);
             return;
         } else if (bodyType.equals(MultipartFile[].class)) {
             val file = (MultipartFile[]) object;
             if (file != null) {
+                log.debug("feign upload file. file param is {}", file.length == 0 ? "" : file[0].getName());
                 val data = singletonMap(file.length == 0 ? "" : file[0].getName(), object);
                 super.encode(data, MAP_STRING_WILDCARD, template);
                 return;

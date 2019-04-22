@@ -13,6 +13,17 @@
         hbase/bin 目录下执行 start-hbase.cmd
     2、windows下连接 hbase
         hbase/bin 目录下执行 hbase shell
+    3、linux下启动 hbase
+        hbase/bin 目录下 ./start-hbase.sh
+    4、linux下进入 hbase
+        hbase/bin 目录下执行 hbase shell
+        配置了环境变量则直接执行 hbase shell
+        
+####1.3 mysql
+    1、启动mysql
+        service mysql start
+    2、连接mysql
+        mysql -uroot -p123456
     
 ##2、已完成事项
 ####2.1 mysql
@@ -36,10 +47,15 @@
     
 ####2.7 spring cloud
     1、eureka 注册中心、注册发现
+    2、feign 服务调用，并支持文件传输、多文件传输
+    3、hystrix 熔断器
+    
+####2.8 hbase
+    1、单机版部署
     
 ##3、待完成事项
-    1、hbase单机版集成（文件上传）
-    2、spring cloud搭建（部署微服务）
+    1、hbase单机版集成（文件上传）（已完成）
+    2、spring cloud搭建（部署微服务）（已完成）
     3、shiro集成
     4、前端（vue）构建
     5、mongodb单机版集成（记录日志）

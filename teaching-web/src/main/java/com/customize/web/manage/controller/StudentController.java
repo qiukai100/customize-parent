@@ -13,6 +13,7 @@ import com.github.pagehelper.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -47,15 +48,21 @@ public class StudentController extends BaseController {
 
     @ResponseBody
     @RequestMapping(value = "addStudent", method = RequestMethod.POST)
-    public Result addStudent(StudentVo student) {
+    public Result addStudent(Student student, MultipartFile photoFile) {
         student.setPkStuId(UUIDUtil.randomUUID());
         student.setStuNo(RandomUtil.randomNo());
         String vailMsg = VerifyUtil.verifyEntity(student);
-        if (!VerifyUtil.vailIsPass(vailMsg)) {
+        if (!VerifyUtil.vailIsPass(vailMsg) || photoFile == null) {
             return Result.error(vailMsg);
         }
-        pictureFeignService.uploadPicture("tb_student", student.getPkStuId(), "pic", student.getPhotoFile());
-//        studentService.save(student);
+        String filePath = pictureFeignService.uploadPicture("tb_student", student.getPkStuId(), "pic", photoFile);
+        if (filePath != null) {
+            log.debug("file path is {}", filePath);
+            student.setPicUrl(filePath);
+            student.setCreateId("");
+            student.setUpdateId("");
+            studentService.save(student);
+        }
         return Result.success();
     }
 

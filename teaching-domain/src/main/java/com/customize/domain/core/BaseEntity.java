@@ -2,6 +2,7 @@ package com.customize.domain.core;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.customize.common.constants.OptionEnum;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,7 +28,7 @@ public abstract class BaseEntity implements Serializable {
     private String updateId;
 
     @Column(name = "is_delete", nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0 COMMENT '是否删除 - 0：否，1：是'")
-    private Integer isDelete;
+    private Integer isDelete = OptionEnum.NO.getVal();
 
     @Override
     public String toString() {

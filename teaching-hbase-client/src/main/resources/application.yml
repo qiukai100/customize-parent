@@ -11,6 +11,8 @@ server:
   tomcat:
     uri-encoding: utf-8
     max-threads: 1000
+  max-http-header-size: 20480
+
 
 eureka:
   client:
@@ -20,6 +22,6 @@ eureka:
 
 ---
 HBase:
-#  nodes: 192.168.0.108
-  nodes: 192.168.1.214
-  maxSize: 500000
+  nodes: 192.168.0.108
+#  nodes: 192.168.1.214
+  maxSize: 524288000

@@ -1,8 +1,9 @@
 server:
   port: 8080
-  context-path: /teaching
-  session:
-    timeout: 60
+  servlet:
+    context-path: /teaching
+    session:
+      timeout: 60s
   tomcat:
     uri-encoding: utf-8
     max-threads: 1000
@@ -11,8 +12,8 @@ server:
 eureka:
   client:
     service-url:
-#      defaultZone: http://127.0.0.1:8761/eureka/
-      defaultZone: http://eureka.didispace.com/eureka/
+      defaultZone: http://127.0.0.1:8761/eureka/
+#      defaultZone: http://eureka.didispace.com/eureka/
 
 ---
 server_common:

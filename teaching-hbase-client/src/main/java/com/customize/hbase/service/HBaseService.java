@@ -1,13 +1,12 @@
 package com.customize.hbase.service;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.Cell;
-import org.apache.hadoop.hbase.CompareOperator;
+import org.apache.hadoop.hbase.HColumnDescriptor;
+import org.apache.hadoop.hbase.HTableDescriptor;
 import org.apache.hadoop.hbase.TableName;
 import org.apache.hadoop.hbase.client.Admin;
-import org.apache.hadoop.hbase.client.ColumnFamilyDescriptor;
-import org.apache.hadoop.hbase.client.ColumnFamilyDescriptorBuilder;
 import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.ConnectionFactory;
 import org.apache.hadoop.hbase.client.Delete;
@@ -17,14 +16,7 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
-import org.apache.hadoop.hbase.client.TableDescriptor;
-import org.apache.hadoop.hbase.client.TableDescriptorBuilder;
-import org.apache.hadoop.hbase.filter.ColumnPrefixFilter;
-import org.apache.hadoop.hbase.filter.Filter;
-import org.apache.hadoop.hbase.filter.PrefixFilter;
-import org.apache.hadoop.hbase.filter.QualifierFilter;
-import org.apache.hadoop.hbase.filter.RowFilter;
-import org.apache.hadoop.hbase.filter.SubstringComparator;
+import org.apache.hadoop.hbase.filter.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,12 +24,7 @@ import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.math.BigInteger;
 import java.text.MessageFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeSet;
+import java.util.*;
 
 public class HBaseService {
     private Logger log = LoggerFactory.getLogger(HBaseService.class);
@@ -57,32 +44,23 @@ public class HBaseService {
      *
      * @param tableName    表名
      * @param columnFamily 列族名
-     * @return void
-     * @author zifangsky
-     * @date 2018/7/3 17:50
-     * @since 1.0.0
+     * @return boolean
      */
-    public boolean creatTable(String tableName, List<String> columnFamily) {
+    private boolean createTable(String tableName, List<String> columnFamily) {
         Admin admin = null;
         try {
             admin = connection.getAdmin();
-
-            List<ColumnFamilyDescriptor> familyDescriptors = new ArrayList<>(columnFamily.size());
-
-            columnFamily.forEach(cf -> {
-                familyDescriptors.add(ColumnFamilyDescriptorBuilder.newBuilder(Bytes.toBytes(cf)).build());
-            });
-
-            TableDescriptor tableDescriptor = TableDescriptorBuilder.newBuilder(TableName.valueOf(tableName))
-                    .setColumnFamilies(familyDescriptors)
-                    .build();
-
             if (admin.tableExists(TableName.valueOf(tableName))) {
                 log.debug("table Exists!");
-            } else {
-                admin.createTable(tableDescriptor);
-                log.debug("create table Success!");
+                return true;
             }
+            TableName tableNameBean = TableName.valueOf(tableName);
+            HTableDescriptor tableDescriptor = new HTableDescriptor(tableNameBean);
+            columnFamily.forEach(cf -> {
+                tableDescriptor.addFamily(new HColumnDescriptor(cf));
+            });
+            admin.createTable(tableDescriptor);
+            log.debug("create table Success!");
         } catch (IOException e) {
             log.error(MessageFormat.format("创建表{0}失败", tableName), e);
             return false;
@@ -90,6 +68,22 @@ public class HBaseService {
             close(admin, null, null);
         }
         return true;
+    }
+
+    /**
+     * 表是否存在
+     *
+     * @param tableName 表名
+     * @return boolean
+     */
+    private boolean tableIsExists(String tableName) {
+        try {
+            Admin admin = connection.getAdmin();
+            return admin.tableExists(TableName.valueOf(tableName));
+        } catch (Exception e) {
+            log.debug("tableIsExists is error!", e);
+            return false;
+        }
     }
 
     /**
@@ -109,19 +103,14 @@ public class HBaseService {
                 return false;
             }
             admin = connection.getAdmin();
-            if (admin.tableExists(TableName.valueOf(tableName))) {
+            TableName tableNameBean = TableName.valueOf(tableName);
+            if (admin.tableExists(tableNameBean)) {
                 return true;
             } else {
-                List<ColumnFamilyDescriptor> familyDescriptors = new ArrayList<>(columnFamily.size());
-
+                HTableDescriptor tableDescriptor = new HTableDescriptor(tableNameBean);
                 columnFamily.forEach(cf -> {
-                    familyDescriptors.add(ColumnFamilyDescriptorBuilder.newBuilder(Bytes.toBytes(cf)).build());
+                    tableDescriptor.addFamily(new HColumnDescriptor(cf));
                 });
-
-                TableDescriptor tableDescriptor = TableDescriptorBuilder.newBuilder(TableName.valueOf(tableName))
-                        .setColumnFamilies(familyDescriptors)
-                        .build();
-
                 //指定splitkeys
                 admin.createTable(tableDescriptor, splitKeys);
                 log.info("===Create Table " + tableName
@@ -222,9 +211,6 @@ public class HBaseService {
      *
      * @param tableName 表名
      * @return java.util.Map<java.lang.String , java.util.Map < java.lang.String , java.lang.String>>
-     * @author zifangsky
-     * @date 2018/7/3 18:21
-     * @since 1.0.0
      */
     public Map<String, Map<String, String>> getResultScanner(String tableName) {
         Scan scan = new Scan();
@@ -238,14 +224,11 @@ public class HBaseService {
      * @param startRowKey 起始rowKey
      * @param stopRowKey  结束rowKey
      * @return java.util.Map<java.lang.String , java.util.Map < java.lang.String , java.lang.String>>
-     * @author zifangsky
-     * @date 2018/7/4 18:21
-     * @since 1.0.0
      */
     public Map<String, Map<String, String>> getResultScanner(String tableName, String startRowKey, String stopRowKey) {
         Scan scan = new Scan();
 
-        if (StringUtils.isNoneBlank(startRowKey) && StringUtils.isNoneBlank(stopRowKey)) {
+        if (StringUtils.isNotBlank(startRowKey) && StringUtils.isNotBlank(stopRowKey)) {
             scan.withStartRow(Bytes.toBytes(startRowKey));
             scan.withStopRow(Bytes.toBytes(stopRowKey));
         }
@@ -259,14 +242,11 @@ public class HBaseService {
      * @param tableName 表名
      * @param prefix    以prefix开始的行键
      * @return java.util.Map<java.lang.String , java.util.Map < java.lang.String , java.lang.String>>
-     * @author zifangsky
-     * @date 2018/7/4 18:21
-     * @since 1.0.0
      */
     public Map<String, Map<String, String>> getResultScannerPrefixFilter(String tableName, String prefix) {
         Scan scan = new Scan();
 
-        if (StringUtils.isNoneBlank(prefix)) {
+        if (StringUtils.isNotBlank(prefix)) {
             Filter filter = new PrefixFilter(Bytes.toBytes(prefix));
             scan.setFilter(filter);
         }
@@ -280,14 +260,11 @@ public class HBaseService {
      * @param tableName 表名
      * @param prefix    以prefix开始的列名
      * @return java.util.Map<java.lang.String , java.util.Map < java.lang.String , java.lang.String>>
-     * @author zifangsky
-     * @date 2018/7/4 18:21
-     * @since 1.0.0
      */
     public Map<String, Map<String, String>> getResultScannerColumnPrefixFilter(String tableName, String prefix) {
         Scan scan = new Scan();
 
-        if (StringUtils.isNoneBlank(prefix)) {
+        if (StringUtils.isNotBlank(prefix)) {
             Filter filter = new ColumnPrefixFilter(Bytes.toBytes(prefix));
             scan.setFilter(filter);
         }
@@ -301,15 +278,12 @@ public class HBaseService {
      * @param tableName 表名
      * @param keyword   包含指定关键词的行键
      * @return java.util.Map<java.lang.String , java.util.Map < java.lang.String , java.lang.String>>
-     * @author zifangsky
-     * @date 2018/7/4 18:21
-     * @since 1.0.0
      */
     public Map<String, Map<String, String>> getResultScannerRowFilter(String tableName, String keyword) {
         Scan scan = new Scan();
 
-        if (StringUtils.isNoneBlank(keyword)) {
-            Filter filter = new RowFilter(CompareOperator.GREATER_OR_EQUAL, new SubstringComparator(keyword));
+        if (StringUtils.isNotBlank(keyword)) {
+            Filter filter = new RowFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL, new SubstringComparator(keyword));
             scan.setFilter(filter);
         }
 
@@ -322,15 +296,12 @@ public class HBaseService {
      * @param tableName 表名
      * @param keyword   包含指定关键词的列名
      * @return java.util.Map<java.lang.String , java.util.Map < java.lang.String , java.lang.String>>
-     * @author zifangsky
-     * @date 2018/7/4 18:21
-     * @since 1.0.0
      */
     public Map<String, Map<String, String>> getResultScannerQualifierFilter(String tableName, String keyword) {
         Scan scan = new Scan();
 
-        if (StringUtils.isNoneBlank(keyword)) {
-            Filter filter = new QualifierFilter(CompareOperator.GREATER_OR_EQUAL, new SubstringComparator(keyword));
+        if (StringUtils.isNotBlank(keyword)) {
+            Filter filter = new QualifierFilter(CompareFilter.CompareOp.GREATER_OR_EQUAL, new SubstringComparator(keyword));
             scan.setFilter(filter);
         }
 
@@ -344,9 +315,6 @@ public class HBaseService {
      * @param tableName 表名
      * @param scan      过滤条件
      * @return java.util.Map<java.lang.String , java.util.Map < java.lang.String , java.lang.String>>
-     * @author zifangsky
-     * @date 2018/7/4 16:13
-     * @since 1.0.0
      */
     private Map<String, Map<String, String>> queryData(String tableName, Scan scan) {
         //<rowKey,对应的行数据>
@@ -389,9 +357,6 @@ public class HBaseService {
      * @param tableName 表名
      * @param rowKey    行键
      * @return java.util.Map<java.lang.String , java.lang.String> 返回一行的数据
-     * @author zifangsky
-     * @date 2018/7/3 16:07
-     * @since 1.0.0
      */
     public Map<String, String> getRowData(String tableName, String rowKey) {
         //返回的键值对
@@ -405,11 +370,6 @@ public class HBaseService {
             Result hTableResult = table.get(get);
             if (hTableResult != null && !hTableResult.isEmpty()) {
                 for (Cell cell : hTableResult.listCells()) {
-//                System.out.println("family:" + Bytes.toString(cell.getFamilyArray(), cell.getFamilyOffset(), cell.getFamilyLength()));
-//                System.out.println("qualifier:" + Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength()));
-//                System.out.println("value:" + Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
-//                System.out.println("Timestamp:" + cell.getTimestamp());
-//                System.out.println("-------------------------------------------");
                     result.put(Bytes.toString(cell.getQualifierArray(), cell.getQualifierOffset(), cell.getQualifierLength()), Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
                 }
             }
@@ -431,9 +391,6 @@ public class HBaseService {
      * @param familyName 列族名
      * @param columnName 列名
      * @return java.lang.String
-     * @author zifangsky
-     * @date 2018/7/4 10:58
-     * @since 1.0.0
      */
     public String getColumnValue(String tableName, String rowKey, String familyName, String columnName) {
         String str = null;
@@ -460,47 +417,6 @@ public class HBaseService {
     }
 
     /**
-     * 根据tableName、rowKey、familyName、column查询指定单元格多个版本的数据
-     *
-     * @param tableName  表名
-     * @param rowKey     rowKey
-     * @param familyName 列族名
-     * @param columnName 列名
-     * @param versions   需要查询的版本数
-     * @return java.util.List<java.lang.String>
-     * @author zifangsky
-     * @date 2018/7/4 11:16
-     * @since 1.0.0
-     */
-    public List<String> getColumnValuesByVersion(String tableName, String rowKey, String familyName, String columnName, int versions) {
-        //返回数据
-        List<String> result = new ArrayList<>(versions);
-
-        // 获取表
-        Table table = null;
-        try {
-            table = getTable(tableName);
-            Get get = new Get(Bytes.toBytes(rowKey));
-            get.addColumn(Bytes.toBytes(familyName), Bytes.toBytes(columnName));
-            //读取多少个版本
-            get.readVersions(versions);
-            Result hTableResult = table.get(get);
-            if (hTableResult != null && !hTableResult.isEmpty()) {
-                for (Cell cell : hTableResult.listCells()) {
-                    result.add(Bytes.toString(cell.getValueArray(), cell.getValueOffset(), cell.getValueLength()));
-                }
-            }
-        } catch (IOException e) {
-            log.error(MessageFormat.format("查询指定单元格多个版本的数据失败,tableName:{0},rowKey:{1},familyName:{2},columnName:{3}"
-                    , tableName, rowKey, familyName, columnName), e);
-        } finally {
-            close(null, null, table);
-        }
-
-        return result;
-    }
-
-    /**
      * 为表添加 or 更新数据
      *
      * @param tableName  表名
@@ -508,20 +424,20 @@ public class HBaseService {
      * @param familyName 列族名
      * @param columns    列名数组
      * @param values     列值得数组
-     * @author zifangsky
-     * @date 2018/7/3 17:26
-     * @since 1.0.0
      */
-    public void putData(String tableName, String rowKey, String familyName, String[] columns, String[] values) {
+    public boolean putData(String tableName, String rowKey, String familyName, String[] columns, String[] values) {
         // 获取表
+        if (!createTable(tableName, Collections.singletonList(familyName)))
+            return false;
         Table table = null;
         try {
             table = getTable(tableName);
 
-            putData(table, rowKey, tableName, familyName, columns, values);
+            return putData(table, rowKey, tableName, familyName, columns, values);
         } catch (Exception e) {
             log.error(MessageFormat.format("为表添加 or 更新数据失败,tableName:{0},rowKey:{1},familyName:{2}"
                     , tableName, rowKey, familyName), e);
+            return false;
         } finally {
             close(null, null, table);
         }
@@ -536,11 +452,8 @@ public class HBaseService {
      * @param familyName 列族名
      * @param columns    列名数组
      * @param values     列值得数组
-     * @author zifangsky
-     * @date 2018/7/3 17:26
-     * @since 1.0.0
      */
-    private void putData(Table table, String rowKey, String tableName, String familyName, String[] columns, String[] values) {
+    private boolean putData(Table table, String rowKey, String tableName, String familyName, String[] columns, String[] values) {
         try {
             //设置rowkey
             Put put = new Put(Bytes.toBytes(rowKey));
@@ -559,9 +472,45 @@ public class HBaseService {
             table.put(put);
             log.debug("putData add or update data Success,rowKey:" + rowKey);
             table.close();
+            return true;
         } catch (Exception e) {
             log.error(MessageFormat.format("为表添加 or 更新数据失败,tableName:{0},rowKey:{1},familyName:{2}"
                     , tableName, rowKey, familyName), e);
+            return false;
+        }
+    }
+
+    public boolean putData(String tableName, String rowKey, String familyName, List<String> columns, List<byte[]> values) {
+        if (!createTable(tableName, Collections.singletonList(familyName)))
+            return false;
+        // 获取表
+        Table table = null;
+        try {
+            table = getTable(tableName);
+            //设置rowkey
+            Put put = new Put(Bytes.toBytes(rowKey));
+
+            if (columns != null && values != null && columns.size() == values.size()) {
+                for (int i = 0; i < columns.size(); i++) {
+                    if (columns.get(i) != null && values.get(i) != null) {
+                        put.addColumn(Bytes.toBytes(familyName), Bytes.toBytes(columns.get(i)), values.get(i));
+                    } else {
+                        throw new NullPointerException(MessageFormat.format("列名和列数据都不能为空,column:{0},value:{1}"
+                                , columns.get(i), values.get(i)));
+                    }
+                }
+            }
+
+            table.put(put);
+            log.debug("putData add or update data Success,rowKey:" + rowKey);
+            table.close();
+            return true;
+        } catch (Exception e) {
+            log.error(MessageFormat.format("为表添加 or 更新数据失败,tableName:{0},rowKey:{1},familyName:{2}"
+                    , tableName, rowKey, familyName), e);
+            return false;
+        } finally {
+            close(null, null, table);
         }
     }
 
@@ -573,9 +522,6 @@ public class HBaseService {
      * @param familyName 列族名
      * @param column1    列名
      * @param value1     列值
-     * @author zifangsky
-     * @date 2018/7/4 10:20
-     * @since 1.0.0
      */
     public void setColumnValue(String tableName, String rowKey, String familyName, String column1, String value1) {
         Table table = null;
@@ -604,9 +550,6 @@ public class HBaseService {
      * @param familyName 列族名
      * @param columnName 列名
      * @return boolean
-     * @author zifangsky
-     * @date 2018/7/4 11:41
-     * @since 1.0.0
      */
     public boolean deleteColumn(String tableName, String rowKey, String familyName, String columnName) {
         Table table = null;
@@ -641,9 +584,6 @@ public class HBaseService {
      * @param tableName 表名
      * @param rowKey    rowKey
      * @return boolean
-     * @author zifangsky
-     * @date 2018/7/4 13:26
-     * @since 1.0.0
      */
     public boolean deleteRow(String tableName, String rowKey) {
         Table table = null;
@@ -675,9 +615,6 @@ public class HBaseService {
      * @param tableName    表名
      * @param columnFamily 列族
      * @return boolean
-     * @author zifangsky
-     * @date 2018/7/4 13:26
-     * @since 1.0.0
      */
     public boolean deleteColumnFamily(String tableName, String columnFamily) {
         Admin admin = null;
@@ -685,7 +622,7 @@ public class HBaseService {
             admin = connection.getAdmin();
 
             if (admin.tableExists(TableName.valueOf(tableName))) {
-                admin.deleteColumnFamily(TableName.valueOf(tableName), Bytes.toBytes(columnFamily));
+                admin.deleteColumn(TableName.valueOf(tableName), Bytes.toBytes(columnFamily));
                 log.debug(MessageFormat.format("familyName({0}) is deleted!", columnFamily));
             }
         } catch (IOException e) {
@@ -702,9 +639,6 @@ public class HBaseService {
      * 删除表
      *
      * @param tableName 表名
-     * @author zifangsky
-     * @date 2018/7/3 18:02
-     * @since 1.0.0
      */
     public boolean deleteTable(String tableName) {
         Admin admin = null;

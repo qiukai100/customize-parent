@@ -17,7 +17,7 @@ public class PictureFeignFallback implements FallbackFactory<PictureFeignService
             }
 
             @Override
-            public String uploadPictures(MultipartFile[] pictureFiles) {
+            public String uploadPictures(String[] tableNames, String[] rowKeys, String[] columnNames, MultipartFile[] photoFiles) {
                 return null;
             }
         };

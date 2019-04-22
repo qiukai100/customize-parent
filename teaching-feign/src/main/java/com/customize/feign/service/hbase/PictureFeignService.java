@@ -11,15 +11,22 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+/**
+ * HBASE Feign接口
+ * 1、调用时，必须使用RequestParam指定参数名
+ * 2、MultipartFile类型必须使用RequestPart
+ * 3、TODO MultipartFile参数名目前不能通过RequestPart指定，默认使用FieldName
+ */
 @FeignClient(value = FeignClientConstant.HBASE_CLIENT, path = FeignClientConstant.HBASE_CLIENT_PATH + "/picture",
         configuration = FeignMultipartConfig.class, fallbackFactory = PictureFeignFallback.class)
 public interface PictureFeignService {
 
     @RequestMapping(value = "/uploadPicture", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     String uploadPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey, @RequestParam("columnName") String columnName,
-                         @RequestPart("pictureFile") MultipartFile pictureFile);
+                         @RequestPart MultipartFile photoFile);
 
     @RequestMapping(value = "/uploadPictures", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String uploadPictures(@RequestPart("pictureFiles") MultipartFile[] pictureFiles);
+    String uploadPictures(@RequestParam("tableNames") String[] tableNames, @RequestParam("rowKeys") String[] rowKeys,
+                          @RequestParam("columnNames") String[] columnNames, @RequestPart MultipartFile[] photoFiles);
 
 }

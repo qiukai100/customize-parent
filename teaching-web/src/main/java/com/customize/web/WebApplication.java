@@ -29,7 +29,8 @@ import org.springframework.scheduling.annotation.EnableAsync;
         "com.customize.web",
         "com.customize.service",
         "com.customize.component",
-        "com.customize.redis"
+        "com.customize.redis",
+        "com.customize.feign"
 })
 public class WebApplication {
 
