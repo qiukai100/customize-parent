@@ -3,11 +3,9 @@ package com.customize.web.controller;
 import cn.hutool.core.codec.Base64Decoder;
 import com.alibaba.fastjson.JSONObject;
 import com.customize.feign.modules.HBaseResult;
-import com.customize.feign.service.hbase.PictureFeignService;
 import com.customize.feign.utils.JsonResultUtil;
 import com.customize.web.core.BaseController;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,13 +21,6 @@ import java.io.IOException;
 @RestController
 @RequestMapping("image")
 public class ImageController extends BaseController {
-
-    private final PictureFeignService pictureFeignService;
-
-    @Autowired
-    public ImageController(PictureFeignService pictureFeignService) {
-        this.pictureFeignService = pictureFeignService;
-    }
 
     @RequestMapping(value = "showImage/{tableName}/{rowKey}/{columnFamily}/{columnName}", method = RequestMethod.GET)
     public void showImage(@PathVariable String tableName, @PathVariable String rowKey,

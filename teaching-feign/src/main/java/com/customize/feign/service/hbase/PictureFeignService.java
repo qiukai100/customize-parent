@@ -22,22 +22,41 @@ import org.springframework.web.multipart.MultipartFile;
         configuration = FeignMultipartConfig.class, fallbackFactory = PictureFeignFallback.class)
 public interface PictureFeignService {
 
+    /**
+     * 大图片上传
+     *
+     * @param tableName  表名
+     * @param rowKey     行键
+     * @param columnName 列名
+     * @param photoFile  文件流
+     * @return 结果集
+     */
     @RequestMapping(value = "/uploadPicture", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     JSONObject uploadPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey, @RequestParam("columnName") String columnName,
                              @RequestPart MultipartFile photoFile);
 
     /**
-     * 图片上传
-     * @param tableName
-     * @param rowKey
-     * @param columnName
-     * @param photoFile
-     * @return
+     * 小图片上传，使用base64编码
+     *
+     * @param tableName  表名
+     * @param rowKey     行键
+     * @param columnName 列名
+     * @param photoFile  base64编码图片
+     * @return 结果集
      */
     @RequestMapping(value = "/uploadPictureMini", method = RequestMethod.POST)
     JSONObject uploadPictureMini(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey, @RequestParam("columnName") String columnName,
-                             @RequestParam("photoFile") String photoFile);
+                                 @RequestParam("photoFile") String photoFile);
 
+    /**
+     * 获得图片
+     *
+     * @param tableName    表名
+     * @param rowKey       行键
+     * @param columnFamily 列族
+     * @param columnName   列名
+     * @return 结果集
+     */
     @RequestMapping(value = "getPicture", method = RequestMethod.POST)
     JSONObject getPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey,
                           @RequestParam("columnFamily") String columnFamily, @RequestParam("columnName") String columnName);
