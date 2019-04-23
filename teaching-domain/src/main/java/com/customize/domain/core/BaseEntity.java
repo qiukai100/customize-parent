@@ -41,4 +41,10 @@ public abstract class BaseEntity implements Serializable {
                 SerializerFeature.DisableCircularReferenceDetect);
     }
 
+    public void setCreateId(String createId) {
+        this.createId = createId;
+        if (updateId == null || updateId.equals("")) {
+            this.updateId = createId;
+        }
+    }
 }

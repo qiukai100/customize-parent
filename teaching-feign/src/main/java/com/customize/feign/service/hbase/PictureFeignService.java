@@ -1,5 +1,6 @@
 package com.customize.feign.service.hbase;
 
+import com.alibaba.fastjson.JSONObject;
 import com.customize.component.config.FeignMultipartConfig;
 import com.customize.feign.constants.FeignClientConstant;
 import com.customize.feign.fallback.hbase.PictureFeignFallback;
@@ -22,11 +23,13 @@ import org.springframework.web.multipart.MultipartFile;
 public interface PictureFeignService {
 
     @RequestMapping(value = "/uploadPicture", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String uploadPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey, @RequestParam("columnName") String columnName,
-                         @RequestPart MultipartFile photoFile);
+    JSONObject uploadPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey, @RequestParam("columnName") String columnName,
+                             @RequestPart MultipartFile photoFile);
 
     @RequestMapping(value = "/uploadPictures", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     String uploadPictures(@RequestParam("tableNames") String[] tableNames, @RequestParam("rowKeys") String[] rowKeys,
                           @RequestParam("columnNames") String[] columnNames, @RequestPart MultipartFile[] photoFiles);
 
+    @RequestMapping(value = "/testConn", method = RequestMethod.POST)
+    JSONObject testConn(@RequestParam("connTime") int connTime);
 }

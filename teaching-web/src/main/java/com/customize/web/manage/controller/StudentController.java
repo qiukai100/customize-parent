@@ -1,10 +1,13 @@
 package com.customize.web.manage.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.customize.common.utils.RandomUtil;
 import com.customize.common.utils.UUIDUtil;
 import com.customize.common.utils.VerifyUtil;
 import com.customize.domain.vo.StudentVo;
+import com.customize.feign.modules.HBaseResult;
 import com.customize.feign.service.hbase.PictureFeignService;
+import com.customize.feign.utils.JsonResultUtil;
 import com.customize.web.core.BaseController;
 import com.customize.component.modules.Result;
 import com.customize.domain.entity.Student;
@@ -31,7 +34,6 @@ public class StudentController extends BaseController {
         this.pictureFeignService = pictureFeignService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "queryStudentPage", method = RequestMethod.GET)
     public Result queryStudentPage(StudentVo student,
                                    @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
@@ -39,14 +41,12 @@ public class StudentController extends BaseController {
         return Result.success(list);
     }
 
-    @ResponseBody
     @RequestMapping(value = "selectAll", method = RequestMethod.GET)
     public Result selectAll() {
         List<Student> list = studentService.selectAll();
         return Result.success(list);
     }
 
-    @ResponseBody
     @RequestMapping(value = "addStudent", method = RequestMethod.POST)
     public Result addStudent(Student student, MultipartFile photoFile) {
         student.setPkStuId(UUIDUtil.randomUUID());
@@ -55,30 +55,40 @@ public class StudentController extends BaseController {
         if (!VerifyUtil.vailIsPass(vailMsg) || photoFile == null) {
             return Result.error(vailMsg);
         }
-        String filePath = pictureFeignService.uploadPicture("tb_student", student.getPkStuId(), "pic", photoFile);
-        if (filePath != null) {
-            log.debug("file path is {}", filePath);
-            student.setPicUrl(filePath);
+        JSONObject jsonObject = pictureFeignService.uploadPicture("tb_student", student.getPkStuId(), "pic", photoFile);
+        log.debug("pictureFeignService uploadPicture is end. result is {}", jsonObject);
+        HBaseResult hBaseResult = JsonResultUtil.jsonToBean(jsonObject, HBaseResult.class);
+        if (hBaseResult.isSuccess()) {
+            log.debug("file path is {}", hBaseResult.getData());
+            student.setPicUrl(hBaseResult.getData().toString());
             student.setCreateId("");
-            student.setUpdateId("");
             studentService.save(student);
         }
-        return Result.success();
+        return Result.error();
     }
 
-    @ResponseBody
+    @RequestMapping(value = "testConn", method = RequestMethod.POST)
+    public Result testConn(int connTime) {
+        long startTime = System.currentTimeMillis();
+        JSONObject jsonObject = pictureFeignService.testConn(connTime);
+        long endTime = System.currentTimeMillis();
+        HBaseResult hBaseResult = JsonResultUtil.jsonToBean(jsonObject, HBaseResult.class);
+        if (hBaseResult.isSuccess()) {
+            return Result.success("结果：".concat(hBaseResult.getMessage()).concat("所用毫秒：").concat(String.valueOf(endTime - startTime)).concat("ms"));
+        }
+        return Result.error("结果：".concat(hBaseResult.getMessage()).concat("所用毫秒：").concat(String.valueOf(endTime - startTime)).concat("ms"));
+    }
+
     @RequestMapping(value = "setStudent", method = RequestMethod.POST)
     public Result setStudent(StudentVo student) {
         return Result.success();
     }
 
-    @ResponseBody
     @RequestMapping(value = "delStudent/{pkStuId}", method = RequestMethod.POST)
     public Result delStudent(@PathVariable("pkStuId") String pkStuId) {
         return Result.success();
     }
 
-    @ResponseBody
     @RequestMapping(value = "delStudents", method = RequestMethod.POST)
     public Result delStudents(String[] pkStuIds) {
         return Result.success();

@@ -1,6 +1,11 @@
 spring:
   application:
     name: teaching-hbase-client
+  jackson:
+      date-format: yyyy-MM-dd HH:mm:ss
+      time-zone: GMT+8
+      serialization:
+        WRITE_DATES_AS_TIMESTAMPS: false
 
 server:
   port: 9000
@@ -22,6 +27,6 @@ eureka:
 
 ---
 HBase:
-  nodes: 192.168.0.108
-#  nodes: 192.168.1.214
+#  nodes: 192.168.0.108
+  nodes: 192.168.1.214
   maxSize: 524288000

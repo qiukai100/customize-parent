@@ -1,6 +1,7 @@
 package com.customize.hbase.controller;
 
 import com.customize.hbase.constants.ColumnFamilyType;
+import com.customize.hbase.modules.Result;
 import com.customize.hbase.service.HBaseService;
 import com.customize.hbase.utils.PictureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,32 +24,39 @@ public class PictureController {
         this.hBaseService = hBaseService;
     }
 
-    @ResponseBody
     @RequestMapping(value = "uploadPicture", method = RequestMethod.POST)
-    public String uploadPicture(@RequestParam String tableName, @RequestParam String rowKey,
+    public Result uploadPicture(@RequestParam String tableName, @RequestParam String rowKey,
                                 @RequestParam String columnName, @RequestParam MultipartFile photoFile) {
-        List<String> columns = Collections.singletonList(columnName);
-        List<byte[]> values = null;
         try {
-            values = Collections.singletonList(photoFile.getBytes());
+            List<String> columns = Collections.singletonList(columnName);
+            List<byte[]> values = Collections.singletonList(photoFile.getBytes());
+            if (hBaseService.putData(tableName, rowKey, ColumnFamilyType.IMAGE.name(),
+                    columns, values)) {
+                return Result.success(PictureUtil.pathToUrl(tableName, rowKey, columnName));
+            }
         } catch (IOException e) {
             e.printStackTrace();
+            return Result.error(e.getMessage());
         }
-//        hBaseService.creatTable(tableName, Collections.singletonList(ColumnFamilyType.IMAGE.name()));
-        boolean isSucc = hBaseService.putData(tableName, rowKey, ColumnFamilyType.IMAGE.name(),
-                columns, values);
-        if (isSucc) {
-            return PictureUtil.pathToUrl(tableName, rowKey, columnName);
-        }
-        return null;
+        return Result.error();
     }
 
-    @ResponseBody
     @RequestMapping(value = "uploadPictures", method = RequestMethod.POST)
     public List<String> uploadPictures(@RequestParam String[] tableNames, @RequestParam String[] rowKeys,
                                  @RequestParam String[] columnNames, @RequestParam MultipartFile[] photoFiles) {
         System.out.println(photoFiles.length);
         // TODO 暂无策略
         return new ArrayList<>();
+    }
+
+    @RequestMapping(value = "testConn", method = RequestMethod.POST)
+    public Result testConn(int connTime) {
+        try {
+            Thread.sleep(connTime);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            Result.error();
+        }
+        return Result.success();
     }
 }
