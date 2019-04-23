@@ -20,12 +20,12 @@ public class PictureFeignFallback implements FallbackFactory<PictureFeignService
             }
 
             @Override
-            public String uploadPictures(String[] tableNames, String[] rowKeys, String[] columnNames, MultipartFile[] photoFiles) {
-                return null;
+            public JSONObject uploadPictureMini(String tableName, String rowKey, String columnName, String photoFile) {
+                return JsonResultUtil.beanToJson(HBaseResult.error(throwable.getMessage()));
             }
 
             @Override
-            public JSONObject testConn(int connTime) {
+            public JSONObject getPicture(String tableName, String rowKey, String columnFamily, String columnName) {
                 return JsonResultUtil.beanToJson(HBaseResult.error(throwable.getMessage()));
             }
         };

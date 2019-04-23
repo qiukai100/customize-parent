@@ -1,7 +1,10 @@
 package com.customize.hbase.utils;
 
 import com.customize.hbase.constants.ColumnFamilyType;
-import com.customize.hbase.domain.vo.DataVo;
+import org.apache.commons.io.IOUtils;
+import sun.misc.BASE64Encoder;
+
+import java.io.FileInputStream;
 
 public class PictureUtil {
 
@@ -12,8 +15,8 @@ public class PictureUtil {
      * 根据图片数据路径转换为图片自定义url
      * 1、表名/主键（行键）/image（列族）/列名
      *
-     * @param tableName 表名
-     * @param rowKey 行键
+     * @param tableName  表名
+     * @param rowKey     行键
      * @param columnName 列名
      * @return
      */
@@ -21,20 +24,28 @@ public class PictureUtil {
         return tableName.concat(ID_BLOCK).concat(rowKey).concat(ID_BLOCK).concat(ColumnFamilyType.IMAGE.name()).concat(ID_BLOCK).concat(columnName);
     }
 
+
     /**
-     * 根据图片自定义url得到图片路径
-     *
-     * @param picUrl 自定义url
+     * 文件流转byte
+     * @param fileInputStream 文件流
+     * @param length 长度
      * @return
      */
-    public static DataVo urlToPath(String picUrl) {
-        String[] paths = picUrl.split(ID_BLOCK);
-        DataVo vo = new DataVo();
-        vo.setTableName(paths[0]);
-        vo.setRowKey(paths[1]);
-        String[] cols = paths[2].split(":");
-        vo.setColumnFamily(cols[0]);
-        vo.setColumnName(cols[1]);
-        return vo;
+    public static String getFileByte(FileInputStream fileInputStream, int length) {
+        String fileStr = "";
+        try {
+            byte[] bytes = new byte[length];
+            int len = 0;
+            while (len != -1) {
+                len = fileInputStream.read(bytes);
+            }
+            BASE64Encoder be = new BASE64Encoder();
+            fileStr = be.encode(bytes);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            IOUtils.closeQuietly(fileInputStream);
+        }
+        return fileStr;
     }
 }

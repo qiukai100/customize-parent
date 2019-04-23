@@ -480,6 +480,36 @@ public class HBaseService {
         }
     }
 
+    public boolean putData(String tableName, String rowKey, String familyName, String column, String value) {
+        if (!createTable(tableName, Collections.singletonList(familyName)))
+            return false;
+        // 获取表
+        Table table = null;
+        try {
+            table = getTable(tableName);
+            //设置rowkey
+            Put put = new Put(Bytes.toBytes(rowKey));
+
+            if (column != null && value != null) {
+                put.addColumn(Bytes.toBytes(familyName), Bytes.toBytes(column), Bytes.toBytes(value));
+            } else {
+                throw new NullPointerException(MessageFormat.format("列名和列数据都不能为空,column:{0},value:{1}"
+                        , column, value));
+            }
+
+            table.put(put);
+            log.debug("putData add or update data Success,rowKey:" + rowKey);
+            table.close();
+            return true;
+        } catch (Exception e) {
+            log.error(MessageFormat.format("为表添加 or 更新数据失败,tableName:{0},rowKey:{1},familyName:{2}"
+                    , tableName, rowKey, familyName), e);
+            return false;
+        } finally {
+            close(null, null, table);
+        }
+    }
+
     public boolean putData(String tableName, String rowKey, String familyName, List<String> columns, List<byte[]> values) {
         if (!createTable(tableName, Collections.singletonList(familyName)))
             return false;

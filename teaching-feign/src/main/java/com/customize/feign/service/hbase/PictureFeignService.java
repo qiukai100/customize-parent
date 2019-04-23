@@ -26,10 +26,19 @@ public interface PictureFeignService {
     JSONObject uploadPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey, @RequestParam("columnName") String columnName,
                              @RequestPart MultipartFile photoFile);
 
-    @RequestMapping(value = "/uploadPictures", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    String uploadPictures(@RequestParam("tableNames") String[] tableNames, @RequestParam("rowKeys") String[] rowKeys,
-                          @RequestParam("columnNames") String[] columnNames, @RequestPart MultipartFile[] photoFiles);
+    /**
+     * 图片上传
+     * @param tableName
+     * @param rowKey
+     * @param columnName
+     * @param photoFile
+     * @return
+     */
+    @RequestMapping(value = "/uploadPictureMini", method = RequestMethod.POST)
+    JSONObject uploadPictureMini(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey, @RequestParam("columnName") String columnName,
+                             @RequestParam("photoFile") String photoFile);
 
-    @RequestMapping(value = "/testConn", method = RequestMethod.POST)
-    JSONObject testConn(@RequestParam("connTime") int connTime);
+    @RequestMapping(value = "getPicture", method = RequestMethod.POST)
+    JSONObject getPicture(@RequestParam("tableName") String tableName, @RequestParam("rowKey") String rowKey,
+                          @RequestParam("columnFamily") String columnFamily, @RequestParam("columnName") String columnName);
 }

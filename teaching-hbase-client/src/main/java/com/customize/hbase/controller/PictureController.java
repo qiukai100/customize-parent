@@ -7,11 +7,7 @@ import com.customize.hbase.utils.PictureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import sun.misc.BASE64Encoder;
 
 @RestController
 @RequestMapping("picture")
@@ -28,35 +24,49 @@ public class PictureController {
     public Result uploadPicture(@RequestParam String tableName, @RequestParam String rowKey,
                                 @RequestParam String columnName, @RequestParam MultipartFile photoFile) {
         try {
-            List<String> columns = Collections.singletonList(columnName);
-            List<byte[]> values = Collections.singletonList(photoFile.getBytes());
+            byte[] bytes = photoFile.getBytes();
+            BASE64Encoder encoder = new BASE64Encoder();
+            String value = encoder.encode(bytes);
             if (hBaseService.putData(tableName, rowKey, ColumnFamilyType.IMAGE.name(),
-                    columns, values)) {
-                return Result.success(PictureUtil.pathToUrl(tableName, rowKey, columnName));
+                    columnName, value)) {
+                String url = PictureUtil.pathToUrl(tableName, rowKey, columnName);
+                return Result.success(url);
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return Result.error(e.getMessage());
         }
         return Result.error();
     }
 
-    @RequestMapping(value = "uploadPictures", method = RequestMethod.POST)
-    public List<String> uploadPictures(@RequestParam String[] tableNames, @RequestParam String[] rowKeys,
-                                 @RequestParam String[] columnNames, @RequestParam MultipartFile[] photoFiles) {
-        System.out.println(photoFiles.length);
-        // TODO 暂无策略
-        return new ArrayList<>();
+    @RequestMapping(value = "uploadPictureMini", method = RequestMethod.POST)
+    public Result uploadPictureMini(@RequestParam String tableName, @RequestParam String rowKey,
+                                @RequestParam String columnName, @RequestParam String photoFile) {
+        try {
+            if (hBaseService.putData(tableName, rowKey, ColumnFamilyType.IMAGE.name(),
+                    columnName, photoFile)) {
+                String url = PictureUtil.pathToUrl(tableName, rowKey, columnName);
+                return Result.success(url);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return Result.error(e.getMessage());
+        }
+        return Result.error();
     }
 
-    @RequestMapping(value = "testConn", method = RequestMethod.POST)
-    public Result testConn(int connTime) {
+    @RequestMapping(value = "getPicture", method = RequestMethod.POST)
+    public Result getPicture(@RequestParam String tableName, @RequestParam String rowKey,
+                             @RequestParam String columnFamily, @RequestParam String columnName) {
         try {
-            Thread.sleep(connTime);
-        } catch (InterruptedException e) {
+            String picture = hBaseService.getColumnValue(tableName, rowKey, columnFamily, columnName);
+            if (picture != null && picture.length() != 0) {
+                return Result.success(picture);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
-            Result.error();
+            return Result.error(e.getMessage());
         }
-        return Result.success();
+        return Result.error();
     }
 }

@@ -1,5 +1,10 @@
 package com.customize.web.manage.controller;
 
+import cn.hutool.core.codec.Base64Decoder;
+import cn.hutool.core.codec.Base64Encoder;
+import cn.hutool.core.img.Img;
+import cn.hutool.core.img.ImgUtil;
+import cn.hutool.core.util.ImageUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.customize.common.utils.RandomUtil;
 import com.customize.common.utils.UUIDUtil;
@@ -18,7 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
+import java.io.IOException;
 
 @Slf4j
 @RestController
@@ -41,12 +46,6 @@ public class StudentController extends BaseController {
         return Result.success(list);
     }
 
-    @RequestMapping(value = "selectAll", method = RequestMethod.GET)
-    public Result selectAll() {
-        List<Student> list = studentService.selectAll();
-        return Result.success(list);
-    }
-
     @RequestMapping(value = "addStudent", method = RequestMethod.POST)
     public Result addStudent(Student student, MultipartFile photoFile) {
         student.setPkStuId(UUIDUtil.randomUUID());
@@ -55,7 +54,25 @@ public class StudentController extends BaseController {
         if (!VerifyUtil.vailIsPass(vailMsg) || photoFile == null) {
             return Result.error(vailMsg);
         }
-        JSONObject jsonObject = pictureFeignService.uploadPicture("tb_student", student.getPkStuId(), "pic", photoFile);
+        String fileName = photoFile.getOriginalFilename();
+        String fileType;
+        if (fileName == null) {
+            fileType = ImgUtil.IMAGE_TYPE_JPG;
+        } else {
+            fileType = fileName.substring(fileName.lastIndexOf(".") + 1);
+        }
+        JSONObject jsonObject;
+        try {
+            byte[] bytes = photoFile.getBytes();
+            String file = Base64Encoder.encode(bytes);
+            jsonObject = pictureFeignService.uploadPictureMini("tb_student", student.getPkStuId(), fileType, file);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return Result.error();
+        }
+        if (jsonObject == null) {
+            return Result.error();
+        }
         log.debug("pictureFeignService uploadPicture is end. result is {}", jsonObject);
         HBaseResult hBaseResult = JsonResultUtil.jsonToBean(jsonObject, HBaseResult.class);
         if (hBaseResult.isSuccess()) {
@@ -63,34 +80,9 @@ public class StudentController extends BaseController {
             student.setPicUrl(hBaseResult.getData().toString());
             student.setCreateId("");
             studentService.save(student);
+            return Result.success();
         }
         return Result.error();
     }
 
-    @RequestMapping(value = "testConn", method = RequestMethod.POST)
-    public Result testConn(int connTime) {
-        long startTime = System.currentTimeMillis();
-        JSONObject jsonObject = pictureFeignService.testConn(connTime);
-        long endTime = System.currentTimeMillis();
-        HBaseResult hBaseResult = JsonResultUtil.jsonToBean(jsonObject, HBaseResult.class);
-        if (hBaseResult.isSuccess()) {
-            return Result.success("结果：".concat(hBaseResult.getMessage()).concat("所用毫秒：").concat(String.valueOf(endTime - startTime)).concat("ms"));
-        }
-        return Result.error("结果：".concat(hBaseResult.getMessage()).concat("所用毫秒：").concat(String.valueOf(endTime - startTime)).concat("ms"));
-    }
-
-    @RequestMapping(value = "setStudent", method = RequestMethod.POST)
-    public Result setStudent(StudentVo student) {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "delStudent/{pkStuId}", method = RequestMethod.POST)
-    public Result delStudent(@PathVariable("pkStuId") String pkStuId) {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "delStudents", method = RequestMethod.POST)
-    public Result delStudents(String[] pkStuIds) {
-        return Result.success();
-    }
 }
