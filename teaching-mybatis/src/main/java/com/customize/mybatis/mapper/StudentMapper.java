@@ -1,7 +1,7 @@
 package com.customize.mybatis.mapper;
 
 import com.customize.mybatis.core.BaseMapper;
-import com.customize.domain.entity.Student;
+import com.customize.domain.entity.tb.Student;
 
 import java.util.List;
 

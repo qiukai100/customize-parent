@@ -1,4 +1,4 @@
-package com.customize.domain.entity;
+package com.customize.domain.entity.tb;
 
 import com.customize.domain.core.BaseEntity;
 import lombok.Getter;
@@ -22,7 +22,7 @@ public class Grade extends BaseEntity {
     @Column(name = "grade_name", nullable = false, columnDefinition = "VARCHAR(8) COMMENT '年级名称'")
     private String gradeName;
 
-    @Column(name = "level", nullable = false, unique = true, columnDefinition = "TINYINT(1) COMMENT '等级（等级越小，年级越小）'")
+    @Column(name = "level", nullable = false, columnDefinition = "TINYINT(1) COMMENT '等级（等级越小，年级越小）'")
     private Integer level;
 
 }

@@ -49,6 +49,7 @@
         <hadoop.version>2.5.0.RELEASE</hadoop.version>
         <openfeign.version>2.1.1.RELEASE</openfeign.version>
         <fileupload.version>1.4</fileupload.version>
+        <shiro.version>1.4.0</shiro.version>
     </properties>
 
     <dependencyManagement>

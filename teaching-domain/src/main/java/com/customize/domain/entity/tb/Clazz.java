@@ -1,4 +1,4 @@
-package com.customize.domain.entity;
+package com.customize.domain.entity.tb;
 
 import com.customize.domain.core.BaseEntity;
 import lombok.Getter;

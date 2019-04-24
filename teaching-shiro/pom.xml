@@ -11,5 +11,24 @@
 
     <artifactId>teaching-shiro</artifactId>
 
+    <dependencies>
+        <!-- 依赖包 -->
+        <dependency>
+            <groupId>com.customize</groupId>
+            <artifactId>teaching-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.customize</groupId>
+            <artifactId>teaching-domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-spring</artifactId>
+            <version>${shiro.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

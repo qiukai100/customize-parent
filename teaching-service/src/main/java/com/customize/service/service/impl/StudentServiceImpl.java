@@ -1,7 +1,7 @@
 package com.customize.service.service.impl;
 
 import com.customize.service.core.BaseServiceImpl;
-import com.customize.domain.entity.Student;
+import com.customize.domain.entity.tb.Student;
 import com.customize.mybatis.mapper.StudentMapper;
 import com.customize.jpa.repository.StudentRepository;
 import com.customize.service.service.StudentService;

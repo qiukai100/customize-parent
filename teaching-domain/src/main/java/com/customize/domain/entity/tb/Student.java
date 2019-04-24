@@ -1,4 +1,4 @@
-package com.customize.domain.entity;
+package com.customize.domain.entity.tb;
 
 import com.customize.common.annotations.CustVerify;
 import com.customize.common.constants.VerifyTypeEnum;

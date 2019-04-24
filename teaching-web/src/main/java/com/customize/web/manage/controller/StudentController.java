@@ -4,12 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.customize.common.utils.RandomUtil;
 import com.customize.common.utils.UUIDUtil;
 import com.customize.common.utils.VerifyUtil;
-import com.customize.domain.vo.StudentVo;
 import com.customize.feign.modules.HBaseResult;
 import com.customize.feign.utils.JsonResultUtil;
 import com.customize.web.core.BaseController;
 import com.customize.component.modules.Result;
-import com.customize.domain.entity.Student;
+import com.customize.domain.entity.tb.Student;
 import com.customize.service.service.StudentService;
 import com.github.pagehelper.Page;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ public class StudentController extends BaseController {
     }
 
     @RequestMapping(value = "queryStudentPage", method = RequestMethod.GET)
-    public Result queryStudentPage(StudentVo student,
+    public Result queryStudentPage(Student student,
                                    @RequestParam(defaultValue = "0") Integer pageNum, @RequestParam(defaultValue = "20") Integer pageSize) {
         Page<Student> list = studentService.queryStudentPage(student, pageNum, pageSize);
         return Result.success(list);
