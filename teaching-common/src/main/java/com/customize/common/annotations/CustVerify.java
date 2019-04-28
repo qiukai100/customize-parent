@@ -10,7 +10,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自定义验证字段注解
+ * 验证字段注解
  */
 @Target(ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
