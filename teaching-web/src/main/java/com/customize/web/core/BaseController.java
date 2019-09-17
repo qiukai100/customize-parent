@@ -3,11 +3,17 @@ package com.customize.web.core;
 import cn.hutool.core.codec.Base64Encoder;
 import cn.hutool.core.img.ImgUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.customize.common.utils.DateUtils;
 import com.customize.feign.service.hbase.PictureFeignService;
 import com.customize.redis.server.RedisServer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.beans.PropertyEditorSupport;
+import java.util.Date;
 
 public abstract class BaseController {
 
@@ -19,6 +25,20 @@ public abstract class BaseController {
 
     @Value("${server.max-http-header-size}")
     private long maxHttpHeaderSize;
+
+    /**
+     * 将前台传递过来的日期格式的字符串，自动转化为Date类型
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        // Date 类型转换
+        binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
+            @Override
+            public void setAsText(String text) {
+                setValue(DateUtils.parseDate(text));
+            }
+        });
+    }
 
     /**
      * 超出请求头限制大小采用大图片上传，否则小图片上传

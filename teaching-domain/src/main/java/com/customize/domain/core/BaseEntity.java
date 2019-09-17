@@ -15,6 +15,8 @@ import java.util.Date;
 @MappedSuperclass
 public abstract class BaseEntity implements Serializable {
 
+    private static final long serialVersionUID = 1L;
+
     @Column(name = "create_time", nullable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间'")
     private Date createTime;
 

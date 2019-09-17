@@ -18,6 +18,7 @@
         <module>teaching-mqtt</module>
         <module>teaching-eureka-server</module>
         <module>teaching-feign</module>
+        <module>teaching-generator-client</module>
     </modules>
 
     <groupId>com.customize</groupId>
@@ -50,6 +51,8 @@
         <openfeign.version>2.1.1.RELEASE</openfeign.version>
         <fileupload.version>1.4</fileupload.version>
         <shiro.version>1.4.0</shiro.version>
+        <velocity.version>1.7</velocity.version>
+        <commons.io.version>2.5</commons.io.version>
     </properties>
 
     <dependencyManagement>
