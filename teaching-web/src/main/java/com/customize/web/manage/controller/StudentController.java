@@ -1,9 +1,9 @@
 package com.customize.web.manage.controller;
 
 import com.alibaba.fastjson.JSONObject;
-import com.customize.common.utils.RandomUtil;
-import com.customize.common.utils.UUIDUtil;
-import com.customize.common.utils.VerifyUtil;
+import com.customize.common.utils.system.RandomUtil;
+import com.customize.common.utils.system.UUIDUtil;
+import com.customize.common.utils.system.VerifyUtil;
 import com.customize.feign.modules.HBaseResult;
 import com.customize.feign.utils.JsonResultUtil;
 import com.customize.web.core.BaseController;

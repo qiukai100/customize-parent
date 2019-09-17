@@ -34,7 +34,7 @@ server_common:
   centos_ip: 192.168.1.214
   localhost: 127.0.0.1
   # 通用IP，其他配置均引入这里
-  ip: ${server_common.centos_ip}
+  ip: ${server_common.localhost}
 
 redis_db:
   ip: ${server_common.ip}

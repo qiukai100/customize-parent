@@ -1,4 +1,4 @@
-package com.customize.common.utils;
+package com.customize.common.utils.system;
 
 
 import cn.hutool.core.bean.BeanUtil;
