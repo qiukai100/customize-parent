@@ -9,6 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>teaching-common</artifactId>
+    <description>通用工具类</description>
 
     <dependencies>
         <!--hutool工具-->

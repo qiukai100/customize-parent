@@ -9,6 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>teaching-web</artifactId>
+    <description>视图层</description>
     <packaging>jar</packaging>
 
     <dependencies>

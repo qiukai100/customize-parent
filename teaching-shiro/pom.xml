@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <description>shiro服务</description>
     <artifactId>teaching-shiro</artifactId>
 
     <dependencies>

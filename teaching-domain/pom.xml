@@ -8,6 +8,7 @@
         <groupId>com.customize</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <description>实体类</description>
     <artifactId>teaching-domain</artifactId>
     <packaging>jar</packaging>
 
