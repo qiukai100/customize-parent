@@ -8,6 +8,7 @@
         <module>customize-eureka-server</module>
         <module>customize-generator-server</module>
         <module>customize-manage-server</module>
+        <module>customize-redis-server</module>
     </modules>
 
     <groupId>com.customize</groupId>

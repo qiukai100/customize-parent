@@ -1,0 +1,9 @@
+--- # redis 连接设置
+redis_db:
+  database: 0
+  ip: 127.0.0.1
+  port: 6379
+  password: 123456
+
+--- # eureka 连接设置
+eureka_server_url: http://127.0.0.1:8761/eureka/

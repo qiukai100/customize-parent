@@ -1,0 +1,13 @@
+--- redis 配置
+spring:
+  redis:
+    database: ${redis_db.database}
+    host: ${redis_db.ip}
+    port: ${redis_db.port}
+    password: ${redis_db.password}
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+        max-wait: -1s
+        min-idle: 0

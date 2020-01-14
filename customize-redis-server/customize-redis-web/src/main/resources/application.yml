@@ -1,0 +1,41 @@
+--- # spring boot 基本配置
+spring:
+  application:
+    name: customize-redis
+  profiles:
+    active: dev
+    include:
+      - redis
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  messages:
+    basename: i18n/messages
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+--- # 内置 tomcat 配置
+server:
+  port: 8001
+  servlet:
+    context-path: /customize-redis
+    session:
+      timeout: 60s
+  tomcat:
+    uri-encoding: utf-8
+    max-threads: 1000
+  # 16 * 1024
+  max-http-header-size: 16384
+
+--- # eureka 配置
+eureka:
+  client:
+    service-url:
+      defaultZone: ${eureka_server_url}
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
