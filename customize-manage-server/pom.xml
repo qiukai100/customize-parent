@@ -7,6 +7,16 @@
         <groupId>com.customize</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
+    <modules>
+        <module>customize-component</module>
+        <module>customize-domain</module>
+        <module>customize-feign</module>
+        <module>customize-jpa</module>
+        <module>customize-mybatis</module>
+        <module>customize-redis</module>
+        <module>customize-service</module>
+        <module>customize-web</module>
+    </modules>
     <artifactId>customize-manage-server</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>customize-manage-server</name>

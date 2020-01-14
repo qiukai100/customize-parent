@@ -3,17 +3,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>customize-web</module>
-        <module>customize-service</module>
-        <module>customize-domain</module>
         <module>customize-common</module>
-        <module>customize-component</module>
-        <module>customize-jpa</module>
-        <module>customize-redis</module>
-        <module>customize-mybatis</module>
         <module>customize-hbase-server</module>
         <module>customize-eureka-server</module>
-        <module>customize-feign</module>
         <module>customize-generator-server</module>
         <module>customize-manage-server</module>
     </modules>
