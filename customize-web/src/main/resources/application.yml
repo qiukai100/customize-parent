@@ -1,0 +1,49 @@
+spring:
+  application:
+    name: customize-web
+  profiles:
+    active: dev
+    include:
+      - druid
+      - mybatis
+      - redis
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  messages:
+    basename: i18n/messages
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
+eureka:
+  instance:
+    preferIpAddress: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+
+# 设置微服务调用时的连接超时时间
+feign_conn_time: 60000
+
+feign:
+  httpclient:
+    connection-timeout: ${feign_conn_time}
+  hystrix:
+    enabled: true
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: ${feign_conn_time}
+
+ribbon:
+  ReadTimeout: ${feign_conn_time}
+  ConnectTimeout: ${feign_conn_time}
+
+---
+logging:
+  config: classpath:log4j2.yml

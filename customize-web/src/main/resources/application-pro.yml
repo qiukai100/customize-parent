@@ -1,0 +1,37 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /customize
+    session:
+      timeout: 60s
+  tomcat:
+    uri-encoding: utf-8
+    max-threads: 1000
+  # 16 * 1024
+  max-http-header-size: 16384
+
+---
+eureka:
+  client:
+    service-url:
+      defaultZone: http://127.0.0.1:8761/eureka/
+#      defaultZone: http://eureka.didispace.com/eureka/
+
+---
+server_common:
+  centos_ip: 192.168.0.108
+  iphone_ip: 172.20.10.5
+  localhost: 127.0.0.1
+  # 通用IP，其他配置均引入这里
+  ip: ${server_common.centos_ip}
+
+redis_db:
+  ip: ${server_common.ip}
+  port: 6379
+  password: 123456
+
+
+mysql_db:
+  url: jdbc:mysql://${server_common.ip}:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  username: teaching
+  password: 123456
