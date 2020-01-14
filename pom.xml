@@ -3,29 +3,26 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <modules>
-        <module>teaching-web</module>
-        <module>teaching-service</module>
-        <module>teaching-domain</module>
-        <module>teaching-common</module>
-        <module>teaching-component</module>
-        <module>teaching-jpa</module>
-        <module>teaching-redis</module>
-        <module>teaching-mybatis</module>
-        <module>teaching-hbase-client</module>
-        <module>teaching-mongodb</module>
-        <module>teaching-shiro</module>
-        <module>teaching-activity</module>
-        <module>teaching-mqtt</module>
-        <module>teaching-eureka-server</module>
-        <module>teaching-feign</module>
-        <module>teaching-generator-client</module>
+        <module>customize-web</module>
+        <module>customize-service</module>
+        <module>customize-domain</module>
+        <module>customize-common</module>
+        <module>customize-component</module>
+        <module>customize-jpa</module>
+        <module>customize-redis</module>
+        <module>customize-mybatis</module>
+        <module>customize-hbase-server</module>
+        <module>customize-eureka-server</module>
+        <module>customize-feign</module>
+        <module>customize-generator-server</module>
+        <module>customize-manage-server</module>
     </modules>
 
     <groupId>com.customize</groupId>
-    <artifactId>teaching-parent</artifactId>
+    <artifactId>customize-parent</artifactId>
     <packaging>pom</packaging>
     <version>0.0.1-SNAPSHOT</version>
-    <name>teaching-parent</name>
+    <name>customize-parent</name>
 
     <properties>
         <java.version>1.8</java.version>
