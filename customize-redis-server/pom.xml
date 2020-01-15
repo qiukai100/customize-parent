@@ -12,7 +12,7 @@
         <module>customize-redis-service</module>
     </modules>
     <artifactId>customize-redis-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${customize.module.version}</version>
     <name>customize-redis-server</name>
     <description>redis服务</description>
 

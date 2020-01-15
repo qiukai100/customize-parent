@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>customize-redis-service</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${customize.module.version}</version>
     <name>customize-redis-service</name>
     <description>redis业务层</description>
 
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.customize</groupId>
             <artifactId>customize-common</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${customize.module.version}</version>
         </dependency>
     </dependencies>
 

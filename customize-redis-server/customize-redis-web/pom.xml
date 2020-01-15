@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>customize-redis-web</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${customize.module.version}</version>
     <name>customize-redis-web</name>
     <description>redis视图层</description>
 
@@ -29,7 +29,7 @@
         <dependency>
             <groupId>com.customize</groupId>
             <artifactId>customize-redis-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <version>${customize.module.version}</version>
         </dependency>
     </dependencies>
 
