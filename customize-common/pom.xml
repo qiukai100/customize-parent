@@ -9,7 +9,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>customize-common</artifactId>
-    <version>${customize.module.version}</version>
+    <version>${project.parent.version}</version>
     <name>customize-common</name>
     <description>通用工具类</description>
 
@@ -39,6 +39,13 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- google guava工具包 -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
     </dependencies>
 </project>

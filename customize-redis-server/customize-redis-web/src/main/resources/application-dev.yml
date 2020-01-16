@@ -1,4 +1,4 @@
---- # redis 连接设置
+# redis 基本设置
 redis_db:
   database: 0
   ip: 127.0.0.1

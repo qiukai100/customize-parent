@@ -8,7 +8,7 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>customize-redis-service</artifactId>
-    <version>${customize.module.version}</version>
+    <version>${project.parent.version}</version>
     <name>customize-redis-service</name>
     <description>redis业务层</description>
 
@@ -24,11 +24,11 @@
             <version>${jedis.version}</version>
         </dependency>
 
-        <!-- 项目依赖 -->
+        <!-- 其他模块依赖 -->
         <dependency>
             <groupId>com.customize</groupId>
-            <artifactId>customize-common</artifactId>
-            <version>${customize.module.version}</version>
+            <artifactId>customize-redis-domain</artifactId>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 

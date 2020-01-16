@@ -8,28 +8,45 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <artifactId>customize-redis-web</artifactId>
-    <version>${customize.module.version}</version>
+    <version>${project.parent.version}</version>
+    <packaging>jar</packaging>
     <name>customize-redis-web</name>
     <description>redis视图层</description>
 
     <dependencies>
-        <!-- spring boot + mvc -->
+        <!-- spring boot + mvc 过滤自带的logback -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
-        <!-- spring cloud 全家桶 -->
+        <!-- 配置 log4j2 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-log4j2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-yaml</artifactId>
+        </dependency>
+
+        <!-- spring cloud 客户端 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
         </dependency>
 
         <!-- 项目依赖 -->
         <dependency>
             <groupId>com.customize</groupId>
             <artifactId>customize-redis-service</artifactId>
-            <version>${customize.module.version}</version>
+            <version>${project.parent.version}</version>
         </dependency>
     </dependencies>
 

@@ -55,4 +55,8 @@ public class CommonResult {
     public static CommonResult error(String msg) {
         return new CommonResult(fail, ResultCodeEnum.ERROR.name(), msg, null);
     }
+
+    public static CommonResult error(String code, String msg) {
+        return new CommonResult(fail, code, msg, null);
+    }
 }

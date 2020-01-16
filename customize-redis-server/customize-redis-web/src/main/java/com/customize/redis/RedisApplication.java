@@ -1,9 +1,11 @@
 package com.customize.redis;
 
 import org.springframework.boot.SpringApplication;
-import org.springframework.cloud.client.SpringCloudApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
-@SpringCloudApplication
+@EnableEurekaClient
+@SpringBootApplication
 public class RedisApplication {
 
     public static void main(String[] args) {

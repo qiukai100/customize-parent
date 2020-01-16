@@ -1,4 +1,3 @@
---- redis 配置
 spring:
   redis:
     database: ${redis_db.database}

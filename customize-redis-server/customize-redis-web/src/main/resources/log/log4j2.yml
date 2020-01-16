@@ -1,0 +1,48 @@
+# 日志级别 ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF
+Configuration:
+  status: INFO
+  Properties:
+    Property:
+      - name: pattern
+        value: "%d{yyyy-MM-dd HH:mm:ss.SSS}:%5p [%t] (%c:%L) - %m%n"
+      - name: file_name
+        value: customize_redis_log
+      - name: file_path
+        value: E:\logs\customize_redis_log
+      - name: default_level
+        value: info
+      - name: customize_level
+        value: debug
+  Appenders:
+    Console:
+      name: CONSOLE
+      target: SYSTEM_OUT
+      follow: true
+      PatternLayout:
+        pattern: ${pattern}
+    RollingFile:
+      name: ROLLING_FILE
+      fileName: ${file_path}/${file_name}.log
+      filePattern: ${file_path}/${file_name}_%d{yyyy-MM-dd}_%i.log
+      PatternLayout:
+        pattern: ${pattern}
+      Filters:
+        ThresholdFilter:
+          - level: all
+            onMatch: ACCEPT
+            onMismatch: DENY
+      SizeBasedTriggeringPolicy:
+        size: 50 MB
+
+  Loggers:
+    Root:
+      level: ${default_level}
+      AppenderRef:
+        - ref: CONSOLE
+    logger:
+      - name: com.customize
+        additivity: false
+        level: ${customize_level}
+        AppenderRef:
+          - ref: CONSOLE
+          - ref: ROLLING_FILE
