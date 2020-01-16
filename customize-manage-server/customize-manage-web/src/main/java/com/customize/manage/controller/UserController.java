@@ -1,7 +1,7 @@
 package com.customize.manage.controller;
 
-import com.customize.manage.component.Result;
 import com.customize.manage.core.BaseController;
+import com.customize.manage.core.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

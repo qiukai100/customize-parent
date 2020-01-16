@@ -1,6 +1,6 @@
 package com.customize.manage.controller;
 
-import com.customize.manage.component.Result;
+import com.customize.manage.core.Result;
 import com.customize.manage.entity.sys.Permission;
 import com.customize.manage.service.PermissionService;
 import com.customize.manage.core.BaseController;

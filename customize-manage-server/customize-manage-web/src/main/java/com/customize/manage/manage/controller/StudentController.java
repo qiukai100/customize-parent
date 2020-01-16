@@ -5,7 +5,7 @@ import com.customize.common.component.CommonResult;
 import com.customize.common.utils.system.RandomUtil;
 import com.customize.common.utils.system.UUIDUtil;
 import com.customize.common.utils.system.VerifyUtil;
-import com.customize.manage.component.Result;
+import com.customize.manage.core.Result;
 import com.customize.manage.utils.JsonResultUtil;
 import com.customize.manage.core.BaseController;
 import com.customize.manage.entity.tb.Student;
@@ -16,8 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import static com.customize.manage.component.Result.success;
-import static com.customize.manage.component.Result.error;
+import static com.customize.manage.core.Result.success;
+import static com.customize.manage.core.Result.error;
 
 @Slf4j
 @RestController
