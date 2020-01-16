@@ -1,0 +1,27 @@
+spring:
+  quartz:
+    job-store-type: jdbc
+    properties:
+      org:
+        quartz:
+          scheduler:
+            instanceName: CustomizeScheduler
+            instanceId: AUTO
+            rmi:
+              export: false
+              proxy: false
+          jobStore:
+            class: org.quartz.impl.jdbcjobstore.JobStoreTX
+            driverDelegateClass: org.quartz.impl.jdbcjobstore.StdJDBCDelegate
+            clusterCheckinInterval: 15000
+            tablePrefix: QRTZ_
+            isClustered: true
+            useProperties: false
+            maxMisfiresToHandleAtATime: 1
+            txIsolationLevelSerializable: true
+            misfireThreshold: 12000
+          threadPool:
+            class: org.quartz.simpl.SimpleThreadPool
+            threadCount: 20
+            threadPriority: 5
+            threadsInheritContextClassLoaderOfInitializingThread: true

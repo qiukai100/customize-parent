@@ -13,6 +13,7 @@
         <module>customize-manage-mybatis</module>
         <module>customize-manage-feign</module>
         <module>customize-manage-service</module>
+        <module>customize-manage-quartz</module>
         <module>customize-manage-web</module>
     </modules>
     <artifactId>customize-manage-server</artifactId>

@@ -2,27 +2,29 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
     <parent>
         <artifactId>customize-manage-server</artifactId>
         <groupId>com.customize</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
-    <artifactId>customize-manage-service</artifactId>
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>customize-manage-quartz</artifactId>
     <version>${project.parent.version}</version>
-    <description>业务层</description>
+    <description>定时任务服务</description>
 
     <dependencies>
-        <!--依赖包-->
+        <!-- 项目依赖，且不能传递 -->
         <dependency>
             <groupId>com.customize</groupId>
-            <artifactId>customize-manage-feign</artifactId>
+            <artifactId>customize-manage-service</artifactId>
             <version>${project.parent.version}</version>
+            <optional>true</optional>
         </dependency>
+
+        <!-- quartz 相关 -->
         <dependency>
-            <groupId>com.customize</groupId>
-            <artifactId>customize-manage-mybatis</artifactId>
-            <version>${project.parent.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
     </dependencies>
 </project>
