@@ -2,25 +2,32 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
     <parent>
         <artifactId>customize-parent</artifactId>
         <groupId>com.customize</groupId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modules>
-        <module>customize-component</module>
-        <module>customize-domain</module>
-        <module>customize-feign</module>
-        <module>customize-jpa</module>
-        <module>customize-mybatis</module>
-        <module>customize-redis</module>
-        <module>customize-service</module>
-        <module>customize-web</module>
+        <module>customize-manage-common</module>
+        <module>customize-manage-domain</module>
+        <module>customize-manage-mybatis</module>
+        <module>customize-manage-feign</module>
+        <module>customize-manage-service</module>
+        <module>customize-manage-web</module>
     </modules>
     <artifactId>customize-manage-server</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>${project.parent.version}</version>
     <name>customize-manage-server</name>
     <description>管理服务</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.customize</groupId>
+            <artifactId>customize-common</artifactId>
+            <version>${project.parent.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <plugins>

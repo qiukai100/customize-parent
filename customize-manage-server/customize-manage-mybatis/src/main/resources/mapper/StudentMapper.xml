@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.manage.mapper.StudentMapper">
+
+    <resultMap id="BaseResultMap" type="com.customize.manage.entity.tb.Student"
+               extends="com.customize.manage.core.BaseMapper.BaseResultMap">
+        <id column="pk_stu_id" jdbcType="VARCHAR" property="pkStuId"/>
+        <result column="stu_no" jdbcType="INTEGER" property="stuNo"/>
+        <result column="name" jdbcType="VARCHAR" property="name"/>
+        <result column="sex" jdbcType="TINYINT" property="sex"/>
+        <result column="pic_url" jdbcType="VARCHAR" property="picUrl"/>
+        <result column="born_date" jdbcType="TIMESTAMP" property="bornDate"/>
+        <result column="enter_school_date" jdbcType="TIMESTAMP" property="enterSchoolDate"/>
+        <result column="leave_school_date" jdbcType="TIMESTAMP" property="leaveSchoolDate"/>
+        <result column="id_card" jdbcType="VARCHAR" property="idCard"/>
+        <result column="home_address" jdbcType="VARCHAR" property="homeAddress"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        pk_stu_id, stu_no, name, sex, pic_url, born_date, enter_school_date, leave_school_date, id_card, home_address,
+        <include refid="com.customize.manage.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <select id="queryStudentPage" resultMap="BaseResultMap">
+        select <include refid="Base_Column_List"/> from tb_student
+        <where>
+            is_delete = 0
+            <if test="sex != null">
+                and sex = #{sex}
+            </if>
+            <if test="stuNo != null and stuNo != ''">
+                and stu_no like concat('%', #{stuNo}, '%')
+            </if>
+            <if test="name != null and name != ''">
+                and name like concat('%', #{name}, '%')
+            </if>
+            <if test="idCard != null and idCard != ''">
+                and id_card like concat('%', #{idCard}, '%')
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+</mapper>

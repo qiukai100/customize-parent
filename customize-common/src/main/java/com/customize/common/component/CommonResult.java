@@ -11,8 +11,8 @@ import lombok.Setter;
 @Setter
 public class CommonResult {
 
-    private static final int success = 0;
-    private static final int fail = -1;
+    protected static final int success = 0;
+    protected static final int fail = -1;
 
     private Integer state;
 
@@ -22,14 +22,14 @@ public class CommonResult {
 
     private Object data;
 
-    private CommonResult(Integer state, ResultCodeEnum resultCodeEnum, Object data) {
+    protected CommonResult(Integer state, ResultCodeEnum resultCodeEnum, Object data) {
         this.state = state;
         this.resultCode = resultCodeEnum.name();
         this.message = resultCodeEnum.getMessage();
         this.data = data;
     }
 
-    private CommonResult(Integer state, String resultCode, String message, Object data) {
+    protected CommonResult(Integer state, String resultCode, String message, Object data) {
         this.state = state;
         this.resultCode = resultCode;
         this.message = message;
@@ -58,5 +58,9 @@ public class CommonResult {
 
     public static CommonResult error(String code, String msg) {
         return new CommonResult(fail, code, msg, null);
+    }
+
+    public boolean isSuccess() {
+        return state != null && state.equals(success);
     }
 }
