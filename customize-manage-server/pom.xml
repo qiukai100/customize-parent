@@ -9,7 +9,6 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
     <modules>
-        <module>customize-manage-common</module>
         <module>customize-manage-domain</module>
         <module>customize-manage-mybatis</module>
         <module>customize-manage-feign</module>
