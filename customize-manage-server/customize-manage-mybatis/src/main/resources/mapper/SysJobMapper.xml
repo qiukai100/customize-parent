@@ -12,7 +12,7 @@
     <resultMap id="DtoResultMap" type="com.customize.manage.dto.SysJobDto"
                extends="BaseResultMap">
         <association property="sysJobType" column="{id=job_type_id}"
-                     select="com.customize.manage.mapper.SysJobTypeMapper.selectByPrimaryKey"/>
+                     select="com.customize.manage.mapper.SysJobTypeMapper.findById"/>
     </resultMap>
 
     <sql id="Base_Column_List">

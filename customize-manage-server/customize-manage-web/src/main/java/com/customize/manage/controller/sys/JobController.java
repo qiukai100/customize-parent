@@ -5,6 +5,7 @@ import com.customize.manage.core.Result;
 import com.customize.manage.entity.sys.SysJob;
 import com.customize.manage.service.SysJobService;
 import lombok.extern.slf4j.Slf4j;
+import org.quartz.SchedulerException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -27,7 +28,7 @@ public class JobController extends BaseController {
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "insertJob")
-    public Result insertJob(SysJob sysJob) {
+    public Result insertJob(SysJob sysJob) throws Exception {
         return success(sysJobService.insertSelective(sysJob));
     }
 

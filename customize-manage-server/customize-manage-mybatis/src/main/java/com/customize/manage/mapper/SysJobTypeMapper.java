@@ -6,6 +6,6 @@ import org.apache.ibatis.annotations.Param;
 
 public interface SysJobTypeMapper extends BaseMapper<SysJobType, String> {
 
-    SysJobType selectByPrimaryKey(@Param("id") String id);
+    SysJobType findById(@Param("id") String id);
 
 }

@@ -14,7 +14,7 @@
       <include refid="com.customize.manage.core.BaseMapper.Base_Column_List" />
     </sql>
 
-    <select id="selectByPrimaryKey" resultMap="BaseResultMap">
+    <select id="findById" resultMap="BaseResultMap">
       select <include refid="Base_Column_List" /> from sys_job_type
         where pk_job_type_id = #{id}
     </select>

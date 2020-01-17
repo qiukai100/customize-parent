@@ -16,20 +16,20 @@ public class JobInvokeUtils {
      *
      * @param source 任务源
      */
-    public static void invokeMethod(TaskSource source) throws Exception {
+    public static Object invokeMethod(TaskSource source) throws Exception {
         Object bean = isValidClassName(source.getBeanName()) ? Class.forName(source.getBeanName()).newInstance() : SpringUtils.getBean(source.getBeanName());
-        invokeMethod(bean, source.getMethodName(), source.getMethodParams());
+        return invokeMethod(bean, source.getMethodName(), source.getMethodParams());
     }
 
-    private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams) throws Exception {
+    private static Object invokeMethod(Object bean, String methodName, List<Object[]> methodParams) throws Exception {
         if (methodParams != null && methodParams.size() > 0) {
             // 调用有参方法，传入参数
             Method method = bean.getClass().getDeclaredMethod(methodName, getMethodParamsType(methodParams));
-            method.invoke(bean, getMethodParamsValue(methodParams));
+            return method.invoke(bean, getMethodParamsValue(methodParams));
         } else {
             // 调用无参方法
             Method method = bean.getClass().getDeclaredMethod(methodName);
-            method.invoke(bean);
+            return method.invoke(bean);
         }
     }
 

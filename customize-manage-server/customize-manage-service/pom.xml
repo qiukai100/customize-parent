@@ -16,6 +16,12 @@
         <!--依赖包-->
         <dependency>
             <groupId>com.customize</groupId>
+            <artifactId>customize-manage-quartz</artifactId>
+            <version>${project.parent.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>com.customize</groupId>
             <artifactId>customize-manage-feign</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
