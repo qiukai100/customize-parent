@@ -8,7 +8,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.scheduling.annotation.EnableAsync;
 
 @EnableAsync
-@MapperScan(basePackages = {"com.customize.manage.mapper"})
+@MapperScan(basePackages = {"com.customize.manage.mapper", "com.customize.manage.core"})
 @EnableFeignClients
 @SpringCloudApplication
 public class WebApplication {

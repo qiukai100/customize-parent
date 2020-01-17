@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="">
-    <resultMap id="BaseResultMap" type="">
-        <id column="" jdbcType="" property=""/>
-        <result column="" jdbcType="" property=""/>
+<mapper namespace="com.customize.manage.mapper.SysJobMapper">
+    <resultMap id="BaseResultMap" type="com.customize.manage.entity.sys.SysJob"
+               extends="com.customize.manage.core.BaseMapper.BaseResultMap">
+        <id column="pk_job_id" jdbcType="VARCHAR" property="pkJobId"/>
+        <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
+        <result column="job_type_id" jdbcType="VARCHAR" property="jobTypeId"/>
+        <result column="cron_expressions" jdbcType="VARCHAR" property="cronExpressions"/>
+    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.manage.dto.SysJobDto"
+               extends="BaseResultMap">
+        <association property="sysJobType" column="{id=job_type_id}"
+                     select="com.customize.manage.mapper.SysJobTypeMapper.selectByPrimaryKey"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-
+        pk_job_id, job_name, job_type_id, cron_expressions,
+        <include refid="com.customize.manage.core.BaseMapper.Base_Column_List" />
     </sql>
 
-    <select id="selectByPrimaryKey" parameterType="" resultMap="BaseResultMap">
-
+    <select id="selectJobList" resultMap="BaseResultMap">
+      select <include refid="Base_Column_List" />
+        from sys_job
+      <where>
+          <if test="sysJob.jobName != null and sysJob.jobName != ''">
+              and job_name like '%'.concat(#{sysJob.jobName}).concat('%')
+          </if>
+          <if test="sysJob.jobTypeId != null and sysJob.jobTypeId != ''">
+              and job_type_id = #{sysJob.jobTypeId}
+          </if>
+      </where>
     </select>
 
-    <insert id="insert" parameterType="">
-
-    </insert>
-
-    <insert id="insertSelective" parameterType="">
-
-    </insert>
-
-    <update id="updateByPrimaryKeySelective" parameterType="">
-
-    </update>
-
-    <update id="updateByPrimaryKey" parameterType="">
-
-    </update>
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" />
+          from sys_job where pk_job_id = #{id}
+    </select>
 </mapper>
