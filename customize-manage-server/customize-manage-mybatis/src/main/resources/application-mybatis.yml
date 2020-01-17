@@ -6,3 +6,8 @@ mybatis:
 ---
 pagehelper:
   helper-dialect: mysql
+  params: count=countSql
+---
+mapper:
+  mappers:
+    - tk.mybatis.mapper.common.Mapper

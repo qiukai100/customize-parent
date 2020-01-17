@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="">
+    <resultMap id="BaseResultMap" type="">
+        <id column="" jdbcType="" property=""/>
+        <result column="" jdbcType="" property=""/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+
+    </sql>
+
+    <select id="selectByPrimaryKey" parameterType="" resultMap="BaseResultMap">
+
+    </select>
+
+    <insert id="insert" parameterType="">
+
+    </insert>
+
+    <insert id="insertSelective" parameterType="">
+
+    </insert>
+
+    <update id="updateByPrimaryKeySelective" parameterType="">
+
+    </update>
+
+    <update id="updateByPrimaryKey" parameterType="">
+
+    </update>
+</mapper>

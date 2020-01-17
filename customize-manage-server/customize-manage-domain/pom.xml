@@ -12,4 +12,13 @@
     <artifactId>customize-manage-domain</artifactId>
     <version>${project.parent.version}</version>
 
+    <dependencies>
+        <!-- 引入tk mybatis依赖，禁止传递 -->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>${tk.mapper.verion}</version>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
 </project>
