@@ -26,6 +26,11 @@ public class JobController extends BaseController {
         return success(sysJobService.queryJobPage(job, pageNum, pageSize));
     }
 
+    @RequestMapping(method = RequestMethod.GET, value = "selectAll")
+    public Result selectAll() throws Exception {
+        return success(sysJobService.selectAll());
+    }
+
     @RequestMapping(method = RequestMethod.POST, value = "insertJob")
     public Result insertJob(SysJob sysJob) throws Exception {
         return success(sysJobService.insertSelective(sysJob));

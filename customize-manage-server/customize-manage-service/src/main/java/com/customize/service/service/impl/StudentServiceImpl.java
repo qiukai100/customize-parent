@@ -18,6 +18,7 @@ public class StudentServiceImpl extends BaseServiceImpl<Student, String> impleme
 
     @Autowired
     public StudentServiceImpl(StudentMapper studentMapper) {
+        super(studentMapper);
         this.studentMapper = studentMapper;
     }
 

@@ -15,6 +15,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,10 +25,15 @@ import javax.annotation.Resource;
 @Service
 public class SysJobServiceImpl extends BaseServiceImpl<SysJob, String> implements SysJobService {
 
-    @Resource
-    private SysJobMapper sysJobMapper;
-    @Resource
-    private SysJobTypeMapper sysJobTypeMapper;
+    private final SysJobMapper sysJobMapper;
+    private final SysJobTypeMapper sysJobTypeMapper;
+
+    @Autowired
+    public SysJobServiceImpl(SysJobMapper sysJobMapper, SysJobTypeMapper sysJobTypeMapper) {
+        super(sysJobMapper);
+        this.sysJobMapper = sysJobMapper;
+        this.sysJobTypeMapper = sysJobTypeMapper;
+    }
 
     @Override
     public Page<SysJob> queryJobPage(SysJob job, Integer pageNum, Integer pageSize) {

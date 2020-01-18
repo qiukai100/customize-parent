@@ -7,9 +7,15 @@ import org.springframework.stereotype.Service;
 import java.io.Serializable;
 import java.util.List;
 
+@Service
 public abstract class BaseServiceImpl<T, ID extends Serializable> implements BaseService<T, ID> {
 
-    private BaseMapper<T> mapper;
+    private final BaseMapper<T> mapper;
+
+    @Autowired
+    public BaseServiceImpl(BaseMapper<T> mapper) {
+        this.mapper = mapper;
+    }
 
     @Override
     public T insertSelective(T t) throws Exception {
