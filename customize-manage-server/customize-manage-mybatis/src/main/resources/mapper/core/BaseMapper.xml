@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.customize.manage.core.BaseMapper">
-    <resultMap id="BaseResultMap" type="com.customize.manage.core.BaseEntity">
+<mapper namespace="com.customize.mybatis.core.BaseMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.core.BaseEntity">
         <result column="create_id" jdbcType="VARCHAR" property="createId"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_id" jdbcType="VARCHAR" property="updateId"/>

@@ -1,5 +1,5 @@
 mybatis:
-  typeAliasesPackage: com.customize.manage.entity
+  typeAliasesPackage: com.customize.domain.entity
   mapperLocations: classpath:mapper/*Mapper.xml, classpath:mapper/core/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
@@ -7,7 +7,11 @@ mybatis:
 pagehelper:
   helper-dialect: mysql
   params: count=countSql
+  reasonable: true
+  supportMethodsArguments: true
 ---
 mapper:
+  identity: MYSQL
   mappers:
     - tk.mybatis.mapper.common.Mapper
+  notEmpty: true

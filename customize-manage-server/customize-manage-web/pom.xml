@@ -21,12 +21,6 @@
             <version>${project.parent.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.customize</groupId>
-            <artifactId>customize-manage-quartz</artifactId>
-            <version>${project.parent.version}</version>
-        </dependency>
-
         <!--spring boot + mvc-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

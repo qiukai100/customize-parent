@@ -45,6 +45,7 @@
         <velocity.version>1.7</velocity.version>
         <commons.io.version>2.5</commons.io.version>
         <guava.version>23.0</guava.version>
+        <persistence.api.version>1.0</persistence.api.version>
     </properties>
 
     <dependencyManagement>

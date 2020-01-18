@@ -13,10 +13,10 @@
     <description>定时任务服务</description>
 
     <dependencies>
-        <!-- 项目依赖，且不能传递 -->
+        <!-- 项目依赖 -->
         <dependency>
             <groupId>com.customize</groupId>
-            <artifactId>customize-manage-service</artifactId>
+            <artifactId>customize-manage-mybatis</artifactId>
             <version>${project.parent.version}</version>
             <optional>true</optional>
         </dependency>

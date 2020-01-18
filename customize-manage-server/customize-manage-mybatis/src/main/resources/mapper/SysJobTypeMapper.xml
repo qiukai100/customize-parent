@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.customize.manage.mapper.SysJobTypeMapper">
-    <resultMap id="BaseResultMap" type="com.customize.manage.entity.sys.SysJobType">
+<mapper namespace="com.customize.mybatis.mapper.SysJobTypeMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.SysJobType">
         <id column="pk_job_type_id" jdbcType="VARCHAR" property="pkJobTypeId"/>
         <result column="job_type_name" jdbcType="VARCHAR" property="jobTypeName"/>
         <result column="manager_class" jdbcType="VARCHAR" property="managerClass"/>
@@ -11,7 +11,7 @@
 
     <sql id="Base_Column_List">
       pk_job_type_id, job_type_name, manager_class, `function`, `parameter`,
-      <include refid="com.customize.manage.core.BaseMapper.Base_Column_List" />
+      <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <select id="findById" resultMap="BaseResultMap">

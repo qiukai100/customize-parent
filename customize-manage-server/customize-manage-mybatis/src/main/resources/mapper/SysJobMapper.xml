@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.customize.manage.mapper.SysJobMapper">
-    <resultMap id="BaseResultMap" type="com.customize.manage.entity.sys.SysJob"
-               extends="com.customize.manage.core.BaseMapper.BaseResultMap">
+<mapper namespace="com.customize.mybatis.mapper.SysJobMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.SysJob"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_job_id" jdbcType="VARCHAR" property="pkJobId"/>
         <result column="job_name" jdbcType="VARCHAR" property="jobName"/>
         <result column="job_type_id" jdbcType="VARCHAR" property="jobTypeId"/>
         <result column="cron_expressions" jdbcType="VARCHAR" property="cronExpressions"/>
     </resultMap>
 
-    <resultMap id="DtoResultMap" type="com.customize.manage.dto.SysJobDto"
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.SysJobDto"
                extends="BaseResultMap">
         <association property="sysJobType" column="{id=job_type_id}"
-                     select="com.customize.manage.mapper.SysJobTypeMapper.findById"/>
+                     select="com.customize.mybatis.mapper.SysJobTypeMapper.findById"/>
     </resultMap>
 
     <sql id="Base_Column_List">
         pk_job_id, job_name, job_type_id, cron_expressions,
-        <include refid="com.customize.manage.core.BaseMapper.Base_Column_List" />
+        <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <select id="selectJobList" resultMap="BaseResultMap">

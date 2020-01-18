@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.customize.manage.mapper.StudentMapper">
+<mapper namespace="com.customize.mybatis.mapper.StudentMapper">
 
-    <resultMap id="BaseResultMap" type="com.customize.manage.entity.tb.Student"
-               extends="com.customize.manage.core.BaseMapper.BaseResultMap">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.tb.Student"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_stu_id" jdbcType="VARCHAR" property="pkStuId"/>
         <result column="stu_no" jdbcType="INTEGER" property="stuNo"/>
         <result column="name" jdbcType="VARCHAR" property="name"/>
@@ -18,7 +18,7 @@
 
     <sql id="Base_Column_List">
         pk_stu_id, stu_no, name, sex, pic_url, born_date, enter_school_date, leave_school_date, id_card, home_address,
-        <include refid="com.customize.manage.core.BaseMapper.Base_Column_List" />
+        <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <select id="queryStudentPage" resultMap="BaseResultMap">
