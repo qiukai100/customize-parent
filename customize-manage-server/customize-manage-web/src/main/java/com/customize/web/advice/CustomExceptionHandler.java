@@ -87,7 +87,7 @@ public class CustomExceptionHandler {
     }
 
     private void printLog(HttpServletRequest request, Exception e, String msg) {
-        log.error(request.getRequestURI().concat(msg), e);
+        log.error("url is -----> [".concat(request.getRequestURI()).concat("] error msg is -----> [").concat(msg).concat("]"), e);
     }
 
     private String getMessage(String msg, Exception e) {

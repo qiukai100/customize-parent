@@ -1,10 +1,10 @@
-package com.customize.service.task;
+package com.customize.quartz.task;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
+@Component("TestTask")
 public class TestTask {
 
     public void testJob() {

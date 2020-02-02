@@ -7,12 +7,13 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @Accessors(chain = true)
-public class TaskSource {
+public class TaskSource implements Serializable {
 
     /**
      * 任务名

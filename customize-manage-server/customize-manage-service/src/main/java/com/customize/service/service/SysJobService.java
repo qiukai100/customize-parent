@@ -13,4 +13,10 @@ public interface SysJobService extends BaseService<SysJob, String> {
     SysJob insertSelective(SysJob job) throws SchedulerException;
 
     SysJobDto findById(String id);
+
+    int deleteByPrimaryKey(String id) throws Exception;
+
+    void resumeJob(String id) throws Exception;
+
+    void pauseJob(String id) throws Exception;
 }

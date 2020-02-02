@@ -1,6 +1,8 @@
 package com.customize.service.service.impl;
 
+import com.customize.common.exception.CustomException;
 import com.customize.common.utils.system.UUIDUtil;
+import com.customize.quartz.component.QuartzManage;
 import com.customize.quartz.constants.MisfireEnum;
 import com.customize.service.core.BaseServiceImpl;
 import com.customize.quartz.domain.TaskSource;
@@ -10,7 +12,6 @@ import com.customize.domain.entity.sys.SysJobType;
 import com.customize.mybatis.mapper.SysJobMapper;
 import com.customize.mybatis.mapper.SysJobTypeMapper;
 import com.customize.service.service.SysJobService;
-import com.customize.quartz.utils.QuartzUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -27,12 +28,14 @@ public class SysJobServiceImpl extends BaseServiceImpl<SysJob, String> implement
 
     private final SysJobMapper sysJobMapper;
     private final SysJobTypeMapper sysJobTypeMapper;
+    private final QuartzManage quartzManage;
 
     @Autowired
-    public SysJobServiceImpl(SysJobMapper sysJobMapper, SysJobTypeMapper sysJobTypeMapper) {
+    public SysJobServiceImpl(SysJobMapper sysJobMapper, SysJobTypeMapper sysJobTypeMapper, QuartzManage quartzManage) {
         super(sysJobMapper);
         this.sysJobMapper = sysJobMapper;
         this.sysJobTypeMapper = sysJobTypeMapper;
+        this.quartzManage = quartzManage;
     }
 
     @Override
@@ -44,15 +47,40 @@ public class SysJobServiceImpl extends BaseServiceImpl<SysJob, String> implement
     @Transactional(rollbackFor = Exception.class)
     public SysJob insertSelective(SysJob job) throws SchedulerException {
         job.setPkJobId(UUIDUtil.randomUUID());
-        sysJobMapper.insertSelective(job);
+        if (sysJobMapper.insertSelective(job) < 1) throw new CustomException("未新增成功！");
         TaskSource source = buildTaskSource(job);
-        QuartzUtils.createJob(source);
+        quartzManage.createJob(source);
         return job;
     }
 
     @Override
     public SysJobDto findById(String id) {
         return sysJobMapper.findById(id);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public int deleteByPrimaryKey(String id) throws Exception {
+        SysJobDto jobDto = findById(id);
+        if (jobDto == null) return 0;
+        int rowNum = sysJobMapper.deleteByPrimaryKey(id);
+        if (rowNum > 0 && jobDto.getSysJobType() != null)
+            quartzManage.deleteTrigger(jobDto.getSysJobType().getJobTypeName(), "系统任务组");
+        return rowNum;
+    }
+
+    @Override
+    public void resumeJob(String id) throws Exception {
+        SysJobDto jobDto = findById(id);
+        if (jobDto == null || jobDto.getSysJobType() == null) return;
+        quartzManage.resumeJob(jobDto.getSysJobType().getJobTypeName(), "系统任务组");
+    }
+
+    @Override
+    public void pauseJob(String id) throws Exception {
+        SysJobDto jobDto = findById(id);
+        if (jobDto == null || jobDto.getSysJobType() == null) return;
+        quartzManage.pauseTrigger(jobDto.getSysJobType().getJobTypeName(), "系统任务组");
     }
 
     private TaskSource buildTaskSource(SysJob job) {

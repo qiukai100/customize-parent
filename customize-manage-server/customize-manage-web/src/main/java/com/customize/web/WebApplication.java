@@ -12,7 +12,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @MapperScan(basePackages = {"com.customize.mybatis.mapper"})
 @EnableFeignClients(basePackages = {"com.customize.feign.service"})
 @SpringCloudApplication
-@ComponentScan(basePackages = {"com.customize.web", "com.customize.service", "com.customize.feign"})
+@ComponentScan(basePackages = {"com.customize.web", "com.customize.service", "com.customize.feign", "com.customize.quartz"})
 public class WebApplication {
 
     public static void main(String[] args) {

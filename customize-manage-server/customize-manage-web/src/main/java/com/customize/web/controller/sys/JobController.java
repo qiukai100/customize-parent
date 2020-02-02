@@ -36,6 +36,18 @@ public class JobController extends BaseController {
         return success(sysJobService.insertSelective(sysJob));
     }
 
+    @RequestMapping(method = RequestMethod.PUT, value = "updateJobStatus")
+    public Result updateJobStatus(@RequestParam String id, @RequestParam Boolean startUp) throws Exception {
+        if (startUp) sysJobService.resumeJob(id);
+        else sysJobService.pauseJob(id);
+        return success();
+    }
+
+    @RequestMapping(method = RequestMethod.DELETE, value = "deleteJob/{id}")
+    public Result deleteJob(@PathVariable("id") String id) throws Exception {
+        return success(sysJobService.deleteByPrimaryKey(id));
+    }
+
     @RequestMapping(method = RequestMethod.GET, value = "findById/{id}")
     public Result findById(@PathVariable("id") String id) {
         return success(sysJobService.findById(id));

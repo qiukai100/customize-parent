@@ -1,5 +1,7 @@
 package com.customize.quartz.job.core;
 
+import com.alibaba.fastjson.JSONObject;
+import com.customize.common.exception.CustomException;
 import com.customize.common.utils.ExceptionUtils;
 import com.customize.common.utils.StringUtils;
 import com.customize.quartz.domain.TaskSource;
@@ -22,12 +24,12 @@ public abstract class AbstractJob implements Job {
 
     @Override
     public void execute(JobExecutionContext context) {
-        TaskSource source = new TaskSource();
-        BeanUtils.copyProperties(source, context.getMergedJobDataMap().get(ScheduleEnum.TASK_SOURCE_KEY.code()));
+        Object bean = context.getMergedJobDataMap().get(ScheduleEnum.TASK_SOURCE_KEY.code());
+        TaskSource source = JSONObject.parseObject(bean.toString(), TaskSource.class);
         before(context);
         Exception exception = null;
         try {
-            assert !source.isEmpty() : "未找到任务源，无法执行任务！";
+            if (source.isEmpty()) throw new CustomException("未找到任务源，无法执行任务！");
             doExecute(context, source);
         } catch (Exception e) {
             log.error("任务执行异常 - ：", e);
