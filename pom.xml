@@ -9,6 +9,7 @@
         <module>customize-generator-server</module>
         <module>customize-manage-server</module>
         <module>customize-redis-server</module>
+        <module>customize-activity-server</module>
     </modules>
 
     <groupId>com.customize</groupId>
@@ -46,6 +47,9 @@
         <commons.io.version>2.5</commons.io.version>
         <guava.version>23.0</guava.version>
         <persistence.api.version>1.0</persistence.api.version>
+        <activity.starter.version>6.0.0</activity.starter.version>
+        <activity.modeler.version>5.22.0</activity.modeler.version>
+        <apache.xmlgraphics.version>1.7</apache.xmlgraphics.version>
     </properties>
 
     <dependencyManagement>

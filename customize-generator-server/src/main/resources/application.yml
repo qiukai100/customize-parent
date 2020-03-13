@@ -1,6 +1,6 @@
 spring:
   application:
-    name: customize-generator-client
+    name: customize-generator-server
   jackson:
       date-format: yyyy-MM-dd HH:mm:ss
       time-zone: GMT+8

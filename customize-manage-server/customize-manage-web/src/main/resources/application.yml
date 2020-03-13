@@ -35,7 +35,10 @@ server:
 eureka:
   instance:
     preferIpAddress: true
-    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    instance-id: ${spring.cloud.client.ip-address}:${server.port}
+    hostname: ${spring.cloud.client.ip-address}
+    lease-expiration-duration-in-seconds: 5
+    lease-renewal-interval-in-seconds: 1
   client:
     service-url:
       defaultZone: ${eureka_defaultZone}

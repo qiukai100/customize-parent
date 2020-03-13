@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: customize-activity
+  profiles:
+      include:
+        - druid
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+    serialization:
+      WRITE_DATES_AS_TIMESTAMPS: false
+  # activity 配置
+  activiti:
+    # 自动检查数据库
+    database-schema-update: false
+    # 关闭检查流程文件
+    check-process-definitions: false
+    # 控制引擎保存历史数据的级别，依次是 none - activity - audit - full
+    history-level: full
+
+--- # tomcat 配置
+server:
+  port: 9010
+  servlet:
+    context-path: /customize-activity
+    session:
+      timeout: 60s
+  tomcat:
+    uri-encoding: utf-8
+    max-threads: 1000
+
+--- # log 配置
+logging:
+  config: classpath:log/log4j2.yml
