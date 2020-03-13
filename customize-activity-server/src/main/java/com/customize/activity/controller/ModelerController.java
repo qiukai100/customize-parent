@@ -3,6 +3,7 @@ package com.customize.activity.controller;
 import com.customize.activity.domain.vo.ActModelVO;
 import com.customize.activity.service.ModelerService;
 import com.customize.common.component.CommonResult;
+import com.customize.common.exception.CustomException;
 import com.customize.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.repository.Model;
@@ -38,6 +39,12 @@ public class ModelerController {
         response.sendRedirect(request.getContextPath() + "/modeler.html?modelId=" + modelId);
     }
 
+    @GetMapping("queryModelPage")
+    public CommonResult queryModelPage(Pageable pageable) {
+        final Page<Model> page = actModelService.getAllModels(pageable);
+        return CommonResult.success(page.getContent());
+    }
+
     @PostMapping("createModel")
     public CommonResult createModel(@Valid @RequestBody ActModelVO actModelVO) throws Exception {
         log.debug("REST request to save Model : {}", actModelVO);
@@ -51,15 +58,8 @@ public class ModelerController {
         return CommonResult.success(actModelService.getModelById(modelId));
     }
 
-    @GetMapping("getAllModels")
-    public CommonResult getAllModels(Pageable pageable) {
-        final Page<Model> page = actModelService.getAllModels(pageable);
-        return CommonResult.success(page.getContent());
-    }
-
-    @PutMapping("deployModel")
-    public CommonResult deployModel(@RequestBody ActModelVO actModelVO) {
-        String modelId = actModelVO.getId();
+    @PutMapping("deployModel/{modelId}")
+    public CommonResult deployModel(@PathVariable String modelId) {
         log.debug("REST request to deploy Model : {}", modelId);
         try {
             List<ProcessDefinition> processDefinitions = actModelService.deployModel(modelId);
@@ -68,6 +68,7 @@ public class ModelerController {
             }
         } catch (Exception e) {
             e.printStackTrace();
+            throw new CustomException(e.getMessage());
         }
         return CommonResult.error();
     }
@@ -79,8 +80,8 @@ public class ModelerController {
         return CommonResult.success();
     }
 
-    @GetMapping("exportModel")
-    public void exportModel(@RequestParam("modelId") String modelId, HttpServletResponse response) throws Exception {
+    @GetMapping("exportModel/{modelId}")
+    public void exportModel(@PathVariable String modelId, HttpServletResponse response) throws Exception {
         actModelService.exportModel(modelId, response);
     }
 
