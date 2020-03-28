@@ -31,6 +31,7 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     public List<User> findUserByQueryCriteria(UserQueryImpl userQuery, Page page) {
+        // TODO 这个需要修改
         return null;
     }
 
@@ -41,6 +42,7 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     public List<Group> findGroupsByUser(String s) {
+        // TODO 这个需要修改
         return null;
     }
 
@@ -91,6 +93,7 @@ public class UserEntityServiceImpl implements UserEntityService {
 
     @Override
     public UserEntity findById(String s) {
+        // TODO 这个需要修改
         return null;
     }
 

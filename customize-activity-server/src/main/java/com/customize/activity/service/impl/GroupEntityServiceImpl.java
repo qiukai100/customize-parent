@@ -38,6 +38,7 @@ public class GroupEntityServiceImpl implements GroupEntityService {
 
     @Override
     public List<Group> findGroupsByUser(String s) {
+        // TODO 这个需要修改
         return null;
     }
 

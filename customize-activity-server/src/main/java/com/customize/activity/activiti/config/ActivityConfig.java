@@ -3,12 +3,17 @@ package com.customize.activity.activiti.config;
 import com.customize.activity.activiti.factory.GroupEntityManagerFactory;
 import com.customize.activity.activiti.factory.UserEntityManagerFactory;
 import com.customize.activity.activiti.utils.IdGenerator;
+import org.activiti.engine.ProcessEngine;
+import org.activiti.engine.ProcessEngineConfiguration;
 import org.activiti.engine.impl.interceptor.SessionFactory;
 import org.activiti.spring.SpringProcessEngineConfiguration;
 import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,4 +40,13 @@ public class ActivityConfig implements ProcessEngineConfigurationConfigurer {
         customSessionFactories.add(groupEntityManagerFactory);
         processEngineConfiguration.setCustomSessionFactories(customSessionFactories);
     }
+
+    /*@Bean
+    public ProcessEngine processEngine(ProcessEngineConfiguration processEngineConfiguration, ApplicationContext applicationContext) throws IOException {
+        SpringProcessEngineConfiguration engineConfiguration = (SpringProcessEngineConfiguration) processEngineConfiguration;
+        if (engineConfiguration.getTransactionManager() != null) {
+            processEngineConfiguration.setTransactionsExternallyManaged(true);
+        }
+        return engineConfiguration.buildProcessEngine();
+    }*/
 }

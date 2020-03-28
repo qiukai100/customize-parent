@@ -6,7 +6,6 @@
         <module>customize-common</module>
         <module>customize-hbase-server</module>
         <module>customize-eureka-server</module>
-        <module>customize-generator-server</module>
         <module>customize-manage-server</module>
         <module>customize-redis-server</module>
         <module>customize-activity-server</module>
@@ -34,7 +33,7 @@
         <fastjson.version>1.2.57</fastjson.version>
         <hutool.version>4.5.2</hutool.version>
         <servlet.version>4.0.1</servlet.version>
-        <lombok.version>1.18.6</lombok.version>
+        <lombok.version>1.16.16</lombok.version>
         <jedis.version>3.0.1</jedis.version>
         <jackson.version>2.9.8</jackson.version>
         <pagehelper.version>1.2.10</pagehelper.version>
@@ -50,6 +49,7 @@
         <activity.starter.version>6.0.0</activity.starter.version>
         <activity.modeler.version>5.22.0</activity.modeler.version>
         <apache.xmlgraphics.version>1.7</apache.xmlgraphics.version>
+        <httpclient.version>4.5.10</httpclient.version>
     </properties>
 
     <dependencyManagement>
