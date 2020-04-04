@@ -17,9 +17,12 @@ public class SysJob extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "JDBC")
     private String pkJobId;
 
+    @Column(name = "industry_id")
     private String jobName;
 
     private String jobTypeId;
+
+    private String a;
 
     private String cronExpressions;
 

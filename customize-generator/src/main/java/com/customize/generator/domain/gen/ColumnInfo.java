@@ -1,8 +1,5 @@
 package com.customize.generator.domain.gen;
 
-import com.customize.generator.util.JSON;
-import org.apache.commons.lang.StringUtils;
-
 /**
  * 数据库表列信息
  */
@@ -24,11 +21,6 @@ public class ColumnInfo {
     private String columnComment;
 
     /**
-     * 列配置
-     */
-    private ColumnConfigInfo configInfo;
-
-    /**
      * Java属性类型
      */
     private String attrType;
@@ -48,15 +40,10 @@ public class ColumnInfo {
      */
     private String extra;
 
-    public void setColumnComment(String columnComment) throws Exception {
-        // 根据列描述解析列的配置信息
-        if (StringUtils.isNotEmpty(columnComment) && columnComment.startsWith("{")) {
-            this.configInfo = JSON.unmarshal(columnComment, ColumnConfigInfo.class);
-            this.columnComment = configInfo.getTitle();
-        } else {
-            this.columnComment = columnComment;
-        }
-    }
+    /**
+     * Java属性包
+     */
+    private String attrPackage;
 
     public String getColumnName() {
         return columnName;
@@ -76,14 +63,6 @@ public class ColumnInfo {
 
     public String getColumnComment() {
         return columnComment;
-    }
-
-    public ColumnConfigInfo getConfigInfo() {
-        return configInfo;
-    }
-
-    public void setConfigInfo(ColumnConfigInfo configInfo) {
-        this.configInfo = configInfo;
     }
 
     public String getAttrType() {
@@ -116,5 +95,17 @@ public class ColumnInfo {
 
     public void setExtra(String extra) {
         this.extra = extra;
+    }
+
+    public String getAttrPackage() {
+        return attrPackage;
+    }
+
+    public void setAttrPackage(String attrPackage) {
+        this.attrPackage = attrPackage;
+    }
+
+    public void setColumnComment(String columnComment) {
+        this.columnComment = columnComment;
     }
 }

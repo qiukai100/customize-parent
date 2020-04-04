@@ -1,0 +1,54 @@
+package ${params.servicePackage}.service.${moduleName};
+
+import ${params.domainPackage}.dto.${moduleName}.${className}Dto;
+import ${params.domainPackage}.entity.${moduleName}.${className};
+import ${params.domainPackage}.vo.${moduleName}.${className}Vo;
+import ${params.servicePackage}.core.BaseService;
+import com.github.pagehelper.Page;
+
+import java.util.List;
+
+/**
+ * 业务层接口
+ * ${tableComment}表 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${className}Service extends BaseService<${className}, ${primaryKey.attrType}> {
+
+    /**
+     * 分页条件查询${tableComment}
+     */
+    Page<${className}Dto> query${className}Page(${className}Vo ${classname}Vo);
+
+    /**
+     * 条件查询${tableComment}
+     */
+    List<${className}Dto> query${className}List(${className}Vo ${classname}Vo);
+
+    /**
+     * 查询所有${tableComment}
+     */
+    List<${className}Dto> select${className}List();
+
+    /**
+     * 根据ID查询${tableComment}
+     */
+	${className}Dto findById(${primaryKey.attrType} ${primaryKey.attrname});
+
+    /**
+     * 根据ID移除${tableComment}（逻辑删除）
+     */
+    int removeByPrimaryKey(${primaryKey.attrType} ${primaryKey.attrname});
+
+    /**
+     * 批量移除${tableComment}（逻辑删除）
+     */
+    int remove${className}Batch(${primaryKey.attrType}[] ${primaryKey.attrname}s);
+
+    /**
+     * 批量删除${tableComment}（物理删除）
+     */
+    int delete${className}Batch(${primaryKey.attrType}[] ${primaryKey.attrname}s);
+}

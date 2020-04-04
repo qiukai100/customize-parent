@@ -38,6 +38,11 @@ public class TableInfo {
      */
     private String classname;
 
+    /**
+     * 模块名
+     */
+    private String moduleName;
+
     private Date createTime;
 
     private Date updateTime;
@@ -112,5 +117,13 @@ public class TableInfo {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getModuleName() {
+        return moduleName;
+    }
+
+    public void setModuleName(String moduleName) {
+        this.moduleName = moduleName;
     }
 }

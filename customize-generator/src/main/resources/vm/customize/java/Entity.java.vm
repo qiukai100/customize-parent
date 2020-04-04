@@ -1,0 +1,43 @@
+package ${params.domainPackage}.entity.${moduleName};
+
+import ${params.domainPackage}.core.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+#foreach ($column in $columns)
+#if($column.attrPackage)
+import $column.attrPackage;
+#end
+#end
+
+import javax.persistence.*;
+
+/**
+ * 实体模型
+ * ${tableComment}表 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Getter
+@Setter
+@Accessors(chain = true)
+@Table(name = "${tableName}")
+public class ${className} extends BaseEntity {
+
+    /** $primaryKey.columnComment */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY, generator = "JDBC")
+    private $primaryKey.attrType $primaryKey.attrname;
+
+#foreach ($column in $columns)
+    #if($column.attrname != 'createTime' && $column.attrname != 'createId' && $column.attrname != 'updateTime' && $column.attrname != 'updateId' && $column.attrname != 'isDelete')
+    /** $column.columnComment */
+    @Column(name = "$column.columnName")
+    private $column.attrType $column.attrname;
+
+    #end
+#end
+
+}

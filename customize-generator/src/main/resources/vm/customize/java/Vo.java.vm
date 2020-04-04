@@ -1,0 +1,20 @@
+package ${params.domainPackage}.vo.${moduleName};
+
+import ${params.domainPackage}.core.BaseVo;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+
+/**
+ * 视图交互模型
+ * ${tableComment}表 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Getter
+@Setter
+@Accessors(chain = true)
+public class ${className}Vo extends BaseVo {
+
+}

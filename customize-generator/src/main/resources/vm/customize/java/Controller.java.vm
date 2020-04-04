@@ -1,0 +1,114 @@
+package ${params.webPackage}.controller.${moduleName};
+
+import ${params.webPackage}.core.BaseController;
+import ${params.webPackage}.core.Result;
+import ${params.domainPackage}.vo.${moduleName}.${className}Vo;
+import ${params.domainPackage}.dto.${moduleName}.${className}Dto;
+import ${params.servicePackage}.service.${moduleName}.${className}Service;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import static ${params.webPackage}.core.Result.success;
+
+/**
+ * 视图层
+ * ${tableComment}表 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Slf4j
+@RestController
+@RequestMapping("${moduleName}/${classname}")
+public class ${className}Controller extends BaseController {
+
+    private final ${className}Service ${classname}Service;
+
+    @Autowired
+    public ${className}Controller(${className}Service ${classname}Service) throws Exception {
+        this.${classname}Service = ${classname}Service;
+    }
+
+    /**
+     * 分页条件查询${tableComment}
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "query${className}Page")
+    public Result query${className}Page(${className}Vo ${classname}Vo) throws Exception {
+        return success(${classname}Service.query${className}Page(${classname}Vo));
+    }
+
+    /**
+     * 条件查询${tableComment}
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "query${className}List")
+    public Result query${className}List(${className}Vo ${classname}Vo) throws Exception {
+        return success(${classname}Service.query${className}List(${classname}Vo));
+    }
+
+    /**
+     * 查询所有${tableComment}
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "select${className}List")
+    public Result select${className}List() throws Exception {
+        return success(${classname}Service.select${className}List());
+    }
+
+    /**
+     * 根据ID查询${tableComment}
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "find${className}ById/{${primaryKey.attrname}}")
+    public Result findById(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}) {
+        return success(${classname}Service.findById(${primaryKey.attrname}));
+    }
+
+    /**
+     * 新增${tableComment}
+     */
+    @RequestMapping(method = RequestMethod.POST, value = "insert${className}")
+    public Result insert${className}(${className}Dto ${classname}Dto) throws Exception {
+        return success(${classname}Service.insertSelective(${classname}Dto));
+    }
+
+    /**
+     * 修改${tableComment}
+     */
+    @RequestMapping(method = RequestMethod.PUT, value = "update${className}")
+    public Result update${className}(${className}Dto ${classname}Dto) throws Exception {
+        return success(${classname}Service.updateByPrimaryKeySelective(${classname}Dto));
+    }
+
+    /**
+     * 根据ID移除${tableComment}（逻辑删除）
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "remove${className}ById/{${primaryKey.attrname}}")
+    public Result remove${className}ById(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}) throws Exception {
+        return success(${classname}Service.removeByPrimaryKey(${primaryKey.attrname}));
+    }
+
+    /**
+     * 根据ID移除${tableComment}（物理删除）
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "delete${className}ById/{${primaryKey.attrname}}")
+    public Result delete${className}ById(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}) throws Exception {
+        return success(${classname}Service.deleteByPrimaryKey(${primaryKey.attrname}));
+    }
+
+    /**
+     * 批量删除${tableComment}（逻辑删除）
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "remove${className}Batch")
+    public Result remove${className}Batch(@RequestParam ${primaryKey.attrType}[] ${primaryKey.attrname}s) throws Exception {
+        return success(${classname}Service.remove${className}Batch(${primaryKey.attrname}s));
+    }
+
+    /**
+     * 批量删除${tableComment}（物理删除）
+     */
+    @RequestMapping(method = RequestMethod.DELETE, value = "delete${className}Batch")
+    public Result delete${className}Batch(@RequestParam ${primaryKey.attrType}[] ${primaryKey.attrname}s) throws Exception {
+        return success(${classname}Service.delete${className}Batch(${primaryKey.attrname}s));
+    }
+
+}

@@ -1,0 +1,71 @@
+package ${params.servicePackage}.service.${moduleName}.impl;
+
+import ${params.commonPackage}.constants.OptionEnum;
+import ${params.domainPackage}.dto.${moduleName}.${className}Dto;
+import ${params.domainPackage}.entity.${moduleName}.${className};
+import ${params.domainPackage}.vo.${moduleName}.${className}Vo;
+import ${params.mapperPackage}.mapper.${moduleName}.${className}Mapper;
+import ${params.servicePackage}.core.BaseServiceImpl;
+import ${params.servicePackage}.service.${moduleName}.${className}Service;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * 业务层实现
+ * ${tableComment}表 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+@Slf4j
+@Service
+public class ${className}ServiceImpl extends BaseServiceImpl<${className}, ${primaryKey.attrType}> implements ${className}Service {
+
+    private final ${className}Mapper ${classname}Mapper;
+
+    @Autowired
+    public ${className}ServiceImpl(${className}Mapper ${classname}Mapper) {
+        super(${classname}Mapper);
+        this.${classname}Mapper = ${classname}Mapper;
+    }
+
+    @Override
+    public Page<${className}Dto> query${className}Page(${className}Vo ${classname}Vo) {
+        return PageHelper.startPage(${classname}Vo.getPageNum(), ${classname}Vo.getPageSize()).doSelectPage(() -> ${classname}Mapper.query${className}List(${classname}Vo));
+    }
+
+    @Override
+    public List<${className}Dto> query${className}List(${className}Vo ${classname}Vo) {
+        return ${classname}Mapper.query${className}List(${classname}Vo);
+    }
+
+    @Override
+    public List<${className}Dto> select${className}List() {
+        return ${classname}Mapper.select${className}List(OptionEnum.YES.getVal());
+    }
+
+    @Override
+    public ${className}Dto findById(${primaryKey.attrType} ${primaryKey.attrname}) {
+        return ${classname}Mapper.findById(${primaryKey.attrname}, OptionEnum.YES.getVal());
+    }
+
+    @Override
+    public int removeByPrimaryKey(${primaryKey.attrType} ${primaryKey.attrname}) {
+        return ${classname}Mapper.removeByPrimaryKey(${primaryKey.attrname}, OptionEnum.YES.getVal());
+    }
+
+    @Override
+    public int remove${className}Batch(${primaryKey.attrType}[] ${primaryKey.attrname}s) {
+        return ${classname}Mapper.remove${className}Batch(${primaryKey.attrname}s, OptionEnum.YES.getVal());
+    }
+
+    @Override
+    public int delete${className}Batch(${primaryKey.attrType}[] ${primaryKey.attrname}s) {
+        return ${classname}Mapper.delete${className}Batch(${primaryKey.attrname}s);
+    }
+}

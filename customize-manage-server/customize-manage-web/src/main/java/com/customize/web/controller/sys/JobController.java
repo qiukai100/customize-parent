@@ -5,9 +5,9 @@ import com.customize.web.core.Result;
 import com.customize.domain.entity.sys.SysJob;
 import com.customize.service.service.SysJobService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.annotation.Resource;
 
 import static com.customize.web.core.Result.success;
 
@@ -16,8 +16,12 @@ import static com.customize.web.core.Result.success;
 @RequestMapping("sys/job")
 public class JobController extends BaseController {
 
-    @Resource
-    private SysJobService sysJobService;
+    private final SysJobService sysJobService;
+
+    @Autowired
+    public JobController(SysJobService sysJobService) {
+        this.sysJobService = sysJobService;
+    }
 
     @RequestMapping(method = RequestMethod.GET, value = "queryJobList")
     public Result queryJobList(SysJob job,

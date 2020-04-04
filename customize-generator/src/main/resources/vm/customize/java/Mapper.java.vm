@@ -1,0 +1,49 @@
+package ${params.mapperPackage}.mapper.${moduleName};
+
+import ${params.domainPackage}.dto.${moduleName}.${className}Dto;
+import ${params.domainPackage}.entity.${moduleName}.${className};
+import ${params.domainPackage}.vo.${moduleName}.${className}Vo;
+import ${params.mapperPackage}.core.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
+
+/**
+ * 数据层接口
+ * ${tableComment}表 ${tableName}
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${className}Mapper extends BaseMapper<${className}> {
+
+    /**
+     * 条件查询${tableComment}
+     */
+    List<${className}Dto> query${className}List(@Param("${classname}Vo") ${className}Vo ${classname}Vo);
+
+    /**
+     * 查询所有${tableComment}
+     */
+    List<${className}Dto> select${className}List(@Param("isDelete") Integer isDelete);
+
+    /**
+     * 根据ID查询${tableComment}
+     */
+    ${className}Dto findById(@Param("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}, Integer isDelete);
+
+    /**
+     * 根据ID移除${tableComment}（逻辑删除）
+     */
+    int removeByPrimaryKey(@Param("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}, @Param("isDelete") Integer isDelete);
+
+    /**
+     * 批量移除${tableComment}（逻辑删除）
+     */
+    int remove${className}Batch(@Param("${primaryKey.attrname}s") ${primaryKey.attrType}[] ${primaryKey.attrname}s, @Param("isDelete") Integer isDelete);
+
+    /**
+     * 批量删除${tableComment}（物理删除）
+     */
+    int delete${className}Batch(@Param("${primaryKey.attrname}s") ${primaryKey.attrType}[] ${primaryKey.attrname}s);
+}

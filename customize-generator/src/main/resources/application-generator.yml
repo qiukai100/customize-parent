@@ -1,0 +1,40 @@
+# 代码生成
+generator:
+  # 作者
+  author: qiukai
+  splitPrefix: true
+  cover: false
+  prefixArray: qrtz, sys, tb
+  params:
+    commonPackage: com.customize.common
+    webPackage: com.customize.web
+    servicePackage: com.customize.service
+    mapperPackage: com.customize.mapper
+    domainPackage: com.customize.domain
+  # 模板信息列表
+  templateInfos:
+    - typeEnum: ENTITY
+      vmPath: vm/customize/java/Entity.java.vm
+      fileDirectory: F:/project/testPoj/customize-manage-domain/src/main/java/com/customize/domain/entity
+    - typeEnum: DTO
+      vmPath: vm/customize/java/Dto.java.vm
+      fileDirectory: F:/project/testPoj/customize-manage-domain/src/main/java/com/customize/domain/dto
+    - typeEnum: VO
+      vmPath: vm/customize/java/Vo.java.vm
+      fileDirectory: F:/project/testPoj/customize-manage-domain/src/main/java/com/customize/domain/vo
+    - typeEnum: MAPPER
+      vmPath: vm/customize/java/Mapper.java.vm
+      fileDirectory: F:/project/testPoj/customize-manage-mybatis/src/main/java/com/customize/mybatis/mapper
+    - typeEnum: SERVICE
+      vmPath: vm/customize/java/Service.java.vm
+      fileDirectory: F:/project/testPoj/customize-manage-service/src/main/java/com/customize/service/service
+    - typeEnum: SERVICE_IMPL
+      vmPath: vm/customize/java/ServiceImpl.java.vm
+      fileDirectory: F:/project/testPoj/customize-manage-service/src/main/java/com/customize/service/service
+      autoCompletion: false
+    - typeEnum: WEB
+      vmPath: vm/customize/java/Controller.java.vm
+      fileDirectory: F:/project/testPoj/customize-manage-web/src/main/java/com/customize/web/controller
+    - typeEnum: MAPPER_XML
+      vmPath: vm/customize/xml/Mapper.xml.vm
+      fileDirectory: F:/project/testPoj/customize-manage-mybatis/src/main/resources/mapper

@@ -1,71 +1,90 @@
 package com.customize.generator.config;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.customize.generator.domain.gen.TemplateInfo;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
-/**
- * 读取代码生成相关配置
- */
+import java.util.List;
+import java.util.Map;
+
 @Component
-@ConfigurationProperties(prefix = "gen")
-@PropertySource(value = { "classpath:generator.yml" })
-public class GenConfig
-{
-    /** 作者 */
-    public static String author;
+@ConfigurationProperties(prefix = "generator")
+public class GenConfig {
+    /**
+     * 作者
+     */
+    private String author;
 
-    /** 生成包路径 */
-    public static String packageName;
+    /**
+     * 分割前缀
+     */
+    private Boolean splitPrefix = Boolean.TRUE;
 
-    /** 自动去除表前缀，默认是true */
-    public static String autoRemovePre;
+    /**
+     * 覆盖
+     */
+    private Boolean cover = Boolean.FALSE;
 
-    /** 表前缀(类名不会包含表前缀) */
-    public static String tablePrefix;
+    /**
+     * 前缀数组，用于识别前缀
+     */
+    private List<String> prefixArray;
 
-    public static String getAuthor()
-    {
+    /**
+     * 参数
+     */
+    private Map<String, Object> params;
+
+    /**
+     * 模板信息
+     */
+    private List<TemplateInfo> templateInfos;
+
+    public String getAuthor() {
         return author;
     }
 
-    @Value("${author}")
-    public void setAuthor(String author)
-    {
-        GenConfig.author = author;
+    public void setAuthor(String author) {
+        this.author = author;
     }
 
-    public static String getPackageName()
-    {
-        return packageName;
+    public Boolean getSplitPrefix() {
+        return splitPrefix;
     }
 
-    @Value("${packageName}")
-    public void setPackageName(String packageName)
-    {
-        GenConfig.packageName = packageName;
+    public void setSplitPrefix(Boolean splitPrefix) {
+        this.splitPrefix = splitPrefix;
     }
 
-    public static String getAutoRemovePre()
-    {
-        return autoRemovePre;
+    public Boolean getCover() {
+        return cover;
     }
 
-    @Value("${autoRemovePre}")
-    public void setAutoRemovePre(String autoRemovePre)
-    {
-        GenConfig.autoRemovePre = autoRemovePre;
+    public void setCover(Boolean cover) {
+        this.cover = cover;
     }
 
-    public static String getTablePrefix()
-    {
-        return tablePrefix;
+    public Map<String, Object> getParams() {
+        return params;
     }
 
-    @Value("${tablePrefix}")
-    public void setTablePrefix(String tablePrefix)
-    {
-        GenConfig.tablePrefix = tablePrefix;
+    public void setParams(Map<String, Object> params) {
+        this.params = params;
+    }
+
+    public List<TemplateInfo> getTemplateInfos() {
+        return templateInfos;
+    }
+
+    public void setTemplateInfos(List<TemplateInfo> templateInfos) {
+        this.templateInfos = templateInfos;
+    }
+
+    public List<String> getPrefixArray() {
+        return prefixArray;
+    }
+
+    public void setPrefixArray(List<String> prefixArray) {
+        this.prefixArray = prefixArray;
     }
 }
