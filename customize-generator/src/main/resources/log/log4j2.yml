@@ -1,6 +1,6 @@
 # 日志级别 ALL < TRACE < DEBUG < INFO < WARN < ERROR < FATAL < OFF
 Configuration:
-  status: warn
+  status: debug
   Properties:
     Property:
       - name: pattern

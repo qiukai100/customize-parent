@@ -20,10 +20,6 @@ public class FileUtils {
      */
     public static boolean mkdirs(String path) {
         File file = new File(path);
-        if (!file.isDirectory()) {
-            log.error("create directory error. path is not director. path is [{}]", path);
-            return false;
-        }
         if (!file.exists()) {
             return file.mkdirs();
         }
@@ -38,10 +34,6 @@ public class FileUtils {
      */
     public static boolean createFile(String path, boolean cover) throws IOException {
         File file = new File(path);
-        if (file.isDirectory()) {
-            log.error("create file error. path is not file. path is [{}]", path);
-            return false;
-        }
         String dirPath = path.substring(0, path.lastIndexOf(getFileSeparator(path)));
         if (!mkdirs(dirPath)) {
             log.error("create file error. directory is not exists and create error. dirPath is [{}]. path is [{}]", dirPath, path);
@@ -70,18 +62,9 @@ public class FileUtils {
      * @param cover    是否覆盖
      */
     public static boolean writeFile(String data, File file, String encoding, boolean cover) throws IOException {
-        if (file.isDirectory()) {
-            log.error("write file error. file is directory. path is [{}]", file.getPath());
+        if (!createFile(file.getPath(), cover)) {
+            log.error("write file error. create error. path is [{}]", file.getPath());
             return false;
-        }
-        if (file.exists() && !cover) {
-            log.error("write file error. file is exists. path is [{}]", file.getPath());
-            return false;
-        } else {
-            if (!createFile(file.getPath(), cover)) {
-                log.error("write file error. file is not exists and create error. path is [{}]", file.getPath());
-                return false;
-            }
         }
         FileOutputStream fos = new FileOutputStream(file);
         IOUtils.write(data, fos, encoding);

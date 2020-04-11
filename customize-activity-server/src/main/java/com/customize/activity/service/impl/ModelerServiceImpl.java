@@ -24,6 +24,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.List;
 
 @Slf4j
@@ -98,17 +101,12 @@ public class ModelerServiceImpl implements ModelerService {
     }
 
     @Override
-    public void exportModel(String modelId, HttpServletResponse response) throws Exception {
+    public byte[] getModelXml(String modelId) throws IOException {
         Model modelData = repositoryService.getModel(modelId);
         BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
         ObjectNode editorNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelData.getId()));
         BpmnModel bpmnModel = jsonConverter.convertToBpmnModel(editorNode);
         BpmnXMLConverter xmlConverter = new BpmnXMLConverter();
-        byte[] bpmnBytes = xmlConverter.convertToXML(bpmnModel);
-        ByteArrayInputStream in = new ByteArrayInputStream(bpmnBytes);
-        IOUtils.copy(in, response.getOutputStream());
-        String filename = bpmnModel.getMainProcess().getId() + ".bpmn20.xml";
-        response.setHeader("Content-Disposition", "attachment; filename=" + java.net.URLEncoder.encode(filename, "UTF-8"));
-        response.flushBuffer();
+        return xmlConverter.convertToXML(bpmnModel);
     }
 }

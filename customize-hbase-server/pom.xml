@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
     <description>hbase客户端</description>
 
-    <artifactId>customize-hbase-client</artifactId>
+    <artifactId>customize-hbase-server</artifactId>
 
     <dependencies>
         <!-- Apache HBase Client -->

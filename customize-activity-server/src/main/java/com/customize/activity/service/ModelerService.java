@@ -6,7 +6,7 @@ import org.activiti.engine.repository.ProcessDefinition;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
-import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.List;
 
 public interface ModelerService {
@@ -21,5 +21,6 @@ public interface ModelerService {
 
     void deleteModel(String modelId);
 
-    void exportModel(String modelId, HttpServletResponse response) throws Exception;
+    byte[] getModelXml(String modelId) throws IOException;
+
 }

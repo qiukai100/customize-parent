@@ -53,10 +53,10 @@ public class GeneratorServiceImpl implements GeneratorService {
             File file = new File(filePath.concat(fileName));
             try {
                 if (FileUtils.writeFile(data, file, Constants.UTF8, config.getCover())) {
-                    log.debug("generator code is success. tableName is {}. vmType is {}. file path is {}",
+                    log.info("generator code is success. tableName is {}. vmType is {}. file path is {}",
                             tableName, templateInfo.getTypeEnum().name(), file.getPath());
                 } else {
-                    log.debug("generator code is error. tableName is {}. vmType is {}. file path is {}",
+                    log.info("generator code is error. tableName is {}. vmType is {}. file path is {}",
                             tableName, templateInfo.getTypeEnum().name(), file.getPath());
                 }
             } catch (IOException e) {

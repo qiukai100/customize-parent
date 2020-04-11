@@ -1,33 +1,30 @@
 package com.customize.activity.listeners.takeLeave;
 
-import com.customize.activity.http.cfsc.HttpClient;
-import com.google.common.collect.Lists;
+import com.customize.activity.activiti.utils.SpringUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.activiti.engine.RuntimeService;
 import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.DelegateTask;
-import org.activiti.engine.delegate.JavaDelegate;
-import org.activiti.engine.delegate.TaskListener;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
+import org.activiti.engine.delegate.ExecutionListener;
+import org.activiti.engine.delegate.Expression;
 
 @Slf4j
-public class ApprovalListeners implements JavaDelegate {
+public class ApprovalListeners implements ExecutionListener {
 
-    @Autowired
-    private HttpClient httpClient;
+    public Expression taskKey;
 
     @Override
-    public void execute(DelegateExecution delegateExecution) {
-        log.debug("approvalListeners is run.......");
-
+    public void notify(DelegateExecution delegateExecution) {
+        String key = taskKey.getExpressionText();
+        log.debug("approvalListeners is run. key is {}", key);
+        RuntimeService runtimeService = SpringUtils.getBean(RuntimeService.class);
+        runtimeService.startProcessInstanceByKey(key);
         // 审核人集合
-        List<String> approverList = Lists.newArrayList();
+        /*List<String> approverList = Lists.newArrayList();
 //        httpClient.selectAllUser(delegateTask.getAssignee());
         approverList.add("zhangsan");
         approverList.add("lisi");
         delegateExecution.setVariable("approverList", approverList);
         delegateExecution.setVariable("up", 0);
-        delegateExecution.setVariable("down", 0);
+        delegateExecution.setVariable("down", 0);*/
     }
 }

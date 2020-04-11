@@ -8,6 +8,7 @@ import com.customize.common.utils.StringUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.repository.Model;
 import org.activiti.engine.repository.ProcessDefinition;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.io.ByteArrayInputStream;
 import java.util.List;
 
 @Slf4j
@@ -82,7 +84,12 @@ public class ModelerController {
 
     @GetMapping("exportModel/{modelId}")
     public void exportModel(@PathVariable String modelId, HttpServletResponse response) throws Exception {
-        actModelService.exportModel(modelId, response);
+        byte[] data = actModelService.getModelXml(modelId);
+        String filename = modelId + ".bpmn20.xml";
+        response.setHeader("content-type", "application/octet-stream");
+        response.setContentType("application/octet-stream");
+        response.setHeader("Content-Disposition", "attachment; filename=" + java.net.URLEncoder.encode(filename, "UTF-8"));
+        IOUtils.write(data, response.getOutputStream());
     }
 
 }
