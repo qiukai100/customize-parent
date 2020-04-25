@@ -1,52 +1,85 @@
 package com.customize.activity.activiti.config;
 
-import com.customize.activity.activiti.factory.GroupEntityManagerFactory;
-import com.customize.activity.activiti.factory.UserEntityManagerFactory;
+import com.customize.activity.activiti.utils.FunctionOrgService;
 import com.customize.activity.activiti.utils.IdGenerator;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.ProcessEngineConfiguration;
-import org.activiti.engine.impl.interceptor.SessionFactory;
+import com.customize.activity.listeners.takeLeave.ApprovalListeners;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.impl.persistence.deploy.Deployer;
+import org.activiti.engine.impl.rules.RulesDeployer;
+import org.activiti.spring.ProcessEngineFactoryBean;
 import org.activiti.spring.SpringProcessEngineConfiguration;
-import org.activiti.spring.boot.ProcessEngineConfigurationConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.transaction.PlatformTransactionManager;
 
-import java.io.IOException;
+import javax.sql.DataSource;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Configuration
-public class ActivityConfig implements ProcessEngineConfigurationConfigurer {
+public class ActivityConfig {
 
-    private final UserEntityManagerFactory userEntityManagerFactory;
-
-    private final GroupEntityManagerFactory groupEntityManagerFactory;
+    private final DataSource dataSource;
+    private final PlatformTransactionManager platformTransactionManager;
 
     @Autowired
-    public ActivityConfig(UserEntityManagerFactory userEntityManagerFactory, GroupEntityManagerFactory groupEntityManagerFactory) {
-        this.userEntityManagerFactory = userEntityManagerFactory;
-        this.groupEntityManagerFactory = groupEntityManagerFactory;
+    public ActivityConfig(DataSource dataSource, PlatformTransactionManager platformTransactionManager) {
+        this.dataSource = dataSource;
+        this.platformTransactionManager = platformTransactionManager;
     }
 
-    @Override
-    public void configure(SpringProcessEngineConfiguration processEngineConfiguration) {
-        // 设置流程ID的生成方式
-        processEngineConfiguration.setIdGenerator(new IdGenerator());
-        //自定义用户和组
-        List<SessionFactory> customSessionFactories = new ArrayList<>();
-        customSessionFactories.add(userEntityManagerFactory);
-        customSessionFactories.add(groupEntityManagerFactory);
-        processEngineConfiguration.setCustomSessionFactories(customSessionFactories);
+    @Bean
+    public SpringProcessEngineConfiguration springProcessEngineConfiguration(ApplicationContext context) {
+        SpringProcessEngineConfiguration configuration = new SpringProcessEngineConfiguration();
+        configuration.setTransactionManager(platformTransactionManager);
+        configuration.setDataSource(dataSource);
+        configuration.setDatabaseSchemaUpdate("true");
+        configuration.setDbIdentityUsed(false);
+        configuration.setAsyncExecutorActivate(true);
+        configuration.setIdGenerator(new IdGenerator());
+        RulesDeployer rulesDeployer=new RulesDeployer();
+        List<Deployer> customPostDeployers=new ArrayList<>();
+        customPostDeployers.add(rulesDeployer);
+        configuration.setCustomPostDeployers(customPostDeployers);
+        Map<Object, Object> map=new HashMap<>();
+//        map.put("fn", new FunctionOrgService());// 加载自定义函数
+        map.put("approvalListeners", context.getBean(ApprovalListeners.class));
+        configuration.setBeans(map);
+        return configuration;
     }
 
-    /*@Bean
-    public ProcessEngine processEngine(ProcessEngineConfiguration processEngineConfiguration, ApplicationContext applicationContext) throws IOException {
-        SpringProcessEngineConfiguration engineConfiguration = (SpringProcessEngineConfiguration) processEngineConfiguration;
-        if (engineConfiguration.getTransactionManager() != null) {
-            processEngineConfiguration.setTransactionsExternallyManaged(true);
-        }
-        return engineConfiguration.buildProcessEngine();
-    }*/
+    @Bean
+    public ProcessEngineFactoryBean processEngine(ApplicationContext context) {
+        ProcessEngineFactoryBean processEngineFactoryBean = new ProcessEngineFactoryBean();
+        processEngineFactoryBean.setProcessEngineConfiguration(springProcessEngineConfiguration(context));
+        return processEngineFactoryBean;
+    }
+
+
+    @Bean
+    public RepositoryService repositoryService(ApplicationContext context) throws Exception {
+        return processEngine(context).getObject().getRepositoryService();
+    }
+
+    @Bean
+    public RuntimeService runtimeService(ApplicationContext context) throws Exception {
+        return processEngine(context).getObject().getRuntimeService();
+    }
+
+    @Bean
+    public TaskService taskService(ApplicationContext context) throws Exception {
+        return processEngine(context).getObject().getTaskService();
+    }
+
+    @Bean
+    public HistoryService historyService(ApplicationContext context) throws Exception {
+        return processEngine(context).getObject().getHistoryService();
+    }
 }

@@ -6,7 +6,7 @@ import ${params.domainPackage}.entity.${moduleName}.${className};
 import ${params.domainPackage}.vo.${moduleName}.${className}Vo;
 import ${params.mapperPackage}.mapper.${moduleName}.${className}Mapper;
 import ${params.servicePackage}.core.BaseServiceImpl;
-import ${params.servicePackage}.service.${moduleName}.${className}Service;
+import ${params.servicePackage}.service.${moduleName}.I${className}Service;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 @Slf4j
 @Service
-public class ${className}ServiceImpl extends BaseServiceImpl<${className}, ${primaryKey.attrType}> implements ${className}Service {
+public class ${className}ServiceImpl extends BaseServiceImpl<${className}, ${primaryKey.attrType}> implements I${className}Service {
 
     private final ${className}Mapper ${classname}Mapper;
 

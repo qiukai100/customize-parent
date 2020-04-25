@@ -1,23 +1,27 @@
 package com.customize.activity.listeners.takeLeave;
 
-import com.customize.activity.activiti.utils.SpringUtils;
+import com.customize.activity.service.ProcessService;
 import lombok.extern.slf4j.Slf4j;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.delegate.DelegateExecution;
-import org.activiti.engine.delegate.ExecutionListener;
-import org.activiti.engine.delegate.Expression;
+import org.activiti.engine.delegate.*;
+import org.springframework.stereotype.Service;
 
 @Slf4j
-public class ApprovalListeners implements ExecutionListener {
+@Service("approvalListeners")
+public class ApprovalListeners {
 
-    public Expression taskKey;
+    private Expression taskKey;
 
-    @Override
+//    @Autowired
+    private ProcessService processService;
+
     public void notify(DelegateExecution delegateExecution) {
-        String key = taskKey.getExpressionText();
+        log.debug(taskKey.getExpressionText());
+        log.debug(processService.toString());
+
+        /*String key = taskKey.getExpressionText();
         log.debug("approvalListeners is run. key is {}", key);
         RuntimeService runtimeService = SpringUtils.getBean(RuntimeService.class);
-        runtimeService.startProcessInstanceByKey(key);
+        runtimeService.startProcessInstanceByKey(key);*/
         // 审核人集合
         /*List<String> approverList = Lists.newArrayList();
 //        httpClient.selectAllUser(delegateTask.getAssignee());
@@ -26,5 +30,9 @@ public class ApprovalListeners implements ExecutionListener {
         delegateExecution.setVariable("approverList", approverList);
         delegateExecution.setVariable("up", 0);
         delegateExecution.setVariable("down", 0);*/
+    }
+
+    public void setProcessService(ProcessService processService) {
+        this.processService = processService;
     }
 }

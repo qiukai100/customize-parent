@@ -21,6 +21,8 @@ public abstract class BaseVo implements Serializable {
 
     private Integer isDelete = OptionEnum.NO.getVal();
 
+    private String dataStatus;
+
     @Override
     public String toString() {
         return JSON.toJSONString(this,

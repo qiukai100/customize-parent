@@ -7,10 +7,12 @@
         <result column="update_id" jdbcType="VARCHAR" property="updateId"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
         <result column="is_delete" jdbcType="TINYINT" property="isDelete"/>
+        <result column="data_status" jdbcType="VARCHAR" property="dataStatus"/>
+        <result column="version" jdbcType="INTEGER" property="version"/>
     </resultMap>
 
     <sql id="Base_Column_List">
-        create_id, create_time, update_id, update_time, is_delete
+        create_id, create_time, update_id, update_time, is_delete, data_status, version
     </sql>
 
 </mapper>

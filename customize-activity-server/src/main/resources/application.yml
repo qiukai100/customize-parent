@@ -1,6 +1,8 @@
 spring:
   application:
     name: customize-activity
+  main:
+    allow-bean-definition-overriding: true
   profiles:
       include:
         - druid

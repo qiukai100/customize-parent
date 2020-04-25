@@ -2,7 +2,6 @@ package com.customize.domain.core;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.serializer.SerializerFeature;
-import com.customize.common.constants.OptionEnum;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -25,7 +24,11 @@ public abstract class BaseEntity implements Serializable {
 
     private String updateId;
 
-    private Integer isDelete = OptionEnum.NO.getVal();
+    private Integer isDelete;
+
+    private Integer version;
+
+    private String dataStatus;
 
     @Override
     public String toString() {
@@ -36,12 +39,5 @@ public abstract class BaseEntity implements Serializable {
                 SerializerFeature.WriteMapNullValue,
                 // 消除对同一对象循环引用
                 SerializerFeature.DisableCircularReferenceDetect);
-    }
-
-    public void setCreateId(String createId) {
-        this.createId = createId;
-        if (updateId == null || updateId.equals("")) {
-            this.updateId = createId;
-        }
     }
 }

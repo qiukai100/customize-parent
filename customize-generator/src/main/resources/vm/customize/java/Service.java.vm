@@ -15,7 +15,7 @@ import java.util.List;
  * @author ${author}
  * @date ${datetime}
  */
-public interface ${className}Service extends BaseService<${className}, ${primaryKey.attrType}> {
+public interface I${className}Service extends BaseService<${className}, ${primaryKey.attrType}> {
 
     /**
      * 分页条件查询${tableComment}

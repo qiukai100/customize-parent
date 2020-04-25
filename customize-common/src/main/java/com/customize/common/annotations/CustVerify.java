@@ -1,7 +1,6 @@
 package com.customize.common.annotations;
 
 import com.customize.common.constants.RegexEnum;
-import com.customize.common.constants.SexEnum;
 import com.customize.common.constants.VerifyTypeEnum;
 
 import java.lang.annotation.ElementType;

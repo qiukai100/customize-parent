@@ -104,7 +104,8 @@ public class ModelerServiceImpl implements ModelerService {
     public byte[] getModelXml(String modelId) throws IOException {
         Model modelData = repositoryService.getModel(modelId);
         BpmnJsonConverter jsonConverter = new BpmnJsonConverter();
-        ObjectNode editorNode = (ObjectNode) new ObjectMapper().readTree(repositoryService.getModelEditorSource(modelData.getId()));
+        byte[] data = repositoryService.getModelEditorSource(modelData.getId());
+        ObjectNode editorNode = (ObjectNode) new ObjectMapper().readTree(data);
         BpmnModel bpmnModel = jsonConverter.convertToBpmnModel(editorNode);
         BpmnXMLConverter xmlConverter = new BpmnXMLConverter();
         return xmlConverter.convertToXML(bpmnModel);
