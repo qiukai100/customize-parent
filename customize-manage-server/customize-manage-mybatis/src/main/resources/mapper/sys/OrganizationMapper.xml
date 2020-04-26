@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.sys.OrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Organization"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_organization_id" jdbcType="varchar" property="pkOrganizationId" />
+                            <result column="organization_code" jdbcType="varchar" property="organizationCode" />
+                                        <result column="organization_name" jdbcType="varchar" property="organizationName" />
+                                        <result column="organization_name_en" jdbcType="varchar" property="organizationNameEn" />
+                                        <result column="sort" jdbcType="int" property="sort" />
+                                        <result column="fk_company_id" jdbcType="varchar" property="fkCompanyId" />
+                                        <result column="fk_organization_type_id" jdbcType="varchar" property="fkOrganizationTypeId" />
+                                        <result column="sr_organization_id" jdbcType="varchar" property="srOrganizationId" />
+                                        <result column="sr_organization_id_path" jdbcType="varchar" property="srOrganizationIdPath" />
+                                        <result column="is_top" jdbcType="tinyint" property="isTop" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.OrganizationDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    organization_code,
+                                                organization_name,
+                                                organization_name_en,
+                                                sort,
+                                                fk_company_id,
+                                                fk_organization_type_id,
+                                                sr_organization_id,
+                                                sr_organization_id_path,
+                                                is_top,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update sys_organization set is_delete = #{isDelete} where pk_organization_id = #{pkOrganizationId}
+    </update>
+
+    <update id="removeOrganizationBatch" parameterType="Map">
+        update sys_organization set is_delete = #{isDelete} where pk_organization_id in
+        <foreach item="pkOrganizationId" collection="pkOrganizationIds" separator="," open="(" close=")">
+            #{pkOrganizationId}
+        </foreach>
+    </update>
+
+    <delete id="deleteOrganizationBatch" parameterType="String">
+        delete from sys_organization where pk_organization_id in
+        <foreach item="pkOrganizationId" collection="pkOrganizationIds" separator="," open="(" close=")">
+            #{pkOrganizationId}
+        </foreach>
+    </delete>
+
+    <select id="queryOrganizationList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_organization
+        <where>
+            <if test="organizationVo.isDelete != null">
+                is_delete = #{organizationVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectOrganizationList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_organization
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_organization
+        where pk_organization_id = #{pkOrganizationId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

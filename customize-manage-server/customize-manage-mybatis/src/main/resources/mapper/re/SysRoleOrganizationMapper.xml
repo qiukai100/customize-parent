@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.re.SysRoleOrganizationMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysRoleOrganization"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_re_role_organization_id" jdbcType="varchar" property="pkReRoleOrganizationId" />
+                            <result column="fk_role_id" jdbcType="varchar" property="fkRoleId" />
+                                        <result column="fk_organization_id" jdbcType="varchar" property="fkOrganizationId" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysRoleOrganizationDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    fk_role_id,
+                                                fk_organization_id,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update re_sys_role_organization set is_delete = #{isDelete} where pk_re_role_organization_id = #{pkReRoleOrganizationId}
+    </update>
+
+    <update id="removeSysRoleOrganizationBatch" parameterType="Map">
+        update re_sys_role_organization set is_delete = #{isDelete} where pk_re_role_organization_id in
+        <foreach item="pkReRoleOrganizationId" collection="pkReRoleOrganizationIds" separator="," open="(" close=")">
+            #{pkReRoleOrganizationId}
+        </foreach>
+    </update>
+
+    <delete id="deleteSysRoleOrganizationBatch" parameterType="String">
+        delete from re_sys_role_organization where pk_re_role_organization_id in
+        <foreach item="pkReRoleOrganizationId" collection="pkReRoleOrganizationIds" separator="," open="(" close=")">
+            #{pkReRoleOrganizationId}
+        </foreach>
+    </delete>
+
+    <select id="querySysRoleOrganizationList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_role_organization
+        <where>
+            <if test="sysRoleOrganizationVo.isDelete != null">
+                is_delete = #{sysRoleOrganizationVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectSysRoleOrganizationList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_role_organization
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_role_organization
+        where pk_re_role_organization_id = #{pkReRoleOrganizationId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

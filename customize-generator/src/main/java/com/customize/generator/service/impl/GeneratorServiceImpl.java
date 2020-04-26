@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 
 @Service
@@ -29,19 +30,7 @@ public class GeneratorServiceImpl implements GeneratorService {
         this.config = config;
     }
 
-    @Override
-    public void generatorCode(String tableName, DatabaseEnum databaseEnum) {
-        TableInfo table = genMapper.selectTableByName(tableName);
-        if (table == null) {
-            log.debug("generatorCode is fail. table is not found. table name is {}", tableName);
-            return;
-        }
-        table.setColumns(genMapper.selectTableColumnsByName(tableName));
-        if (table.getColumns() == null || table.getColumns().size() < 1) {
-            log.debug("generatorCode is fail. Columns is null. table name is {}", tableName);
-            return;
-        }
-
+    private void generatorCode(TableInfo table, DatabaseEnum databaseEnum) {
         GeneratorUtils.transTable(table, databaseEnum, config);
         Map<String, Object> params = VelocityUtils.loadParams(table, config);
         config.getTemplateInfos().forEach(templateInfo -> {
@@ -54,14 +43,46 @@ public class GeneratorServiceImpl implements GeneratorService {
             try {
                 if (FileUtils.writeFile(data, file, Constants.UTF8, config.getCover())) {
                     log.info("generator code is success. tableName is {}. vmType is {}. file path is {}",
-                            tableName, templateInfo.getTypeEnum().name(), file.getPath());
+                            table.getTableName(), templateInfo.getTypeEnum().name(), file.getPath());
                 } else {
                     log.info("generator code is error. tableName is {}. vmType is {}. file path is {}",
-                            tableName, templateInfo.getTypeEnum().name(), file.getPath());
+                            table.getTableName(), templateInfo.getTypeEnum().name(), file.getPath());
                 }
             } catch (IOException e) {
                 log.error("generator code is error.", e);
             }
+        });
+    }
+
+    @Override
+    public void generatorCode(String tableName, DatabaseEnum databaseEnum) {
+        TableInfo table = genMapper.selectTableByName(tableName);
+        if (table == null) {
+            log.debug("generatorCode is fail. table is not found. table name is {}", tableName);
+            return;
+        }
+        table.setColumns(genMapper.selectTableColumnsByName(tableName));
+        if (table.getColumns() == null || table.getColumns().size() < 1) {
+            log.debug("generatorCode is fail. Columns is null. table name is {}", tableName);
+            return;
+        }
+        generatorCode(table, databaseEnum);
+    }
+
+    @Override
+    public void generatorAllCode(DatabaseEnum databaseEnum) {
+        List<TableInfo> tables = genMapper.selectTableList();
+        if (tables == null) {
+            log.debug("generatorCode is fail. table is not found.");
+            return;
+        }
+        tables.forEach(table -> {
+            table.setColumns(genMapper.selectTableColumnsByName(table.getTableName()));
+            if (table.getColumns() == null || table.getColumns().size() < 1) {
+                log.debug("generatorCode is fail. Columns is null. table name is {}", table.getTableName());
+                return;
+            }
+            generatorCode(table, databaseEnum);
         });
     }
 }

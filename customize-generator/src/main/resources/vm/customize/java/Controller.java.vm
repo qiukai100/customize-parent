@@ -4,7 +4,7 @@ import ${params.webPackage}.core.BaseController;
 import ${params.webPackage}.core.Result;
 import ${params.domainPackage}.vo.${moduleName}.${className}Vo;
 import ${params.domainPackage}.dto.${moduleName}.${className}Dto;
-import ${params.servicePackage}.service.${moduleName}.${className}Service;
+import ${params.servicePackage}.service.${moduleName}.I${className}Service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,10 +24,10 @@ import static ${params.webPackage}.core.Result.success;
 @RequestMapping("${moduleName}/${classname}")
 public class ${className}Controller extends BaseController {
 
-    private final ${className}Service ${classname}Service;
+    private final I${className}Service ${classname}Service;
 
     @Autowired
-    public ${className}Controller(${className}Service ${classname}Service) throws Exception {
+    public ${className}Controller(I${className}Service ${classname}Service) throws Exception {
         this.${classname}Service = ${classname}Service;
     }
 

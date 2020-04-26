@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.re.SysUserRoleMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysUserRole"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_re_user_role_id" jdbcType="varchar" property="pkReUserRoleId" />
+                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />
+                                        <result column="fk_role_id" jdbcType="varchar" property="fkRoleId" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysUserRoleDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    fk_user_id,
+                                                fk_role_id,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update re_sys_user_role set is_delete = #{isDelete} where pk_re_user_role_id = #{pkReUserRoleId}
+    </update>
+
+    <update id="removeSysUserRoleBatch" parameterType="Map">
+        update re_sys_user_role set is_delete = #{isDelete} where pk_re_user_role_id in
+        <foreach item="pkReUserRoleId" collection="pkReUserRoleIds" separator="," open="(" close=")">
+            #{pkReUserRoleId}
+        </foreach>
+    </update>
+
+    <delete id="deleteSysUserRoleBatch" parameterType="String">
+        delete from re_sys_user_role where pk_re_user_role_id in
+        <foreach item="pkReUserRoleId" collection="pkReUserRoleIds" separator="," open="(" close=")">
+            #{pkReUserRoleId}
+        </foreach>
+    </delete>
+
+    <select id="querySysUserRoleList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_user_role
+        <where>
+            <if test="sysUserRoleVo.isDelete != null">
+                is_delete = #{sysUserRoleVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectSysUserRoleList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_user_role
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_user_role
+        where pk_re_user_role_id = #{pkReUserRoleId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

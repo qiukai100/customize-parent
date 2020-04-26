@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.sys.RoleMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Role"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_role_id" jdbcType="varchar" property="pkRoleId" />
+                            <result column="role_code" jdbcType="varchar" property="roleCode" />
+                                        <result column="role_name" jdbcType="varchar" property="roleName" />
+                                        <result column="role_name_en" jdbcType="varchar" property="roleNameEn" />
+                                        <result column="sort" jdbcType="int" property="sort" />
+                                        <result column="remark" jdbcType="varchar" property="remark" />
+                                        <result column="data_auth_type" jdbcType="varchar" property="dataAuthType" />
+                                        <result column="resource_auth_type" jdbcType="varchar" property="resourceAuthType" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.RoleDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    role_code,
+                                                role_name,
+                                                role_name_en,
+                                                sort,
+                                                remark,
+                                                data_auth_type,
+                                                resource_auth_type,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update sys_role set is_delete = #{isDelete} where pk_role_id = #{pkRoleId}
+    </update>
+
+    <update id="removeRoleBatch" parameterType="Map">
+        update sys_role set is_delete = #{isDelete} where pk_role_id in
+        <foreach item="pkRoleId" collection="pkRoleIds" separator="," open="(" close=")">
+            #{pkRoleId}
+        </foreach>
+    </update>
+
+    <delete id="deleteRoleBatch" parameterType="String">
+        delete from sys_role where pk_role_id in
+        <foreach item="pkRoleId" collection="pkRoleIds" separator="," open="(" close=")">
+            #{pkRoleId}
+        </foreach>
+    </delete>
+
+    <select id="queryRoleList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_role
+        <where>
+            <if test="roleVo.isDelete != null">
+                is_delete = #{roleVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectRoleList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_role
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_role
+        where pk_role_id = #{pkRoleId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

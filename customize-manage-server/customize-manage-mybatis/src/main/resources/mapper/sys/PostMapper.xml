@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.sys.PostMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Post"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_post_id" jdbcType="varchar" property="pkPostId" />
+                            <result column="post_code" jdbcType="varchar" property="postCode" />
+                                        <result column="post_name" jdbcType="varchar" property="postName" />
+                                        <result column="post_name_en" jdbcType="varchar" property="postNameEn" />
+                                        <result column="sort" jdbcType="int" property="sort" />
+                                        <result column="remark" jdbcType="varchar" property="remark" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.PostDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    post_code,
+                                                post_name,
+                                                post_name_en,
+                                                sort,
+                                                remark,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update sys_post set is_delete = #{isDelete} where pk_post_id = #{pkPostId}
+    </update>
+
+    <update id="removePostBatch" parameterType="Map">
+        update sys_post set is_delete = #{isDelete} where pk_post_id in
+        <foreach item="pkPostId" collection="pkPostIds" separator="," open="(" close=")">
+            #{pkPostId}
+        </foreach>
+    </update>
+
+    <delete id="deletePostBatch" parameterType="String">
+        delete from sys_post where pk_post_id in
+        <foreach item="pkPostId" collection="pkPostIds" separator="," open="(" close=")">
+            #{pkPostId}
+        </foreach>
+    </delete>
+
+    <select id="queryPostList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_post
+        <where>
+            <if test="postVo.isDelete != null">
+                is_delete = #{postVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectPostList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_post
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_post
+        where pk_post_id = #{pkPostId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

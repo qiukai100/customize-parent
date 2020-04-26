@@ -7,7 +7,7 @@ generator:
   author: qiukai
   splitPrefix: true
   cover: true
-  prefixArray: qrtz, sys, tb
+  prefixArray: qrtz, sys, tb, re
   params:
     commonPackage: com.customize.common
     webPackage: com.customize.web

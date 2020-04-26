@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.sys.CompanyMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Company"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_company_id" jdbcType="varchar" property="pkCompanyId" />
+                            <result column="company_code" jdbcType="varchar" property="companyCode" />
+                                        <result column="company_name" jdbcType="varchar" property="companyName" />
+                                        <result column="company_name_en" jdbcType="varchar" property="companyNameEn" />
+                                        <result column="contact_person" jdbcType="varchar" property="contactPerson" />
+                                        <result column="contact_number" jdbcType="varchar" property="contactNumber" />
+                                        <result column="contact_email" jdbcType="varchar" property="contactEmail" />
+                                        <result column="sort" jdbcType="int" property="sort" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.CompanyDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    company_code,
+                                                company_name,
+                                                company_name_en,
+                                                contact_person,
+                                                contact_number,
+                                                contact_email,
+                                                sort,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update sys_company set is_delete = #{isDelete} where pk_company_id = #{pkCompanyId}
+    </update>
+
+    <update id="removeCompanyBatch" parameterType="Map">
+        update sys_company set is_delete = #{isDelete} where pk_company_id in
+        <foreach item="pkCompanyId" collection="pkCompanyIds" separator="," open="(" close=")">
+            #{pkCompanyId}
+        </foreach>
+    </update>
+
+    <delete id="deleteCompanyBatch" parameterType="String">
+        delete from sys_company where pk_company_id in
+        <foreach item="pkCompanyId" collection="pkCompanyIds" separator="," open="(" close=")">
+            #{pkCompanyId}
+        </foreach>
+    </delete>
+
+    <select id="queryCompanyList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_company
+        <where>
+            <if test="companyVo.isDelete != null">
+                is_delete = #{companyVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectCompanyList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_company
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_company
+        where pk_company_id = #{pkCompanyId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

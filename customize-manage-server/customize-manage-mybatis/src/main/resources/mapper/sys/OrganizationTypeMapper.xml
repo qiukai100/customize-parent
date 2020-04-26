@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.sys.OrganizationTypeMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.OrganizationType"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_organization_type_id" jdbcType="varchar" property="pkOrganizationTypeId" />
+                            <result column="organization_type_code" jdbcType="varchar" property="organizationTypeCode" />
+                                        <result column="organization_type_name" jdbcType="varchar" property="organizationTypeName" />
+                                        <result column="organization_type_name_en" jdbcType="varchar" property="organizationTypeNameEn" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.OrganizationTypeDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    organization_type_code,
+                                                organization_type_name,
+                                                organization_type_name_en,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update sys_organization_type set is_delete = #{isDelete} where pk_organization_type_id = #{pkOrganizationTypeId}
+    </update>
+
+    <update id="removeOrganizationTypeBatch" parameterType="Map">
+        update sys_organization_type set is_delete = #{isDelete} where pk_organization_type_id in
+        <foreach item="pkOrganizationTypeId" collection="pkOrganizationTypeIds" separator="," open="(" close=")">
+            #{pkOrganizationTypeId}
+        </foreach>
+    </update>
+
+    <delete id="deleteOrganizationTypeBatch" parameterType="String">
+        delete from sys_organization_type where pk_organization_type_id in
+        <foreach item="pkOrganizationTypeId" collection="pkOrganizationTypeIds" separator="," open="(" close=")">
+            #{pkOrganizationTypeId}
+        </foreach>
+    </delete>
+
+    <select id="queryOrganizationTypeList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_organization_type
+        <where>
+            <if test="organizationTypeVo.isDelete != null">
+                is_delete = #{organizationTypeVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectOrganizationTypeList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_organization_type
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_organization_type
+        where pk_organization_type_id = #{pkOrganizationTypeId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

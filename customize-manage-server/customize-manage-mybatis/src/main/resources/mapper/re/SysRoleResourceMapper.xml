@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.re.SysRoleResourceMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysRoleResource"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_re_role_resource_id" jdbcType="varchar" property="pkReRoleResourceId" />
+                            <result column="fk_role_id" jdbcType="varchar" property="fkRoleId" />
+                                        <result column="fk_resource_id" jdbcType="varchar" property="fkResourceId" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysRoleResourceDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    fk_role_id,
+                                                fk_resource_id,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update re_sys_role_resource set is_delete = #{isDelete} where pk_re_role_resource_id = #{pkReRoleResourceId}
+    </update>
+
+    <update id="removeSysRoleResourceBatch" parameterType="Map">
+        update re_sys_role_resource set is_delete = #{isDelete} where pk_re_role_resource_id in
+        <foreach item="pkReRoleResourceId" collection="pkReRoleResourceIds" separator="," open="(" close=")">
+            #{pkReRoleResourceId}
+        </foreach>
+    </update>
+
+    <delete id="deleteSysRoleResourceBatch" parameterType="String">
+        delete from re_sys_role_resource where pk_re_role_resource_id in
+        <foreach item="pkReRoleResourceId" collection="pkReRoleResourceIds" separator="," open="(" close=")">
+            #{pkReRoleResourceId}
+        </foreach>
+    </delete>
+
+    <select id="querySysRoleResourceList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_role_resource
+        <where>
+            <if test="sysRoleResourceVo.isDelete != null">
+                is_delete = #{sysRoleResourceVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectSysRoleResourceList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_role_resource
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_role_resource
+        where pk_re_role_resource_id = #{pkReRoleResourceId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

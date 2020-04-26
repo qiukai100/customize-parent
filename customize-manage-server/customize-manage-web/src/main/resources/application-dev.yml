@@ -16,6 +16,6 @@ eureka_defaultZone: http://eureka.didispace.com/eureka/
 
 --- # mysql 配置
 mysql_db:
-  url: jdbc:mysql://127.0.0.1:3306/teaching?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
-  username: teaching
+  url: jdbc:mysql://127.0.0.1:3306/enterprise?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true&useSSL=false&noAccessToProcedureBodies=true
+  username: enterprise
   password: 123456

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.customize.mybatis.mapper.re.SysUserProjectMapper">
+    <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysUserProject"
+               extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
+        <id column="pk_re_user_project_id" jdbcType="varchar" property="pkReUserProjectId" />
+                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />
+                                        <result column="fk_project_id" jdbcType="varchar" property="fkProjectId" />
+                                                                                                                                                                    </resultMap>
+
+    <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysUserProjectDto"
+               extends="BaseResultMap">
+
+    </resultMap>
+
+    <sql id="Base_Column_List">
+                                    fk_user_id,
+                                                fk_project_id,
+                                                                                                                                data_status,
+                                                                    version,
+                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+    </sql>
+
+    <update id="removeByPrimaryKey" parameterType="Map">
+        update re_sys_user_project set is_delete = #{isDelete} where pk_re_user_project_id = #{pkReUserProjectId}
+    </update>
+
+    <update id="removeSysUserProjectBatch" parameterType="Map">
+        update re_sys_user_project set is_delete = #{isDelete} where pk_re_user_project_id in
+        <foreach item="pkReUserProjectId" collection="pkReUserProjectIds" separator="," open="(" close=")">
+            #{pkReUserProjectId}
+        </foreach>
+    </update>
+
+    <delete id="deleteSysUserProjectBatch" parameterType="String">
+        delete from re_sys_user_project where pk_re_user_project_id in
+        <foreach item="pkReUserProjectId" collection="pkReUserProjectIds" separator="," open="(" close=")">
+            #{pkReUserProjectId}
+        </foreach>
+    </delete>
+
+    <select id="querySysUserProjectList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_user_project
+        <where>
+            <if test="sysUserProjectVo.isDelete != null">
+                is_delete = #{sysUserProjectVo.isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="selectSysUserProjectList" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_user_project
+        <where>
+            <if test="isDelete != null">
+                is_delete = #{isDelete}
+            </if>
+        </where>
+        order by create_time desc
+    </select>
+
+    <select id="findById" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from re_sys_user_project
+        where pk_re_user_project_id = #{pkReUserProjectId}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
+</mapper>

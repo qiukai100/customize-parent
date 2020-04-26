@@ -6,9 +6,10 @@
         <id column="${primaryKey.columnName}" jdbcType="${primaryKey.dataType}" property="${primaryKey.attrname}" />
         #foreach ($column in $columns)
             #if($column.attrname != 'createTime' && $column.attrname != 'updateTime'
-                && $column.attrname != 'createId' && $column.attrname != 'updateId' && $column.attrname != 'isDelete')
+                && $column.attrname != 'createId' && $column.attrname != 'updateId'
+                && $column.attrname != 'isDelete' && $column.attrname != 'dataStatus'
+                && $column.attrname != 'version')
         <result column="$column.columnName" jdbcType="$column.dataType" property="$column.attrname" />
-                #break
             #end
         #end
     </resultMap>
@@ -23,7 +24,6 @@
             #if($column.attrname != 'createTime' && $column.attrname != 'updateTime'
             && $column.attrname != 'createId' && $column.attrname != 'updateId' && $column.attrname != 'isDelete')
                 $column.columnName,
-                #break
             #end
         #end
         <include refid="${params.mapperPackage}.core.BaseMapper.Base_Column_List" />

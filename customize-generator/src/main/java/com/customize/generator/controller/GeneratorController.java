@@ -24,4 +24,9 @@ public class GeneratorController {
         generatorService.generatorCode(tableName, DatabaseEnum.MYSQL);
     }
 
+    @RequestMapping(method = RequestMethod.POST, value = "/generateAllCode")
+    public void generateAllCode() {
+        generatorService.generatorAllCode(DatabaseEnum.MYSQL);
+    }
+
 }

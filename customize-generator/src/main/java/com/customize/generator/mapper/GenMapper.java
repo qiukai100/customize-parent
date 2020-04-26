@@ -15,10 +15,9 @@ public interface GenMapper {
     /**
      * 查询ry数据库表信息
      *
-     * @param tableInfo 表信息
      * @return 数据库表列表
      */
-    List<TableInfo> selectTableList(@Param("tableInfo") TableInfo tableInfo);
+    List<TableInfo> selectTableList();
 
     /**
      * 根据表名称查询信息

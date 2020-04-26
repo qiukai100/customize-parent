@@ -6,9 +6,17 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 #foreach ($column in $columns)
-#if($column.attrPackage)
-import $column.attrPackage;
-#end
+    #if($column.attrPackage)
+        #foreach ($columnJ in $columns)
+            #if($column.attrPackage == $columnJ.attrPackage)
+                #if($column.columnName == $columnJ.columnName)
+                    import ${columnJ.attrPackage};
+                #else
+                    #break
+                #end
+            #end
+        #end
+    #end
 #end
 
 import javax.persistence.*;
@@ -32,7 +40,8 @@ public class ${className} extends BaseEntity {
     private $primaryKey.attrType $primaryKey.attrname;
 
 #foreach ($column in $columns)
-    #if($column.attrname != 'createTime' && $column.attrname != 'createId' && $column.attrname != 'updateTime' && $column.attrname != 'updateId' && $column.attrname != 'isDelete')
+    #if($column.attrname != 'createTime' && $column.attrname != 'createId' && $column.attrname != 'updateTime'
+        && $column.attrname != 'updateId' && $column.attrname != 'isDelete' && $column.attrname != 'version' && $column.attrname != 'dataStatus')
     /** $column.columnComment */
     @Column(name = "$column.columnName")
     private $column.attrType $column.attrname;
