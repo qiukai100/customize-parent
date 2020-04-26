@@ -54,21 +54,12 @@
     1、单机版部署
     
 ##3、待完成事项
-    1、hbase单机版集成（文件上传）（已完成）
-    2、spring cloud搭建（部署微服务）（已完成）
-    3、shiro集成
-    4、前端（vue）构建
-    5、mongodb单机版集成（记录日志）
-    6、quartz集成
-    7、使用nginx代理
-    8、mqtt（activemq）集成
-    9、activity集成
-    10、websocket集成
-    11、线程池扩展（高并发、自定义线程）
-    12、redis缓存、集群、哨兵
-    13、druid换成hikari
-    14、Gradle学习
-    15、dubbo学习
+    1、generator-server 切换数据源（JDBC），支持ORACLE
+    2、manage-server 增加接口文档swagger
+    3、增加网关
+    3、manage-server 增加Spring Security、JWT鉴权
+    4、redis-server 切换DB，哨兵模式
+    5、拆分quartz服务
 
     
 

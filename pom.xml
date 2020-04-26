@@ -50,6 +50,8 @@
         <activity.modeler.version>5.22.0</activity.modeler.version>
         <apache.xmlgraphics.version>1.7</apache.xmlgraphics.version>
         <httpclient.version>4.5.10</httpclient.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <swagger1.version>1.5.21</swagger1.version>
     </properties>
 
     <dependencyManagement>
