@@ -4,9 +4,7 @@
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysUserProject"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_re_user_project_id" jdbcType="varchar" property="pkReUserProjectId" />
-                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />
-                                        <result column="fk_project_id" jdbcType="varchar" property="fkProjectId" />
-                                                                                                                                                                    </resultMap>
+                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />                                         <result column="fk_project_id" jdbcType="varchar" property="fkProjectId" />                                                                                                                                                                     </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysUserProjectDto"
                extends="BaseResultMap">
@@ -14,11 +12,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-                                    fk_user_id,
-                                                fk_project_id,
-                                                                                                                                data_status,
-                                                                    version,
-                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+                            fk_user_id,                                         fk_project_id,                                                                                                                         data_status,                                                             version,                             <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <update id="removeByPrimaryKey" parameterType="Map">

@@ -4,16 +4,7 @@
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Organization"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_organization_id" jdbcType="varchar" property="pkOrganizationId" />
-                            <result column="organization_code" jdbcType="varchar" property="organizationCode" />
-                                        <result column="organization_name" jdbcType="varchar" property="organizationName" />
-                                        <result column="organization_name_en" jdbcType="varchar" property="organizationNameEn" />
-                                        <result column="sort" jdbcType="int" property="sort" />
-                                        <result column="fk_company_id" jdbcType="varchar" property="fkCompanyId" />
-                                        <result column="fk_organization_type_id" jdbcType="varchar" property="fkOrganizationTypeId" />
-                                        <result column="sr_organization_id" jdbcType="varchar" property="srOrganizationId" />
-                                        <result column="sr_organization_id_path" jdbcType="varchar" property="srOrganizationIdPath" />
-                                        <result column="is_top" jdbcType="tinyint" property="isTop" />
-                                                                                                                                                                    </resultMap>
+                            <result column="organization_code" jdbcType="varchar" property="organizationCode" />                                         <result column="organization_name" jdbcType="varchar" property="organizationName" />                                         <result column="organization_name_en" jdbcType="varchar" property="organizationNameEn" />                                         <result column="sort" jdbcType="int" property="sort" />                                         <result column="fk_company_id" jdbcType="varchar" property="fkCompanyId" />                                         <result column="fk_organization_type_id" jdbcType="varchar" property="fkOrganizationTypeId" />                                         <result column="sr_organization_id" jdbcType="varchar" property="srOrganizationId" />                                         <result column="sr_organization_id_path" jdbcType="varchar" property="srOrganizationIdPath" />                                         <result column="is_top" jdbcType="tinyint" property="isTop" />                                                                                                                                                                     </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.OrganizationDto"
                extends="BaseResultMap">
@@ -21,18 +12,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-                                    organization_code,
-                                                organization_name,
-                                                organization_name_en,
-                                                sort,
-                                                fk_company_id,
-                                                fk_organization_type_id,
-                                                sr_organization_id,
-                                                sr_organization_id_path,
-                                                is_top,
-                                                                                                                                data_status,
-                                                                    version,
-                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+                            organization_code,                                         organization_name,                                         organization_name_en,                                         sort,                                         fk_company_id,                                         fk_organization_type_id,                                         sr_organization_id,                                         sr_organization_id_path,                                         is_top,                                                                                                                         data_status,                                                             version,                             <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <update id="removeByPrimaryKey" parameterType="Map">

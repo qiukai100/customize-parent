@@ -4,10 +4,7 @@
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.OrganizationType"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_organization_type_id" jdbcType="varchar" property="pkOrganizationTypeId" />
-                            <result column="organization_type_code" jdbcType="varchar" property="organizationTypeCode" />
-                                        <result column="organization_type_name" jdbcType="varchar" property="organizationTypeName" />
-                                        <result column="organization_type_name_en" jdbcType="varchar" property="organizationTypeNameEn" />
-                                                                                                                                                                    </resultMap>
+                            <result column="organization_type_code" jdbcType="varchar" property="organizationTypeCode" />                                         <result column="organization_type_name" jdbcType="varchar" property="organizationTypeName" />                                         <result column="organization_type_name_en" jdbcType="varchar" property="organizationTypeNameEn" />                                                                                                                                                                     </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.OrganizationTypeDto"
                extends="BaseResultMap">
@@ -15,12 +12,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-                                    organization_type_code,
-                                                organization_type_name,
-                                                organization_type_name_en,
-                                                                                                                                data_status,
-                                                                    version,
-                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+                            organization_type_code,                                         organization_type_name,                                         organization_type_name_en,                                                                                                                         data_status,                                                             version,                             <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <update id="removeByPrimaryKey" parameterType="Map">

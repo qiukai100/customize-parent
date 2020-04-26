@@ -5,6 +5,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.customize.common.component.CommonResult;
 import com.customize.feign.utils.JsonResultUtil;
 import com.customize.web.core.BaseController;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +23,11 @@ import java.io.IOException;
 @Slf4j
 @RestController
 @RequestMapping("image")
+@Api("图片管理")
 public class ImageController extends BaseController {
 
+    @ApiOperation("显示图片")
+    @ApiImplicitParam(name = "tableName", value = "表名", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "showImage/{tableName}/{rowKey}/{columnFamily}/{columnName}", method = RequestMethod.GET)
     public void showImage(@PathVariable String tableName, @PathVariable String rowKey,
                           @PathVariable String columnFamily, @PathVariable String columnName,

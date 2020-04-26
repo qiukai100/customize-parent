@@ -1,13 +1,14 @@
 package ${params.domainPackage}.vo.${moduleName};
 
 import ${params.domainPackage}.core.BaseVo;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 
 /**
- * 视图交互模型
- * ${tableComment}表 ${tableName}
+ * ${tableName} 表
  *
  * @author ${author}
  * @date ${datetime}
@@ -15,6 +16,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(chain = true)
+@ApiModel("${tableComment}视图模型")
 public class ${className}Vo extends BaseVo {
 
 }

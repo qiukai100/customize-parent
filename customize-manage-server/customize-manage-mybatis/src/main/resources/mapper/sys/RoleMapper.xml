@@ -4,14 +4,7 @@
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Role"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_role_id" jdbcType="varchar" property="pkRoleId" />
-                            <result column="role_code" jdbcType="varchar" property="roleCode" />
-                                        <result column="role_name" jdbcType="varchar" property="roleName" />
-                                        <result column="role_name_en" jdbcType="varchar" property="roleNameEn" />
-                                        <result column="sort" jdbcType="int" property="sort" />
-                                        <result column="remark" jdbcType="varchar" property="remark" />
-                                        <result column="data_auth_type" jdbcType="varchar" property="dataAuthType" />
-                                        <result column="resource_auth_type" jdbcType="varchar" property="resourceAuthType" />
-                                                                                                                                                                    </resultMap>
+                            <result column="role_code" jdbcType="varchar" property="roleCode" />                                         <result column="role_name" jdbcType="varchar" property="roleName" />                                         <result column="role_name_en" jdbcType="varchar" property="roleNameEn" />                                         <result column="sort" jdbcType="int" property="sort" />                                         <result column="remark" jdbcType="varchar" property="remark" />                                         <result column="data_auth_type" jdbcType="varchar" property="dataAuthType" />                                         <result column="resource_auth_type" jdbcType="varchar" property="resourceAuthType" />                                                                                                                                                                     </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.RoleDto"
                extends="BaseResultMap">
@@ -19,16 +12,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-                                    role_code,
-                                                role_name,
-                                                role_name_en,
-                                                sort,
-                                                remark,
-                                                data_auth_type,
-                                                resource_auth_type,
-                                                                                                                                data_status,
-                                                                    version,
-                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+                            role_code,                                         role_name,                                         role_name_en,                                         sort,                                         remark,                                         data_auth_type,                                         resource_auth_type,                                                                                                                         data_status,                                                             version,                             <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <update id="removeByPrimaryKey" parameterType="Map">

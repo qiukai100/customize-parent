@@ -13,7 +13,7 @@ import java.util.List;
  * 关联用户角色表 re_sys_user_role
  *
  * @author qiukai
- * @date 2020-04-25
+ * @date 2020-04-26
  */
 public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 

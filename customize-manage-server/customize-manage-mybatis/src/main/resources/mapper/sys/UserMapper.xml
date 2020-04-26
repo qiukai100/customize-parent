@@ -4,18 +4,7 @@
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.User"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_user_id" jdbcType="varchar" property="pkUserId" />
-                            <result column="user_code" jdbcType="varchar" property="userCode" />
-                                        <result column="user_name" jdbcType="varchar" property="userName" />
-                                        <result column="account" jdbcType="varchar" property="account" />
-                                        <result column="password" jdbcType="varchar" property="password" />
-                                        <result column="fk_organization_id" jdbcType="varchar" property="fkOrganizationId" />
-                                        <result column="user_name_en" jdbcType="varchar" property="userNameEn" />
-                                        <result column="phone_number" jdbcType="varchar" property="phoneNumber" />
-                                        <result column="email" jdbcType="varchar" property="email" />
-                                        <result column="sex" jdbcType="varchar" property="sex" />
-                                        <result column="sort" jdbcType="int" property="sort" />
-                                        <result column="remark" jdbcType="varchar" property="remark" />
-                                                                                                                                                                    </resultMap>
+                            <result column="user_code" jdbcType="varchar" property="userCode" />                                         <result column="user_name" jdbcType="varchar" property="userName" />                                         <result column="account" jdbcType="varchar" property="account" />                                         <result column="password" jdbcType="varchar" property="password" />                                         <result column="fk_organization_id" jdbcType="varchar" property="fkOrganizationId" />                                         <result column="user_name_en" jdbcType="varchar" property="userNameEn" />                                         <result column="phone_number" jdbcType="varchar" property="phoneNumber" />                                         <result column="email" jdbcType="varchar" property="email" />                                         <result column="sex" jdbcType="varchar" property="sex" />                                         <result column="sort" jdbcType="int" property="sort" />                                         <result column="remark" jdbcType="varchar" property="remark" />                                                                                                                                                                     </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.UserDto"
                extends="BaseResultMap">
@@ -23,20 +12,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-                                    user_code,
-                                                user_name,
-                                                account,
-                                                password,
-                                                fk_organization_id,
-                                                user_name_en,
-                                                phone_number,
-                                                email,
-                                                sex,
-                                                sort,
-                                                remark,
-                                                                                                                                data_status,
-                                                                    version,
-                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+                            user_code,                                         user_name,                                         account,                                         password,                                         fk_organization_id,                                         user_name_en,                                         phone_number,                                         email,                                         sex,                                         sort,                                         remark,                                                                                                                         data_status,                                                             version,                             <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <update id="removeByPrimaryKey" parameterType="Map">

@@ -4,9 +4,7 @@
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysUserRole"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
         <id column="pk_re_user_role_id" jdbcType="varchar" property="pkReUserRoleId" />
-                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />
-                                        <result column="fk_role_id" jdbcType="varchar" property="fkRoleId" />
-                                                                                                                                                                    </resultMap>
+                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />                                         <result column="fk_role_id" jdbcType="varchar" property="fkRoleId" />                                                                                                                                                                     </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysUserRoleDto"
                extends="BaseResultMap">
@@ -14,11 +12,7 @@
     </resultMap>
 
     <sql id="Base_Column_List">
-                                    fk_user_id,
-                                                fk_role_id,
-                                                                                                                                data_status,
-                                                                    version,
-                            <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
+                            fk_user_id,                                         fk_role_id,                                                                                                                         data_status,                                                             version,                             <include refid="com.customize.mybatis.core.BaseMapper.Base_Column_List" />
     </sql>
 
     <update id="removeByPrimaryKey" parameterType="Map">

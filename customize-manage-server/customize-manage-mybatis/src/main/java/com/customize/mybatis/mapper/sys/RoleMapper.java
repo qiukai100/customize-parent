@@ -13,7 +13,7 @@ import java.util.List;
  * 角色表 sys_role
  *
  * @author qiukai
- * @date 2020-04-25
+ * @date 2020-04-26
  */
 public interface RoleMapper extends BaseMapper<Role> {
 

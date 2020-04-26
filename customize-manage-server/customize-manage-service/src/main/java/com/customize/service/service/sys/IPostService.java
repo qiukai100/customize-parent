@@ -13,7 +13,7 @@ import java.util.List;
  * 岗位表 sys_post
  *
  * @author qiukai
- * @date 2020-04-25
+ * @date 2020-04-26
  */
 public interface IPostService extends BaseService<Post, String> {
 
