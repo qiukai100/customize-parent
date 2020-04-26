@@ -3,8 +3,10 @@
 <mapper namespace="com.customize.mybatis.mapper.re.SysUserProjectMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysUserProject"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_re_user_project_id" jdbcType="varchar" property="pkReUserProjectId" />
-                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />                                         <result column="fk_project_id" jdbcType="varchar" property="fkProjectId" />                                                                                                                                                                     </resultMap>
+        <id column="pk_re_user_project_id" property="pkReUserProjectId" />
+                            <result column="fk_user_id" property="fkUserId" />
+                                        <result column="fk_project_id" property="fkProjectId" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysUserProjectDto"
                extends="BaseResultMap">

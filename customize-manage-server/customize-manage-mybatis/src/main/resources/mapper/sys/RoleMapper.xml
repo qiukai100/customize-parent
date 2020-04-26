@@ -3,8 +3,15 @@
 <mapper namespace="com.customize.mybatis.mapper.sys.RoleMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Role"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_role_id" jdbcType="varchar" property="pkRoleId" />
-                            <result column="role_code" jdbcType="varchar" property="roleCode" />                                         <result column="role_name" jdbcType="varchar" property="roleName" />                                         <result column="role_name_en" jdbcType="varchar" property="roleNameEn" />                                         <result column="sort" jdbcType="int" property="sort" />                                         <result column="remark" jdbcType="varchar" property="remark" />                                         <result column="data_auth_type" jdbcType="varchar" property="dataAuthType" />                                         <result column="resource_auth_type" jdbcType="varchar" property="resourceAuthType" />                                                                                                                                                                     </resultMap>
+        <id column="pk_role_id" property="pkRoleId" />
+                            <result column="role_code" property="roleCode" />
+                                        <result column="role_name" property="roleName" />
+                                        <result column="role_name_en" property="roleNameEn" />
+                                        <result column="sort" property="sort" />
+                                        <result column="remark" property="remark" />
+                                        <result column="data_auth_type" property="dataAuthType" />
+                                        <result column="resource_auth_type" property="resourceAuthType" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.RoleDto"
                extends="BaseResultMap">

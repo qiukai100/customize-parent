@@ -3,8 +3,19 @@
 <mapper namespace="com.customize.mybatis.mapper.sys.ResourceMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Resource"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_resource_id" jdbcType="varchar" property="pkResourceId" />
-                            <result column="resource_type" jdbcType="varchar" property="resourceType" />                                         <result column="resource_name" jdbcType="varchar" property="resourceName" />                                         <result column="resource_path" jdbcType="varchar" property="resourcePath" />                                         <result column="permission" jdbcType="varchar" property="permission" />                                         <result column="fk_project_id" jdbcType="varchar" property="fkProjectId" />                                         <result column="sr_resource_id" jdbcType="varchar" property="srResourceId" />                                         <result column="sr_resource_id_path" jdbcType="varchar" property="srResourceIdPath" />                                         <result column="is_top" jdbcType="tinyint" property="isTop" />                                         <result column="open_type" jdbcType="varchar" property="openType" />                                         <result column="resource_icon" jdbcType="varchar" property="resourceIcon" />                                         <result column="sort" jdbcType="int" property="sort" />                                                                                                                                                                     </resultMap>
+        <id column="pk_resource_id" property="pkResourceId" />
+                            <result column="resource_type" property="resourceType" />
+                                        <result column="resource_name" property="resourceName" />
+                                        <result column="resource_path" property="resourcePath" />
+                                        <result column="permission" property="permission" />
+                                        <result column="fk_project_id" property="fkProjectId" />
+                                        <result column="sr_resource_id" property="srResourceId" />
+                                        <result column="sr_resource_id_path" property="srResourceIdPath" />
+                                        <result column="is_top" property="isTop" />
+                                        <result column="open_type" property="openType" />
+                                        <result column="resource_icon" property="resourceIcon" />
+                                        <result column="sort" property="sort" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.ResourceDto"
                extends="BaseResultMap">

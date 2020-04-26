@@ -22,6 +22,7 @@ public abstract class BaseVo implements Serializable {
     @ApiModelProperty("每页行数")
     private Integer pageSize = 20;
 
+    @ApiModelProperty(hidden = true)
     private Integer isDelete = OptionEnum.NO.getVal();
 
     @ApiModelProperty(value = "数据状态", example="Enable")

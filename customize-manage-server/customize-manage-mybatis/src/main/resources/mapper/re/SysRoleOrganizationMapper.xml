@@ -3,8 +3,10 @@
 <mapper namespace="com.customize.mybatis.mapper.re.SysRoleOrganizationMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysRoleOrganization"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_re_role_organization_id" jdbcType="varchar" property="pkReRoleOrganizationId" />
-                            <result column="fk_role_id" jdbcType="varchar" property="fkRoleId" />                                         <result column="fk_organization_id" jdbcType="varchar" property="fkOrganizationId" />                                                                                                                                                                     </resultMap>
+        <id column="pk_re_role_organization_id" property="pkReRoleOrganizationId" />
+                            <result column="fk_role_id" property="fkRoleId" />
+                                        <result column="fk_organization_id" property="fkOrganizationId" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysRoleOrganizationDto"
                extends="BaseResultMap">

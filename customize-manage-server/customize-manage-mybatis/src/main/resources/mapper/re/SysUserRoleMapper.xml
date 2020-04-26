@@ -3,8 +3,10 @@
 <mapper namespace="com.customize.mybatis.mapper.re.SysUserRoleMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.re.SysUserRole"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_re_user_role_id" jdbcType="varchar" property="pkReUserRoleId" />
-                            <result column="fk_user_id" jdbcType="varchar" property="fkUserId" />                                         <result column="fk_role_id" jdbcType="varchar" property="fkRoleId" />                                                                                                                                                                     </resultMap>
+        <id column="pk_re_user_role_id" property="pkReUserRoleId" />
+                            <result column="fk_user_id" property="fkUserId" />
+                                        <result column="fk_role_id" property="fkRoleId" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.re.SysUserRoleDto"
                extends="BaseResultMap">

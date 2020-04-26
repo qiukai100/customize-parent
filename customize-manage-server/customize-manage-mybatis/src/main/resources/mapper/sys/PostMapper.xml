@@ -3,8 +3,13 @@
 <mapper namespace="com.customize.mybatis.mapper.sys.PostMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Post"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_post_id" jdbcType="varchar" property="pkPostId" />
-                            <result column="post_code" jdbcType="varchar" property="postCode" />                                         <result column="post_name" jdbcType="varchar" property="postName" />                                         <result column="post_name_en" jdbcType="varchar" property="postNameEn" />                                         <result column="sort" jdbcType="int" property="sort" />                                         <result column="remark" jdbcType="varchar" property="remark" />                                                                                                                                                                     </resultMap>
+        <id column="pk_post_id" property="pkPostId" />
+                            <result column="post_code" property="postCode" />
+                                        <result column="post_name" property="postName" />
+                                        <result column="post_name_en" property="postNameEn" />
+                                        <result column="sort" property="sort" />
+                                        <result column="remark" property="remark" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.PostDto"
                extends="BaseResultMap">

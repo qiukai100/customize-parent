@@ -3,8 +3,10 @@
 <mapper namespace="com.customize.mybatis.mapper.sys.ProjectMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Project"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_project_id" jdbcType="varchar" property="pkProjectId" />
-                            <result column="project_code" jdbcType="varchar" property="projectCode" />                                         <result column="project_name" jdbcType="varchar" property="projectName" />                                                                                                                                                                     </resultMap>
+        <id column="pk_project_id" property="pkProjectId" />
+                            <result column="project_code" property="projectCode" />
+                                        <result column="project_name" property="projectName" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.ProjectDto"
                extends="BaseResultMap">

@@ -3,8 +3,15 @@
 <mapper namespace="com.customize.mybatis.mapper.sys.CompanyMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Company"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_company_id" jdbcType="varchar" property="pkCompanyId" />
-                            <result column="company_code" jdbcType="varchar" property="companyCode" />                                         <result column="company_name" jdbcType="varchar" property="companyName" />                                         <result column="company_name_en" jdbcType="varchar" property="companyNameEn" />                                         <result column="contact_person" jdbcType="varchar" property="contactPerson" />                                         <result column="contact_number" jdbcType="varchar" property="contactNumber" />                                         <result column="contact_email" jdbcType="varchar" property="contactEmail" />                                         <result column="sort" jdbcType="int" property="sort" />                                                                                                                                                                     </resultMap>
+        <id column="pk_company_id" property="pkCompanyId" />
+                            <result column="company_code" property="companyCode" />
+                                        <result column="company_name" property="companyName" />
+                                        <result column="company_name_en" property="companyNameEn" />
+                                        <result column="contact_person" property="contactPerson" />
+                                        <result column="contact_number" property="contactNumber" />
+                                        <result column="contact_email" property="contactEmail" />
+                                        <result column="sort" property="sort" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.CompanyDto"
                extends="BaseResultMap">

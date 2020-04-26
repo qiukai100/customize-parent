@@ -3,8 +3,17 @@
 <mapper namespace="com.customize.mybatis.mapper.sys.OrganizationMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.Organization"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_organization_id" jdbcType="varchar" property="pkOrganizationId" />
-                            <result column="organization_code" jdbcType="varchar" property="organizationCode" />                                         <result column="organization_name" jdbcType="varchar" property="organizationName" />                                         <result column="organization_name_en" jdbcType="varchar" property="organizationNameEn" />                                         <result column="sort" jdbcType="int" property="sort" />                                         <result column="fk_company_id" jdbcType="varchar" property="fkCompanyId" />                                         <result column="fk_organization_type_id" jdbcType="varchar" property="fkOrganizationTypeId" />                                         <result column="sr_organization_id" jdbcType="varchar" property="srOrganizationId" />                                         <result column="sr_organization_id_path" jdbcType="varchar" property="srOrganizationIdPath" />                                         <result column="is_top" jdbcType="tinyint" property="isTop" />                                                                                                                                                                     </resultMap>
+        <id column="pk_organization_id" property="pkOrganizationId" />
+                            <result column="organization_code" property="organizationCode" />
+                                        <result column="organization_name" property="organizationName" />
+                                        <result column="organization_name_en" property="organizationNameEn" />
+                                        <result column="sort" property="sort" />
+                                        <result column="fk_company_id" property="fkCompanyId" />
+                                        <result column="fk_organization_type_id" property="fkOrganizationTypeId" />
+                                        <result column="sr_organization_id" property="srOrganizationId" />
+                                        <result column="sr_organization_id_path" property="srOrganizationIdPath" />
+                                        <result column="is_top" property="isTop" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.OrganizationDto"
                extends="BaseResultMap">

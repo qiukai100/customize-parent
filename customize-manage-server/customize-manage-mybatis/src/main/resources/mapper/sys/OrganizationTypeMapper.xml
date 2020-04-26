@@ -3,8 +3,11 @@
 <mapper namespace="com.customize.mybatis.mapper.sys.OrganizationTypeMapper">
     <resultMap id="BaseResultMap" type="com.customize.domain.entity.sys.OrganizationType"
                extends="com.customize.mybatis.core.BaseMapper.BaseResultMap">
-        <id column="pk_organization_type_id" jdbcType="varchar" property="pkOrganizationTypeId" />
-                            <result column="organization_type_code" jdbcType="varchar" property="organizationTypeCode" />                                         <result column="organization_type_name" jdbcType="varchar" property="organizationTypeName" />                                         <result column="organization_type_name_en" jdbcType="varchar" property="organizationTypeNameEn" />                                                                                                                                                                     </resultMap>
+        <id column="pk_organization_type_id" property="pkOrganizationTypeId" />
+                            <result column="organization_type_code" property="organizationTypeCode" />
+                                        <result column="organization_type_name" property="organizationTypeName" />
+                                        <result column="organization_type_name_en" property="organizationTypeNameEn" />
+                                                                                                                                                                    </resultMap>
 
     <resultMap id="DtoResultMap" type="com.customize.domain.dto.sys.OrganizationTypeDto"
                extends="BaseResultMap">

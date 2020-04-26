@@ -1,6 +1,6 @@
 mybatis:
   typeAliasesPackage: com.customize.domain.entity
-  mapperLocations: classpath:mapper/*Mapper.xml, classpath:mapper/core/*Mapper.xml
+  mapperLocations: classpath:mapper/*Mapper.xml, classpath:mapper/*/*Mapper.xml, classpath:core/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
 ---
