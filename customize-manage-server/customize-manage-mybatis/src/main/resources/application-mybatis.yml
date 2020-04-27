@@ -3,6 +3,9 @@ mybatis:
   mapperLocations: classpath:mapper/*Mapper.xml, classpath:mapper/*/*Mapper.xml, classpath:core/*Mapper.xml
   configuration:
     map-underscore-to-camel-case: true
+  configuration-properties:
+    YES: 1
+    NO: 0
 ---
 pagehelper:
   helper-dialect: mysql

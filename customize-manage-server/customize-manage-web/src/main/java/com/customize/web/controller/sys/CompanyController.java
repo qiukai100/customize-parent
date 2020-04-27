@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 import static com.customize.web.core.Result.success;
 
 /**
@@ -51,6 +53,7 @@ public class CompanyController extends BaseController {
     }
 
     @ApiOperation("根据ID查询公司")
+    @ApiImplicitParam(name = "pkCompanyId", value = "公司ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(method = RequestMethod.GET, value = "findCompanyById/{pkCompanyId}")
     public Result findById(@PathVariable("pkCompanyId") String pkCompanyId) {
         return success(companyService.findById(pkCompanyId));
@@ -69,26 +72,30 @@ public class CompanyController extends BaseController {
     }
 
     @ApiOperation("根据ID移除公司（逻辑删除）")
+    @ApiImplicitParam(name = "pkCompanyId", value = "公司ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(method = RequestMethod.DELETE, value = "removeCompanyById/{pkCompanyId}")
     public Result removeCompanyById(@PathVariable("pkCompanyId") String pkCompanyId) throws Exception {
         return success(companyService.removeByPrimaryKey(pkCompanyId));
     }
 
     @ApiOperation("根据ID移除公司（物理删除）")
+    @ApiImplicitParam(name = "pkCompanyId", value = "公司ID", required = true, dataType = "String", paramType = "path")
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteCompanyById/{pkCompanyId}")
     public Result deleteCompanyById(@PathVariable("pkCompanyId") String pkCompanyId) throws Exception {
         return success(companyService.deleteByPrimaryKey(pkCompanyId));
     }
 
     @ApiOperation("批量删除公司（逻辑删除）")
+    @ApiImplicitParam(name = "pkCompanyIds", value = "公司ID数组", required = true, dataType = "String", paramType = "query")
     @RequestMapping(method = RequestMethod.DELETE, value = "removeCompanyBatch")
-    public Result removeCompanyBatch(@RequestParam String[] pkCompanyIds) throws Exception {
+    public Result removeCompanyBatch(@RequestParam List<String> pkCompanyIds) throws Exception {
         return success(companyService.removeCompanyBatch(pkCompanyIds));
     }
 
     @ApiOperation("批量删除公司（物理删除）")
+    @ApiImplicitParam(name = "pkCompanyIds", value = "公司ID数组", required = true, dataType = "String", paramType = "query")
     @RequestMapping(method = RequestMethod.DELETE, value = "deleteCompanyBatch")
-    public Result deleteCompanyBatch(@RequestParam String[] pkCompanyIds) throws Exception {
+    public Result deleteCompanyBatch(@RequestParam List<String> pkCompanyIds) throws Exception {
         return success(companyService.deleteCompanyBatch(pkCompanyIds));
     }
 

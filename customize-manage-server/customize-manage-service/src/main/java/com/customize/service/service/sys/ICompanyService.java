@@ -45,10 +45,10 @@ public interface ICompanyService extends BaseService<Company, String> {
     /**
      * 批量移除公司（逻辑删除）
      */
-    int removeCompanyBatch(String[] pkCompanyIds);
+    int removeCompanyBatch(List<String> pkCompanyIds);
 
     /**
      * 批量删除公司（物理删除）
      */
-    int deleteCompanyBatch(String[] pkCompanyIds);
+    int deleteCompanyBatch(List<String> pkCompanyIds);
 }

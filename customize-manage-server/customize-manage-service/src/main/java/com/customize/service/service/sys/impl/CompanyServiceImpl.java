@@ -46,26 +46,26 @@ public class CompanyServiceImpl extends BaseServiceImpl<Company, String> impleme
 
     @Override
     public List<CompanyDto> selectCompanyList() {
-        return companyMapper.selectCompanyList(OptionEnum.YES.getVal());
+        return companyMapper.selectCompanyList(OptionEnum.NO.getVal());
     }
 
     @Override
     public CompanyDto findById(String pkCompanyId) {
-        return companyMapper.findById(pkCompanyId, OptionEnum.YES.getVal());
+        return companyMapper.findById(pkCompanyId, OptionEnum.NO.getVal());
     }
 
     @Override
     public int removeByPrimaryKey(String pkCompanyId) {
-        return companyMapper.removeByPrimaryKey(pkCompanyId, OptionEnum.YES.getVal());
+        return companyMapper.removeByPrimaryKey(pkCompanyId, OptionEnum.NO.getVal());
     }
 
     @Override
-    public int removeCompanyBatch(String[] pkCompanyIds) {
-        return companyMapper.removeCompanyBatch(pkCompanyIds, OptionEnum.YES.getVal());
+    public int removeCompanyBatch(List<String> pkCompanyIds) {
+        return companyMapper.removeCompanyBatch(pkCompanyIds, OptionEnum.NO.getVal());
     }
 
     @Override
-    public int deleteCompanyBatch(String[] pkCompanyIds) {
+    public int deleteCompanyBatch(List<String> pkCompanyIds) {
         return companyMapper.deleteCompanyBatch(pkCompanyIds);
     }
 }
