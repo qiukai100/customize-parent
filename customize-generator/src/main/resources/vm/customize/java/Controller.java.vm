@@ -51,6 +51,7 @@ public class ${className}Controller extends BaseController {
     }
 
     @ApiOperation("根据ID查询${tableComment}")
+    @ApiImplicitParam(name = "${primaryKey.attrname}", value = "${tableComment}ID", required = true, dataType = "${primaryKey.attrType}", paramType = "path")
     @RequestMapping(method = RequestMethod.GET, value = "find${className}ById/{${primaryKey.attrname}}")
     public Result findById(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}) {
         return success(${classname}Service.findById(${primaryKey.attrname}));
@@ -69,12 +70,14 @@ public class ${className}Controller extends BaseController {
     }
 
     @ApiOperation("根据ID移除${tableComment}（逻辑删除）")
+    @ApiImplicitParam(name = "${primaryKey.attrname}", value = "${tableComment}ID", required = true, dataType = "${primaryKey.attrType}", paramType = "path")
     @RequestMapping(method = RequestMethod.DELETE, value = "remove${className}ById/{${primaryKey.attrname}}")
     public Result remove${className}ById(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}) throws Exception {
         return success(${classname}Service.removeByPrimaryKey(${primaryKey.attrname}));
     }
 
     @ApiOperation("根据ID移除${tableComment}（物理删除）")
+    @ApiImplicitParam(name = "${primaryKey.attrname}", value = "${tableComment}ID", required = true, dataType = "${primaryKey.attrType}", paramType = "path")
     @RequestMapping(method = RequestMethod.DELETE, value = "delete${className}ById/{${primaryKey.attrname}}")
     public Result delete${className}ById(@PathVariable("${primaryKey.attrname}") ${primaryKey.attrType} ${primaryKey.attrname}) throws Exception {
         return success(${classname}Service.deleteByPrimaryKey(${primaryKey.attrname}));
