@@ -32,6 +32,8 @@ public interface UserMapper extends BaseMapper<User> {
      */
     UserDto findById(@Param("pkUserId") String pkUserId, Integer isDelete);
 
+    UserDto findByCode(@Param("userCode") String userCode, Integer isDelete);
+
     /**
      * 根据ID移除用户（逻辑删除）
      */

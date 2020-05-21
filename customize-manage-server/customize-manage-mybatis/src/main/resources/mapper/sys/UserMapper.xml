@@ -72,4 +72,12 @@
         </if>
     </select>
 
+    <select id="findByCode" resultMap="DtoResultMap">
+        select <include refid="Base_Column_List" /> from sys_user
+        where user_code = #{userCode}
+        <if test="isDelete != null">
+            and is_delete = #{isDelete}
+        </if>
+    </select>
+
 </mapper>

@@ -37,6 +37,8 @@ public interface IUserService extends BaseService<User, String> {
      */
 	UserDto findById(String pkUserId);
 
+	UserDto findByCode(String userCode);
+
     /**
      * 根据ID移除用户（逻辑删除）
      */

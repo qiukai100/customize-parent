@@ -1,5 +1,6 @@
 package com.customize.service.service.sys.impl;
 
+import com.customize.common.constants.ConstantEnum;
 import com.customize.common.constants.OptionEnum;
 import com.customize.domain.dto.sys.UserDto;
 import com.customize.domain.entity.sys.User;
@@ -52,6 +53,11 @@ public class UserServiceImpl extends BaseServiceImpl<User, String> implements IU
     @Override
     public UserDto findById(String pkUserId) {
         return userMapper.findById(pkUserId, OptionEnum.YES.getVal());
+    }
+
+    @Override
+    public UserDto findByCode(String userCode) {
+        return userMapper.findByCode(userCode, OptionEnum.NO.getVal());
     }
 
     @Override

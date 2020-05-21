@@ -15,6 +15,7 @@
         <module>customize-manage-service</module>
         <module>customize-manage-quartz</module>
         <module>customize-manage-web</module>
+        <module>customize-manage-common</module>
     </modules>
     <artifactId>customize-manage-server</artifactId>
     <version>${project.parent.version}</version>

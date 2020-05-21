@@ -1,5 +1,7 @@
 package com.customize.web.controller.sys;
 
+import com.customize.domain.entity.sys.User;
+import com.customize.service.service.sys.IUserService;
 import com.customize.web.core.BaseController;
 import com.customize.web.core.Result;
 import com.customize.domain.vo.sys.ResourceVo;
@@ -7,7 +9,6 @@ import com.customize.domain.dto.sys.ResourceDto;
 import com.customize.service.service.sys.IResourceService;
 
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,10 +27,19 @@ import static com.customize.web.core.Result.success;
 public class ResourceController extends BaseController {
 
     private final IResourceService resourceService;
+    private final IUserService userService;
 
     @Autowired
-    public ResourceController(IResourceService resourceService) throws Exception {
+    public ResourceController(IResourceService resourceService, IUserService userService) throws Exception {
         this.resourceService = resourceService;
+        this.userService = userService;
+    }
+
+    @ApiOperation("获取用户资源")
+    @RequestMapping(method = RequestMethod.GET, value = "selectResourceByUser")
+    public Result selectResourceByUser(String userCode) {
+        User user = userService.findByCode(userCode);
+
     }
 
     @ApiOperation("分页条件查询资源")
